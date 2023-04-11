@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.AppRH.AppRH.models.Cooperado;
 
 @Repository
-public interface CooperadoRepository extends CrudRepository<Cooperado, Integer>{
+public interface CooperadoRepository extends CrudRepository<Cooperado, Long>{
 		
 	Cooperado findByCoopindexcod(long coop_index_cod);
 	List<Cooperado> findByCoopnome(String coop_nome);

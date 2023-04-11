@@ -73,14 +73,14 @@
 			</thead>
 			<tbody>
 				<tr th:each="cooperado: ${cooperados}">
-			  	<td><a th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopindexcod)).build()}">
+			  	<td><a th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopindexcod).build())}">
 			 			<span th:text="${cooperado.coopmatricula}"></span></a></td>
 					<td><span th:text="${cooperado.coopnome}"></span></td>					
 					<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
 					
 					<td><a ><button type="button"
 					 class="btn btn-danger">Excluir</button></a></td>
-					<td><a x><button type="button"
+					<td><a th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopindexcod)).build()}"
 					 class="btn btn-primary">Editar</button></a></td>
 					<td><a ><button type="button"
 					 class="btn btn-success">Adicionar telefone</button></a></td>

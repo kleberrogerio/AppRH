@@ -54,7 +54,7 @@ public class CooperadoController {
 	}
 	
 	@RequestMapping(value="/{coopindexcod}",method=RequestMethod.GET)
-	public ModelAndView detalhesCooperado(@PathVariable("coopindexcod") long coop_index_cod) {
+	public ModelAndView detalhesCooperado(@PathVariable("coopindexcod") int coop_index_cod) {
 		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
 		ModelAndView mv = new ModelAndView("cooperado/detalhesCooperado");
 		mv.addObject("cooperado",cooperado);
@@ -62,18 +62,18 @@ public class CooperadoController {
 		Iterable<Telefone> telefones = tr.findByCooperado(cooperado);
 		mv.addObject("telefones",telefones);
 		
-		return mv;
+		return mv;		
 	}
 		
 	//DELETA COOPERADO
 	@RequestMapping("/deletarCooperado")
-	public String deletarCooperado(long coop_index_cod) {
+	public String deletarCooperado(int coop_index_cod) {
 		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
 		cr.delete(cooperado);
 		return "redirect:/cooperados";
 	}
 	
-	public String detalhesCooperadosPost(@PathVariable("coop_index_cod") long coop_index_cod, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
+	public String detalhesCooperadosPost(@PathVariable("coop_index_cod") int coop_index_cod, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
 			return "redirect:/{coop_index_cod}";
@@ -103,7 +103,7 @@ public class CooperadoController {
 		
 	}
 	
-	public String detalhesTelefonePost(@PathVariable("coop_index_cod") long coop_index_cod, @Valid Telefone telefone,
+	public String detalhesTelefonePost(@PathVariable("coop_index_cod") int coop_index_cod, @Valid Telefone telefone,
 			BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
