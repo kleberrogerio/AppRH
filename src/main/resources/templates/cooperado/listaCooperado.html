@@ -63,6 +63,7 @@
 		<table class="table table-hover table-responsive w-auto table-striped">
 			<thead>
 				<tr>
+					<th scope="col"> Index:</th>
 					<th scope="col"> Matrícula do cooperado:</th>
 					<th scope="col">Nome do cooperado:</th>
 					<th scope="col">Nome de guerra:</th>
@@ -74,15 +75,16 @@
 			<tbody>
 				<tr th:each="cooperado: ${cooperados}">
 			  	<td><a th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopindexcod).build())}">
-			 			<span th:text="${cooperado.coopmatricula}"></span></a></td>
+			 			<span th:text="${cooperado.coopindexcod}"></span></a></td>
+					<td><span th:text="${cooperado.coopmatricula}"></span></td>	
 					<td><span th:text="${cooperado.coopnome}"></span></td>					
 					<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
 					
-					<td><a ><button type="button"
+					<td><a th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopindexcod)).build()}"><button type="button"
 					 class="btn btn-danger">Excluir</button></a></td>
-					<td><a th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopindexcod)).build()}"
+					<td><a th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopindexcod)).build()}"
 					 class="btn btn-primary">Editar</button></a></td>
-					<td><a ><button type="button"
+					<td><a th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopindexcod)).build()}"><button type="button"
 					 class="btn btn-success">Adicionar telefone</button></a></td>
 					<!-- th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopindexcod)).build()}" -->
 					<!-- th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopindexcod)).build()}" -->

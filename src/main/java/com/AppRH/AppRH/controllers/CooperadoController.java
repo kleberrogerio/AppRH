@@ -67,23 +67,23 @@ public class CooperadoController {
 		
 	//DELETA COOPERADO
 	@RequestMapping("/deletarCooperado")
-	public String deletarCooperado(int coop_index_cod) {
-		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
+	public String deletarCooperado(int coopindexcod) {
+		Cooperado cooperado = cr.findByCoopindexcod(coopindexcod);
 		cr.delete(cooperado);
 		return "redirect:/cooperados";
 	}
 	
-	public String detalhesCooperadosPost(@PathVariable("coop_index_cod") int coop_index_cod, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
+	public String detalhesCooperadosPost(@PathVariable("coopindexcod") int coop_index_cod, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
-			return "redirect:/{coop_index_cod}";
+			return "redirect:/{coopindexcod}";
 		}
 		
 		
 		//TIPO DE TELEFONE DUPLICADO
 		if(tr.findByCoopteltipo(telefone.getCoopteltipo())!=null){
 			attributes.addFlashAttribute("mensagem erro","Tipo duplicado");
-			return "redirect:/{coop_index_cod}";
+			return "redirect:/{coopindexcod}";
 		}
 		
 		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
@@ -103,7 +103,7 @@ public class CooperadoController {
 		
 	}
 	
-	public String detalhesTelefonePost(@PathVariable("coop_index_cod") int coop_index_cod, @Valid Telefone telefone,
+	public String detalhesTelefonePost(@PathVariable("coopindexcod") int coop_index_cod, @Valid Telefone telefone,
 			BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
@@ -126,7 +126,7 @@ public class CooperadoController {
 	//FORMULÁRIO ALTERA COOPERADO
 	
 	@RequestMapping(value="/editar-cooperado",method = RequestMethod.GET)
-	public ModelAndView editarCooperado(long coop_index_cod) {
+	public ModelAndView editarCooperado(int coop_index_cod) {
 		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
 		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
 		mv.addObject("cooperado",cooperado);
@@ -137,9 +137,9 @@ public class CooperadoController {
 	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
 		cr.save(cooperado);
 		attributes.addFlashAttribute("sucess","Cooperado alterado com sucesso");
-		long codigoLong = cooperado.getCoopindexcod();
-		String coop_index_cod=""+codigoLong;
-		return "redirect:/"+coop_index_cod;
+		int codigoLong = cooperado.getCoopindexcod();
+		String coopindexcod=""+codigoLong;
+		return "redirect:/"+coopindexcod;
 	}
 	
 	
