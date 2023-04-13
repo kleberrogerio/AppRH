@@ -33,10 +33,10 @@ public class CooperadoController {
 	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.POST)
 	public String form(@Valid Cooperado cooperado, BindingResult result, RedirectAttributes attributes) {
 		
-		/*if(result.hasErrors()) {
+		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem","Verifique os campos....");
 			return "redirect:/cadastrarCooperado";
-		}*/
+		}
 		 cr.save(cooperado);
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
 		 return "redirect:/cadastrarCooperado";

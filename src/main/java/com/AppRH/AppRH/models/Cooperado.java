@@ -18,12 +18,11 @@ public class Cooperado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="coop_index_cod")
 	private int coopindexcod;
 	
 	@NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="coop_matricula",unique = true)
 	private int coopmatricula;
 	
@@ -88,7 +87,6 @@ public class Cooperado implements Serializable {
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
-
 	
 }
 

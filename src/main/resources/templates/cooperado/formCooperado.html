@@ -56,27 +56,26 @@
 		<th:block th:include="mensagemValidacao"></th:block>
 
 
-		<form method="post">
-
+		<form method="post">			
 
 			<div class="form-group">
-				<label for=""><b>Matrícula:</b> </label> <input type="text"
+				<label for=""><b>Matrícula:</b> </label> <input type="number"
 					class="form-control" value="" placeholder="Insira o número da matrícula"
-					name="coop_matricula" required> <small class="form-text text-muted"><i>*
+					name="coopmatricula" required> <small class="form-text text-muted"><i>*
 						Coloque a matrícula.</i></small>
 			</div>
 			
 			<div class="form-group">
 				<label for=""><b>Nome do cooperado:</b> </label> <input type="text"
 					class="form-control" value="" placeholder="Insira o nome do cooperado"
-					name="coop_nome" required> <small class="form-text text-muted"><i>*
+					name="coopnome" required> <small class="form-text text-muted"><i>*
 						Coloque o nome completo.</i></small>
 			</div>
 			
 			<div class="form-group">
 				<label for=""><b>Nome de guerra:</b> </label> <input type="text"
 					class="form-control" value="" placeholder="Insira o nome de guerra"
-					name="coop_nome_guerra" required> <small class="form-text text-muted"><i>*
+					name="coopnomeguerra" required> <small class="form-text text-muted"><i>*
 						Coloque o nome de guerra simplificado.</i></small>
 			</div>
 			
@@ -98,7 +97,7 @@
 
 
 	<!--JavaScript bootstrap-->
-	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<script type="application/json" src="bootstrap/js/bootstrap.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
