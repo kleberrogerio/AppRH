@@ -125,7 +125,7 @@ public class CooperadoController {
 	//METODOS QUE ATUALIZAM COOPERADO
 	//FORMULÁRIO ALTERA COOPERADO
 	
-	@RequestMapping(value="/update-Cooperado",method = RequestMethod.POST)
+	@RequestMapping(value="/update-Cooperado",method = RequestMethod.GET)
 	public ModelAndView editarCooperado(int coopindexcod) {
 		Cooperado cooperado = cr.findByCoopindexcod(coopindexcod);
 		ModelAndView mv = new ModelAndView("cooperado/update-Cooperado");
@@ -137,8 +137,8 @@ public class CooperadoController {
 	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
 		cr.save(cooperado);
 		attributes.addFlashAttribute("sucess","Cooperado alterado com sucesso");
-		int codigoLong = cooperado.getCoopindexcod();
-		String coopindexcod=""+codigoLong;
+		int codigoInt = cooperado.getCoopindexcod();
+		String coopindexcod=""+codigoInt;
 		return "redirect:/"+coopindexcod;
 	}
 	

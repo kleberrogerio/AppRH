@@ -75,19 +75,19 @@
 			
 			<br>
 
-			<form method="post" th:object="${telefone}">
+			<form method="post" th:object="${cooptelefones}">
 
 				<div class="form-group">
 					<div class="row">
 
 						<div class="col">
 							<label for=""><b>Fone do Cooperado:</b> </label> <input type="text" value=""
-								name="coopTelefone" class="form-control" placeholder="Telefone" required />
+								name="cooptelnumero" class="form-control" placeholder="Telefone" required />
 						</div>
 
 						<div class="col">
-							<label for=""><b>Tipo: </b> </label><input type="text" value="" name="tipo"
-								placeholder="Comercial ou Residencial" class="validate form-control"
+							<label for=""><b>Tipo: </b> </label><input type="text" value="" name="coopteltipo"
+								placeholder="Comercial, Residencial ou Celular" class="validate form-control"
 								required />
 						</div>
 
@@ -121,9 +121,9 @@
 			<tbody>
 
 				<tr th:each="telefone : ${telefones}">
-					<td><span th:text="${telefone.coopTelefone}"></span></td>
-					<td><span th:text="${telefone.coopTelefoneTipo}"></span></td>
-					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('TC#deletarTelefone').arg(0, telefone.coopTelNumero)).build()}"><button type="button"
+					<td><span th:text="${telefone.cooptelnumero}"></span></td>
+					<td><span th:text="${telefone.coopteltipo}"></span></td>
+					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelnumero)).build()}"><button type="button"
 								class="btn btn-danger">Excluir</button></a></td>
 				</tr>
 
