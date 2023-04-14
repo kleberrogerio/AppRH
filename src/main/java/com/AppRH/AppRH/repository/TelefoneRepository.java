@@ -13,9 +13,9 @@ public interface TelefoneRepository extends CrudRepository<Telefone, Long>{
 	
 	Iterable<Telefone>findByCooperado(Cooperado cooperado);
 	
-	Telefone findByCoopmatricula(Long coop_matricula);
+	Telefone findByCoopmatricula(int coop_matricula);
 	
-	Telefone findByCooptelindexcod(Long coop_tel_index_cod);
+	Telefone findByCooptelindexcod(int coop_tel_index_cod);
 	
 	Telefone findBycooptelnumero(String coop_tel_numero);
 	

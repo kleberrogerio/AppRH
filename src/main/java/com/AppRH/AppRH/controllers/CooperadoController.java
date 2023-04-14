@@ -96,8 +96,8 @@ public class CooperadoController {
 	
 	//DELETA TELEFONE
 	@RequestMapping("/deletarTelefone")
-	public String deletarTelefone(long coop_tel_index_cod) {
-		Telefone telefone = tr.findByCooptelindexcod(coop_tel_index_cod);
+	public String deletarTelefone(int cooptelindexcod) {
+		Telefone telefone = tr.findByCooptelindexcod(cooptelindexcod);
 		tr.delete(telefone);		
 		return "redirect:/telefones";
 		
@@ -125,10 +125,10 @@ public class CooperadoController {
 	//METODOS QUE ATUALIZAM COOPERADO
 	//FORMULÁRIO ALTERA COOPERADO
 	
-	@RequestMapping(value="/editar-cooperado",method = RequestMethod.GET)
-	public ModelAndView editarCooperado(int coop_index_cod) {
-		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
-		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
+	@RequestMapping(value="/update-Cooperado",method = RequestMethod.POST)
+	public ModelAndView editarCooperado(int coopindexcod) {
+		Cooperado cooperado = cr.findByCoopindexcod(coopindexcod);
+		ModelAndView mv = new ModelAndView("cooperado/update-Cooperado");
 		mv.addObject("cooperado",cooperado);
 		return mv;		
 	}
