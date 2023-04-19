@@ -14,5 +14,6 @@ public interface CooperadoRepository extends CrudRepository<Cooperado, Long>{
 		
 	Cooperado findByCoopindexcod(int coop_index_cod);
 	List<Cooperado> findByCoopnome(String coop_nome);
+	Cooperado findByCoopmatricula(int coop_matricula);
 
 }

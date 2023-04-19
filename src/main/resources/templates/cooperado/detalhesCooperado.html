@@ -75,7 +75,7 @@
 			
 			<br>
 
-			<form method="post" th:object="${cooptelefones}">
+			<form method="post" th:object="${telefone}">
 
 				<div class="form-group">
 					<div class="row">
@@ -123,7 +123,7 @@
 				<tr th:each="telefone : ${telefones}">
 					<td><span th:text="${telefone.cooptelnumero}"></span></td>
 					<td><span th:text="${telefone.coopteltipo}"></span></td>
-					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelnumero)).build()}"><button type="button"
+					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelindexcod)).build()}"><button type="button"
 								class="btn btn-danger">Excluir</button></a></td>
 				</tr>
 
