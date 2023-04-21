@@ -73,6 +73,8 @@ public class CooperadoController {
 		return "redirect:/cooperados";
 	}
 	
+	//ADICIONAR TELEFONE
+	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.POST)
 	public String detalhesCooperadosPost(@PathVariable("coopmatricula") int coop_matricula, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
@@ -81,8 +83,8 @@ public class CooperadoController {
 		
 		
 		//TIPO DE TELEFONE DUPLICADO
-		if(tr.findByCoopteltipo(telefone.getCoopteltipo())!=null){
-			attributes.addFlashAttribute("mensagem erro","Tipo duplicado");
+		if(tr.findBycooptelnumero(telefone.getCooptelnumero())!=null){
+			attributes.addFlashAttribute("mensagem_erro","Número duplicado");
 			return "redirect:/{coopmatricula}";
 		}
 		
@@ -90,7 +92,7 @@ public class CooperadoController {
 		telefone.setCooperado(cooperado);
 		tr.save(telefone);
 		attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
-		return "redirect:/{codigo}";
+		return "redirect:/{coopmatricula}";
 		
 	}
 	
@@ -98,8 +100,11 @@ public class CooperadoController {
 	@RequestMapping("/deletarTelefone")
 	public String deletarTelefone(int cooptelindexcod) {
 		Telefone telefone = tr.findByCooptelindexcod(cooptelindexcod);
-		tr.delete(telefone);		
-		return "redirect:/telefones";
+		Cooperado cooperado = telefone.getCooperado();
+		String coop_matricula = "" + cooperado.getCoopmatricula();
+		tr.delete(telefone);	
+		
+		return "redirect:/" +coop_matricula;
 		
 	}
 	
@@ -119,7 +124,7 @@ public class CooperadoController {
 		telefone.setCooperado(cooperado);
 		tr.save(telefone);
 		attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
-		return "redirect:/{codigo}";
+		return "redirect:/{coop_matricula}";
 	
 	}
 	//METODOS QUE ATUALIZAM COOPERADO
