@@ -80,9 +80,9 @@
 					
 					<td><a th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
 					 class="btn btn-danger">Excluir</button></a></td>
-					<td><a th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+					<td><a th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopindexcod)).build()}"
 					 class="btn btn-primary">Editar</button></a></td>
-					<td><a th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
+					<td><a th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
 					 class="btn btn-success">Adicionar telefone</button></a></td>
 					<!-- th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}" -->
 					<!-- th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}" -->
