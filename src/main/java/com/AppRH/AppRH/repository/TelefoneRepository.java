@@ -19,6 +19,8 @@ public interface TelefoneRepository extends CrudRepository<Telefone, Long>{
 	
 	Telefone findBycooptelnumero(String coop_tel_numero);
 	
-	List<Telefone>findByCoopteltipo(String coop_tel_tipo);
+	//Para Buscar
+	//@Query(value = "select t from Telefone t where t.coop_tel_numero like %?1%")
+	//List<Telefone>findByCoopteltipo(String coop_tel_tipo);
 
 }

@@ -53,7 +53,7 @@ public class CooperadoController {
 		
 	}
 	
-	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.GET)
+	@RequestMapping(value="/cooperado/{coopmatricula}",method=RequestMethod.GET)
 	public ModelAndView detalhesCooperado(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/detalhesCooperado");
@@ -74,25 +74,25 @@ public class CooperadoController {
 	}
 	
 	//ADICIONAR TELEFONE
-	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.POST)
+	@RequestMapping(value="/cooperado/{coopmatricula}",method=RequestMethod.POST)
 	public String detalhesCooperadosPost(@PathVariable("coopmatricula") int coop_matricula, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
-			return "redirect:/{coopmatricula}";
+			return "redirect:/cooperado/{coopmatricula}";
 		}
 		
 		
 		//TIPO DE TELEFONE DUPLICADO
 		if(tr.findBycooptelnumero(telefone.getCooptelnumero())!=null){
 			attributes.addFlashAttribute("mensagem_erro","Número duplicado");
-			return "redirect:/{coopmatricula}";
+			return "redirect:/cooperado/{coopmatricula}";
 		}
 		
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		telefone.setCooperado(cooperado);
 		tr.save(telefone);
 		attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
-		return "redirect:/{coopmatricula}";
+		return "redirect:/cooperado/{coopmatricula}";
 		
 	}
 	
