@@ -38,6 +38,10 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+						
+						<li class="nav-item"><a class="nav-link" href="/funcionarios">Funcionários</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cadastrarFuncionario">Cadastrar Funcionário</a>
+						</li>
 
 						<li class="nav-item"><a class="nav-link" href="/cooperados">
 								<< Listar Cooperados>>
@@ -57,6 +61,22 @@
 		<br> <br>
 
 		<div class="row">
+		
+				<div class="col">
+						<div class="card text-center">
+							<div class="card-header card-title">
+								<h3>Funcionários</h3>
+							</div>
+							<div class="card-body">
+		
+								<p class="card-text">Módulo responsável pelos funcionários da
+									agência de RH.</p>
+								<a href="/funcionarios" class="btn btn-primary">Listar
+									Funcionários</a> <a href="/cadastrarFuncionario" class="btn btn-success">Cadastrar
+									Funcionário</a>
+							</div>
+						</div>
+					</div>
 
 			<div class="col">
 				<div class="card text-center">
@@ -75,6 +95,120 @@
 		</div>
 
 		<br>
+		
+		<!-- 	nova busca -->
+		<div class="row">
+			<div class="col">
+				<br> <br>
+				<div class="card text-center card w-100">
+					<div class="card-header">
+						<h3>
+							<< Pesquisar no sistema>>
+						</h3>
+					</div>
+
+
+
+					<form class="form-inline" method="post">
+
+
+						<div class="row form-group justify-content-center w-100 p-2">
+
+
+							<div class="col col-14 col-md-2">
+
+								<label for="cars" class="my-3 p-2 w-100">
+									<h5>Tipo
+										de busca:</h5>
+								</label>
+							</div>
+
+							<div class="col col-14 col-md-2">
+
+
+								<select name="nome" id="nome" class="custom-select my-3 p-2 w-100" required>
+									<option value="">Escolher...</option>
+									<option value="todos">Todos</option>
+									<option value="nomefuncionario">Funcionário</option>
+									<option value="nomedependente">Dependente</option>
+									<option value="nometelefone">Telefone</option>
+									<option value="nomecooperado">Cooperado</option>
+								</select>
+
+
+							</div>
+
+							<div class="col col-14 col-md-4">
+
+								<input class="form-control form-control-lg my-3 p-2 w-100" type="search"
+									placeholder="Insira sua pesquisa..." aria-label="Pesquisar" name="buscar"
+									id="buscar" required>
+
+							</div>
+
+							<div class="col col-14 col-md-2">
+
+								<button class="btn btn-primary my-3 p-2 w-100" type="submit">Pesquisar</button>
+
+							</div>
+						</div>
+
+					</form>
+
+					<div class="row form-group justify-content-center w-100 p-2">
+						<h4><i><span th:text="${mensagem}"></i></h4></span>
+					</div>
+
+					<div class="row form-group justify-content-center w-100 p-2">
+						<table class="table table-hover table-responsive w-auto table-striped">
+
+							<tbody>
+								<tr th:each="funcionario : ${funcionarios}">
+									<td><a
+										th:href="${(#mvc.url('FC#detalhesFuncionario').arg(0, funcionario.id)).build()}"><span
+											th:text="${funcionario.nome}"></span></a> - em <i>funcionários.</i></td>
+
+
+								</tr>
+								<tr th:each="cooperado : ${cooperados}">
+									<td><a
+										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}"><span
+											th:text="${cooperado.coopnome}"></span></a> - em <i>cooperados.</i></td>
+								</tr>
+
+
+								<tr th:each="dependente : ${dependentes}">
+									<td><span></span> - <i>em dependentes.</i></td>
+								</tr>
+
+								<tr th:each="telefone : ${telefones}">
+									<td><span></span> - <i>em telefones.</i></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+	</div>
+
+
+
+
+
+
+	<div style="height: 100px;"></div>
+		
 
 
 
