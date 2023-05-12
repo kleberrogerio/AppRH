@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import com.AppRH.AppRH.models.Cooperado;
-import com.AppRH.AppRH.models.Telefone;
-import com.AppRH.AppRH.models.Funcionario;
-import com.AppRH.AppRH.models.Dependentes;
+//import com.AppRH.AppRH.models.Cooperado;
+//import com.AppRH.AppRH.models.Telefone;
+//import com.AppRH.AppRH.models.Funcionario;
+//import com.AppRH.AppRH.models.Dependentes;
 
 import com.AppRH.AppRH.repository.CooperadoRepository;
-import com.AppRH.AppRH.repository.TelefoneRepository;
+//import com.AppRH.AppRH.repository.TelefoneRepository;
 
 
 @Controller
@@ -23,8 +23,8 @@ public class BuscaController {
 	@Autowired
 	private CooperadoRepository cr;
 	
-	@Autowired
-	private TelefoneRepository tr;
+//	@Autowired
+	//private TelefoneRepository tr;
 	
 	//Get
 	@RequestMapping(value = "/", method = RequestMethod.GET)

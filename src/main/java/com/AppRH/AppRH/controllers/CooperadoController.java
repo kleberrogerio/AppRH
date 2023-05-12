@@ -53,7 +53,7 @@ public class CooperadoController {
 		
 	}
 	
-	@RequestMapping(value="/cooperado/{coopmatricula}",method=RequestMethod.GET)
+	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.GET)
 	public ModelAndView detalhesCooperado(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/detalhesCooperado");

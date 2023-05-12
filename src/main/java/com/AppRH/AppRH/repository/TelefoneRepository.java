@@ -1,9 +1,9 @@
 package com.AppRH.AppRH.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.jpa.repository.Query;
+//import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.util.List;
+//import java.util.List;
 import com.AppRH.AppRH.models.Cooperado;
 
 import com.AppRH.AppRH.models.Telefone;
