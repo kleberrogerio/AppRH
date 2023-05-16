@@ -2,6 +2,7 @@
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -12,12 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name="usuario")
 public class Usuario implements UserDetails {
-//public class Usuario {
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String login;
 	
+	@Column(name="nomeCompleto")
 	private String nomecompleto;
 	
 	private String senha;
@@ -25,6 +27,7 @@ public class Usuario implements UserDetails {
 	public String getLogin() {
 		return login;
 	}
+
 
 	public void setLogin(String login) {
 		this.login = login;
@@ -91,4 +94,5 @@ public class Usuario implements UserDetails {
 	
 
 }
+
 */

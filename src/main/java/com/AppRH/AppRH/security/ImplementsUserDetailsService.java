@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 
 import com.AppRH.AppRH.models.Usuario;
 import com.AppRH.AppRH.repository.UsuarioRepository;
 
+@Repository
 public class ImplementsUserDetailsService implements UserDetailsService{
 
 	@Autowired
@@ -24,5 +26,4 @@ public class ImplementsUserDetailsService implements UserDetailsService{
 	}
 
 }
-
 */

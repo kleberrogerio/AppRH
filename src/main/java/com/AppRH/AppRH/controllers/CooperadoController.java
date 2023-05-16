@@ -12,8 +12,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Telefone;
+import com.AppRH.AppRH.models.Dividas;
 import com.AppRH.AppRH.repository.CooperadoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
+import com.AppRH.AppRH.repository.DividasRepository;
 
 @Controller
 public class CooperadoController {
@@ -23,6 +25,9 @@ public class CooperadoController {
 	
 	@Autowired
 	private TelefoneRepository tr;
+	
+	@Autowired
+	private DividasRepository dr;
 	
 	//INSERE COOPERADO
 	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.GET)
@@ -61,6 +66,9 @@ public class CooperadoController {
 		
 		Iterable<Telefone> telefones = tr.findByCooperado(cooperado);
 		mv.addObject("telefones",telefones);
+		
+		Iterable<Dividas> dividas = dr.findByCooperado(cooperado);
+		mv.addObject("dividas",dividas);
 		
 		return mv;		
 	}

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -22,7 +24,7 @@ public class Dividas implements Serializable {
 	private int coopindexcod;
 	
 	@NotNull
-	@Column(name="coop_matricula")
+	@Column(name="coop_matricula",insertable = false, updatable = false)
 	private int coopmatricula;
 	
 	@Column(name="coop_descricao")
@@ -39,6 +41,18 @@ public class Dividas implements Serializable {
 	
 	@Column(name="coop_flagcotaparte")
 	private int coopflagcotaparte;
+	
+	@ManyToOne
+	@JoinColumn(name = "coop_matricula")
+	private Cooperado cooperado;
+
+	public Cooperado getCooperado() {
+		return cooperado;
+	}
+
+	public void setCooperado(Cooperado cooperado) {
+		this.cooperado = cooperado;
+	}
 
 	public int getCoopindexcod() {
 		return coopindexcod;
