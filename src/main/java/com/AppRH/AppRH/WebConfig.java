@@ -1,4 +1,4 @@
-/*package com.AppRH.AppRH;
+package com.AppRH.AppRH;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +25,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 		
 		http
 		.authorizeRequests().antMatchers("/").permitAll()
+		.antMatchers("/index**").permitAll()
 		.antMatchers("/cooperados**").permitAll()
 		.antMatchers("/home**").permitAll().anyRequest()
 		.authenticated().and().formLogin().permitAll()
@@ -34,4 +35,3 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
 	
 }
-*/
