@@ -26,6 +26,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 		http
 		.authorizeRequests().antMatchers("/").permitAll()
 		.antMatchers("/index**").permitAll()
+		.antMatchers("/bootstrap/css/**").permitAll()
 		.antMatchers("/cooperados**").permitAll()
 		.antMatchers("/home**").permitAll().anyRequest()
 		.authenticated().and().formLogin().permitAll()
