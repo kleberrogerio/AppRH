@@ -40,7 +40,7 @@ public class Dividas implements Serializable {
 	private Date coopdatapagamento;
 	
 	@Column(name="coop_flagcotaparte")
-	private int coopflagcotaparte;
+	private Integer coopflagcotaparte;
 	
 	@ManyToOne
 	@JoinColumn(name = "coop_matricula")

@@ -24,12 +24,14 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception{
 		
 		http
-		.authorizeRequests().antMatchers("/").permitAll()
-		.antMatchers("/index**").permitAll()
+		.authorizeRequests()
+		//.antMatchers("/").permitAll()
+		//.antMatchers("/index**").permitAll()
 		.antMatchers("/bootstrap/css/**").permitAll()
+		.antMatchers("/bootstrap/**").permitAll()
 		.antMatchers("/cooperados**").permitAll()
-		.antMatchers("/home**").permitAll().anyRequest()
-		.authenticated().and().formLogin().permitAll()
+		//.antMatchers("/home**").permitAll()
+		.anyRequest().authenticated().and().formLogin().permitAll()
 		.and().logout().permitAll()
 		.and().csrf().disable();
 	}
