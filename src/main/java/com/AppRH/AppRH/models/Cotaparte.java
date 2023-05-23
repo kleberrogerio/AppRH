@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="coop_dividas")
-public class Dividas implements Serializable {
+@Table(name="coop_cota_parte")
+public class Cotaparte implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
