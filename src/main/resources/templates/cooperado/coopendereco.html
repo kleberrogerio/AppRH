@@ -66,13 +66,6 @@
 			<br>
 
 			<p>
-					<a th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Dívida</button></a>
-					 <a th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Cota Parte</button></a>
-					 <a th:href="${(#mvc.url('CC#coopendereco').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Endereço</button></a>
-					 <br><br>
 				<b>Matrícula:</b> <span th:text="${cooperado.coopmatricula}"></span>
 			</p>
 			<p>
@@ -85,69 +78,32 @@
 			
 			<br> <br>
 			
-					<h2>Adicionar telefone:</h2>
-
-			<th:block th:include="mensagemValidacao"></th:block>
-			
-			<br>
-
-			<form method="post" th:object="${telefone}">
-
-				<div class="form-group">
-					<div class="row">
-
-						<div class="col">
-							<label for=""><b>Fone do Cooperado:</b> </label> <input type="text" value=""
-								name="cooptelnumero" class="form-control" placeholder="Telefone" required />
-						</div>
-
-						<div class="col">
-							<label for=""><b>Tipo: </b> </label><input type="text" value="" name="coopteltipo"
-								placeholder="Comercial, Residencial ou Celular" class="validate form-control"
-								required />
-						</div>
-
-			
-					</div>
-
-
-
-				</div>
-
-				<button type="submit" class="btn btn-success">Adicionar
-					Telefone</button>
-			</form>
-
-
-		</div>
-
-		<br> <br>
-
-		<h2>Telefones:</h2>
-
-		<br>
-
+		<h3>Endereço do cooperado:</h3>
 		<table class="table table-hover table-responsive w-auto table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Telefone:</th>
-					<th scope="col">Tipo:</th>
+					<th scope="col">Endereço
+					<th scope="col">Bairro
+					<th scope="col">Cidade<br>
+					<th scope="col">Estado
+					<th scope="col">CEP
+					<th scope="col">País</th>
 				</tr>
 			</thead>
 			<tbody>
 
-				<tr th:each="telefone : ${telefones}">
-					<td><span th:text="${telefone.cooptelnumero}"></span></td>
-					<br>
-					<td><span th:text="${telefone.coopteltipo}"></span></td>
-					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelindexcod)).build()}"><button type="button"
-								class="btn btn-danger">Excluir</button></a></td>
+				<tr th:each="coopendereco : ${coopendereco}">
+					<td><span th:text="${(coopendereco.coopendereco)}"></span></td>
+					<td><span th:text="${(coopendereco.coopbairro)}"></span></td>
+					<td><span th:text="${coopendereco.coopcidade}"></span></td>
+					<td><span th:text="${coopendereco.coopestado}"></span></td>
+					<td><span th:text="${coopendereco.coopcep}"></span></td>
+					<td><span th:text="${coopendereco.cooppais}"></span></td>
 				</tr>
-
-
-			</tbody>
+			
+				</tbody>
 		</table>
-
+		
 
 	</div>
 

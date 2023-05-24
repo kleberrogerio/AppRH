@@ -41,7 +41,20 @@ public class Cooperado implements Serializable {
 	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
 	private List<Dividas> dividas;
 	
+	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
+	private List<Coopendereco> coopendereco;
 	
+	
+
+
+	public List<Coopendereco> getCoopendereco() {
+		return coopendereco;
+	}
+
+
+	public void setCoopendereco(List<Coopendereco> coopendereco) {
+		this.coopendereco = coopendereco;
+	}
 
 
 	public List<Dividas> getDividas() {

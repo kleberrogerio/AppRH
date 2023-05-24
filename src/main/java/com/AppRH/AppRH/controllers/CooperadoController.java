@@ -14,10 +14,12 @@ import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Cotaparte;
 import com.AppRH.AppRH.models.Telefone;
 import com.AppRH.AppRH.models.Dividas;
+import com.AppRH.AppRH.models.Coopendereco;
 import com.AppRH.AppRH.repository.CooperadoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
 import com.AppRH.AppRH.repository.DividasRepository;
 import com.AppRH.AppRH.repository.CotaRepository;
+import com.AppRH.AppRH.repository.EnderecoRepository;
 
 @Controller
 public class CooperadoController {
@@ -33,6 +35,9 @@ public class CooperadoController {
 	
 	@Autowired
 	private CotaRepository cpr;
+	
+	@Autowired
+	private EnderecoRepository er;
 	
 	//INSERE COOPERADO
 	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.GET)
@@ -92,7 +97,7 @@ public class CooperadoController {
 		
 		return mv;		
 	}
-	
+	//Mostrar Cota Parte
 	@RequestMapping(value="/cota{coopmatricula}",method=RequestMethod.GET)
 	public ModelAndView cota(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -104,6 +109,19 @@ public class CooperadoController {
 		
 		return mv;		
 	}
+	
+	//Mostrar Endereço
+		@RequestMapping(value="/coopendereco{coopmatricula}",method=RequestMethod.GET)
+		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
+			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+			ModelAndView mv = new ModelAndView("cooperado/coopendereco");
+			mv.addObject("cooperado",cooperado);		
+			
+			Iterable<Coopendereco> coopendereco = er.findByCooperado(cooperado);
+			mv.addObject("coopendereco",coopendereco);
+			
+			return mv;		
+		}
 		
 	//DELETA COOPERADO
 	@RequestMapping("/deletarCooperado")
