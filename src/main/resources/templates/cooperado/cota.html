@@ -66,11 +66,7 @@
 			<br>
 
 			<p>
-					<a th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Dívida</button></a></td>
-					 <a th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopindexcod)).build()}"
-					 class="btn btn-primary">Cota Parte</button></a>
-					 <br><br>
+			
 				<b>Matrícula:</b> <span th:text="${cooperado.coopmatricula}"></span>
 			</p>
 			<p>
@@ -83,70 +79,40 @@
 			
 			<br> <br>
 			
-					<h2>Adicionar telefone:</h2>
-
-			<th:block th:include="mensagemValidacao"></th:block>
-			
-			<br>
-
-			<form method="post" th:object="${telefone}">
-
-				<div class="form-group">
-					<div class="row">
-
-						<div class="col">
-							<label for=""><b>Fone do Cooperado:</b> </label> <input type="text" value=""
-								name="cooptelnumero" class="form-control" placeholder="Telefone" required />
-						</div>
-
-						<div class="col">
-							<label for=""><b>Tipo: </b> </label><input type="text" value="" name="coopteltipo"
-								placeholder="Comercial, Residencial ou Celular" class="validate form-control"
-								required />
-						</div>
-
-			
-					</div>
-
-
-
-				</div>
-
-				<button type="submit" class="btn btn-success">Adicionar
-					Telefone</button>
-			</form>
-
-
-		</div>
-
-		<br> <br>
-
-		<h2>Telefones:</h2>
-
-		<br>
-
+				
+		<h3>Cota Parte:</h3>
 		<table class="table table-hover table-responsive w-auto table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Telefone:</th>
-					<th scope="col">Tipo:</th>
+					<th scope="col">Descrição
+					<th scope="col">Valor
+					<th scope="col">Forma de Pagto<br>
+					<th scope="col">Data de Vencimento
+					<th scope="col">Data de Pagto</th>
 				</tr>
 			</thead>
 			<tbody>
 
-				<tr th:each="telefone : ${telefones}">
-					<td><span th:text="${telefone.cooptelnumero}"></span></td>
-					<br>
-					<td><span th:text="${telefone.coopteltipo}"></span></td>
-					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelindexcod)).build()}"><button type="button"
-								class="btn btn-danger">Excluir</button></a></td>
+				<tr th:each="cotaparte : ${cotaparte}">
+					<td><span th:text="${cotaparte.coopdescricao}"></span></td>
+					<td><span th:text="${{(cotaparte.coopvalor)}}"></span></td>
+					<td><span th:text="${cotaparte.coopformapagto}"></span></td>
+					<td><span th:text="${cotaparte.coopdatavencimento}"></span></td>
+					<td><span th:text="${cotaparte.coopdatapagamento}"></span></td>
+					
 				</tr>
+					<tr>
+						<td colspan="2">Total</td>
+						<td
+							th:text="${#numbers.formatCurrency(#aggregates.sum(cotaparte.![coopvalor]))}">R$
+							180,00</td>
+					</tr>
 
 
-			</tbody>
+				</tbody>
 		</table>
-
-
+		
+		
 	</div>
 
 

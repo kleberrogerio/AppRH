@@ -80,6 +80,30 @@ public class CooperadoController {
 		
 		return mv;		
 	}
+	
+	@RequestMapping(value="/divida{coopmatricula}",method=RequestMethod.GET)
+	public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula) {
+		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+		ModelAndView mv = new ModelAndView("cooperado/divida");
+		mv.addObject("cooperado",cooperado);		
+		
+		Iterable<Dividas> dividas = dr.findByCooperado(cooperado);
+		mv.addObject("dividas",dividas);
+		
+		return mv;		
+	}
+	
+	@RequestMapping(value="/cota{coopmatricula}",method=RequestMethod.GET)
+	public ModelAndView cota(@PathVariable("coopmatricula") int coop_matricula) {
+		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+		ModelAndView mv = new ModelAndView("cooperado/cota");
+		mv.addObject("cooperado",cooperado);		
+		
+		Iterable<Cotaparte> cotaparte = cpr.findByCooperado(cooperado);
+		mv.addObject("cotaparte",cotaparte);
+		
+		return mv;		
+	}
 		
 	//DELETA COOPERADO
 	@RequestMapping("/deletarCooperado")
