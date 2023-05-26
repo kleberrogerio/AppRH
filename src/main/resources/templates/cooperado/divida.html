@@ -1,7 +1,9 @@
 
 
 <!DOCTYPE html>
-<html lang=”pt-br” xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang=”pt-br” xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:util="java.util">
+
+
 
 <head>
 
@@ -91,25 +93,24 @@
 			</thead>
 			<tbody>
 
-				<tr th:each="dividas : ${dividas}">
+				<tr th:each="dividas : ${dividas}" th:if="${dividas.coopdatapagamento==null}">
 					<td><span th:text="${dividas.coopdescricao}"></span></td>
 					<td><span th:text="${{(dividas.coopvalor)}}"></span></td>
 					<td><span th:text="${dividas.coopformapagto}"></span></td>
 					<td><span th:text="${dividas.coopdatavencimento}"></span></td>
-					<td><span th:text="${dividas.coopdatapagamento}"></span></td>
-					
+					<td><span th:text="${dividas.coopdatapagamento}"></span></td>	
+					<td><span th:with="soma = ${soma + (dividas.coopvalor)}"></span></td>
 				</tr>
+				
 					<tr>
 						<td colspan="2">Total</td>
 						<td
-							th:text="${#numbers.formatCurrency(#aggregates.sum(dividas.![coopvalor]))}">R$
-							180,00</td>
-					</tr>
-
-
+							th:text="${#numbers.formatCurrency(soma)}"></td>
+							<!--  th:text="${#numbers.formatCurrency(#aggregates.sum(dividas.![coopvalor]))}"></td>-->							
+					</tr>					
 				</tbody>
 		</table>
-		
+		</div>
 
 	</div>
 

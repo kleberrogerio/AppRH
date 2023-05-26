@@ -10,4 +10,6 @@ import com.AppRH.AppRH.models.Dividas;
 public interface DividasRepository extends CrudRepository<Dividas, Long> {
 	Iterable<Dividas>findByCooperado(Cooperado cooperado);
 
+	//@Query(value = "select u from Dividas u where u.coopdatapagamento is null%")
+	//List<Dividas>findByCoopdividasCooperado(Date coopdatapagamento);
 }

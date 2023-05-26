@@ -1,6 +1,7 @@
 package com.AppRH.AppRH.controllers;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.AppRH.AppRH.models.Coopendereco;
 import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Cotaparte;
-import com.AppRH.AppRH.models.Telefone;
 import com.AppRH.AppRH.models.Dividas;
-import com.AppRH.AppRH.models.Coopendereco;
+import com.AppRH.AppRH.models.Telefone;
 import com.AppRH.AppRH.repository.CooperadoRepository;
-import com.AppRH.AppRH.repository.TelefoneRepository;
-import com.AppRH.AppRH.repository.DividasRepository;
 import com.AppRH.AppRH.repository.CotaRepository;
+import com.AppRH.AppRH.repository.DividasRepository;
 import com.AppRH.AppRH.repository.EnderecoRepository;
+import com.AppRH.AppRH.repository.TelefoneRepository;
 
 @Controller
 public class CooperadoController {
@@ -85,15 +86,29 @@ public class CooperadoController {
 		
 		return mv;		
 	}
-	
+	//Mostrar Dívidas
 	@RequestMapping(value="/divida{coopmatricula}",method=RequestMethod.GET)
 	public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula) {
+		//public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula,@RequestParam("buscar") String buscar, @RequestParam("coopdatapagamento") Date coopdatapagamento) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/divida");
 		mv.addObject("cooperado",cooperado);		
 		
 		Iterable<Dividas> dividas = dr.findByCooperado(cooperado);
+		
+		double soma=0;
+		
+		for (Dividas divida : dividas) {
+			if(divida.getCoopdatapagamento()==null) {
+				soma = soma + divida.getCoopvalor();
+			}
+					    
+		}
+		
 		mv.addObject("dividas",dividas);
+        mv.addObject("soma",soma);
+		
+		//mv.addObject("dividas",dr.findByCoopdividasCooperado(buscar));
 		
 		return mv;		
 	}
