@@ -1,7 +1,9 @@
 
 
 <!DOCTYPE html>
-<html lang=”pt-br” xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang=”pt-br” xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:util="java.util">
+
+
 
 <head>
 
@@ -66,15 +68,6 @@
 			<br>
 
 			<p>
-					<a th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Dívida</button></a>
-					 <a th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Cota Parte</button></a>
-					 <a th:href="${(#mvc.url('CC#coopendereco').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Endereço</button></a>
-					 <a th:href="${(#mvc.url('CC#coopcadastro').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Dados Cadastrais</button></a>
-					 <br><br>
 				<b>Matrícula:</b> <span th:text="${cooperado.coopmatricula}"></span>
 			</p>
 			<p>
@@ -87,69 +80,52 @@
 			
 			<br> <br>
 			
-					<h2>Adicionar telefone:</h2>
-
-			<th:block th:include="mensagemValidacao"></th:block>
-			
-			<br>
-
-			<form method="post" th:object="${telefone}">
-
-				<div class="form-group">
-					<div class="row">
-
-						<div class="col">
-							<label for=""><b>Fone do Cooperado:</b> </label> <input type="text" value=""
-								name="cooptelnumero" class="form-control" placeholder="Telefone" required />
-						</div>
-
-						<div class="col">
-							<label for=""><b>Tipo: </b> </label><input type="text" value="" name="coopteltipo"
-								placeholder="Comercial, Residencial ou Celular" class="validate form-control"
-								required />
-						</div>
-
-			
-					</div>
-
-
-
-				</div>
-
-				<button type="submit" class="btn btn-success">Adicionar
-					Telefone</button>
-			</form>
-
-
-		</div>
-
-		<br> <br>
-
-		<h2>Telefones:</h2>
-
-		<br>
-
+		<h3>Dados cadastrais:</h3>
 		<table class="table table-hover table-responsive w-auto table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Telefone:</th>
-					<th scope="col">Tipo:</th>
+					<th scope="col">Data Cadastro
+					<th scope="col">Data Admissão
+					<th scope="col">Data Desligamento<br>
+					<th scope="col">Motivo do desligamento
+					<th scope="col">Ativo</th>
+					<th scope="col">Data Admissibilidade
+					<th scope="col">Data Teste psicológico
+					<th scope="col">Data Teste  Técnico
+					<th scope="col">Informações
+					<th scope="col">Restrições
+					<th scope="col">Anotações
+					<th scope="col">Data Teste psicológico
+					<th scope="col">Data Teste  Técnico
+					<th scope="col">Seleção
+					<th scope="col">Indicação
+					<th scope="col">Ocorrências
+					
 				</tr>
 			</thead>
 			<tbody>
 
-				<tr th:each="telefone : ${telefones}">
-					<td><span th:text="${telefone.cooptelnumero}"></span></td>
-					<br>
-					<td><span th:text="${telefone.coopteltipo}"></span></td>
-					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelindexcod)).build()}"><button type="button"
-								class="btn btn-danger">Excluir</button></a></td>
+				<tr th:each="coopcadastro : ${coopcadastro}" >
+					<td><span th:text="${coopcadastro.coopdatacadastro}"></span></td>
+					<td><span th:text="${coopcadastro.coopdataadmissao}"></span></td>
+					<td><span th:text="${coopcadastro.coopdatadesligamento}"></span></td>
+					<td><span th:text="${coopcadastro.coopmotivodesl}"></span></td>
+					<td><span th:text="${coopcadastro.coopcooperado}"></span></td>	
+					<td><span th:text="${coopcadastro.coopdataadmissibilidade}"></span></td>
+					<td><span th:text="${coopcadastro.cooptestepsicologico}"></span></td>
+					<td><span th:text="${coopcadastro.cooptestetecnico}"></span></td>
+					<td><span th:text="${coopcadastro.coopinformacoes}"></span></td>
+					<td><span th:text="${coopcadastro.cooprestricao}"></span></td>
+					<td><span th:text="${coopcadastro.coopanotacoes}"></span></td>
+					<td><span th:text="${coopcadastro.coopdataatestepsico}"></span></td>
+					<td><span th:text="${coopcadastro.coopsel}"></span></td>
+					<td><span th:text="${coopcadastro.coopindicacao}"></span></td>
+					<td><span th:text="${coopcadastro.coopocorrencias}"></span></td>					
+					
 				</tr>
-
-
-			</tbody>
+				</tbody>
 		</table>
-
+		</div>
 
 	</div>
 
