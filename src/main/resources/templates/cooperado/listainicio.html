@@ -65,39 +65,13 @@
 		<h1>Lista de cooperados cadastrados </h1>
 		
 		<a href="/cooperadosA" class="btn btn-primary">Listar Somente os Cooperados Ativos</a>
-		<a href="/cooperados" class="btn btn-primary">Listar Todos os Cooperados</a>
-		<a href="/cooperadosN" class="btn btn-primary">Listar Somente os Cooperados Inativos</a>
+		<a href="/cooperados" class="btn btn-primary">Listar Todos os Cooperados</a>	
+		<a href="/cooperadosN" class="btn btn-primary">Listar Somente os Cooperados Inativos</a>		
+
 		<br>
 		
 
-		<table class="table table-hover table-responsive w-auto table-striped">
-			<thead>
-				<tr>
-					<th scope="col"> Matrícula:</th>
-					<th scope="col">Nome do cooperado:</th>
-					<th scope="col">Nome de guerra:</th>
-					<th scope="col"></th>
-					<th scope="col">Ações:</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="cooperado: ${cooperados}">
-			  	<td><a th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula).build())}">
-			 			<span th:text="${cooperado.coopmatricula}"></span></a></td>
-					<td><span th:text="${cooperado.coopnome}"></span></td>					
-					<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
-					
-					<td><a th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Excluir</button></a></td>
-					<td><a th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopindexcod)).build()}"
-					 class="btn btn-primary">Editar</button></a></td>
-					<td><a th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-success">Adicionar telefone</button></a></td>
-				</tr>
-			</tbody>			
-		</table>
-
+	
 
 		<div style="height: 100px;"></div>
 

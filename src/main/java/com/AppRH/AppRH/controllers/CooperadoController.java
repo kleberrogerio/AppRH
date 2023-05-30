@@ -1,5 +1,7 @@
 package com.AppRH.AppRH.controllers;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,11 +19,14 @@ import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Cotaparte;
 import com.AppRH.AppRH.models.Dividas;
 import com.AppRH.AppRH.models.Telefone;
+import com.AppRH.AppRH.models.Coopcadastro;
 import com.AppRH.AppRH.repository.CooperadoRepository;
 import com.AppRH.AppRH.repository.CotaRepository;
 import com.AppRH.AppRH.repository.DividasRepository;
 import com.AppRH.AppRH.repository.EnderecoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
+import com.AppRH.AppRH.repository.CoopcadastroRepository;
+
 
 @Controller
 public class CooperadoController {
@@ -40,8 +46,11 @@ public class CooperadoController {
 	@Autowired
 	private EnderecoRepository er;
 	
+	@Autowired
+	private CoopcadastroRepository cc;
+	
 	//INSERE COOPERADO
-	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.GET)
+	@RequestMapping(value = "/cadastrarCooperado")
 	public String form() {
 		return "cooperado/formCooperado";
 	}
@@ -62,14 +71,81 @@ public class CooperadoController {
 	
 	@RequestMapping("/cooperados")
 	public ModelAndView listaCooperados() {
-		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
-		Iterable<Cooperado>cooperados=cr.findAll();
+		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");//tirar o s para voltar ao normal
+		Iterable<Cooperado>cooperados= new ArrayList<Cooperado>();	
+		//Iterable<Cooperado>cooperados=cr.encontrarAtivos();
 		mv.addObject("cooperados",cooperados);
 		return mv;
+	}
+	@RequestMapping(value = "/cooperados", method = RequestMethod.POST)
+	public ModelAndView buscarIndex(@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
 		
+		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
+		String mensagem = "Resultados da busca por " + buscar;
+		
+		if(coopnome.equals("all")){
+			if (buscar.equals("")) {				
+				mv.addObject("cooperados",cr.encontrarTodos());
+			} else {
+				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
+			}
+			
+		}else if(coopnome.equals("inativos")) {
+			if (buscar.equals("")) {
+				
+				mv.addObject("cooperados",cr.encontrarInativos());
+			} else {
+				mv.addObject("cooperados",cr.findByCoopnomesCooperadoInativo(buscar));
+			}
+		}else if(coopnome.equals("ativos")) {
+			if (buscar.equals("")) {
+				
+				mv.addObject("cooperados",cr.encontrarAtivos());
+			} else {
+				mv.addObject("cooperados",cr.findByCoopnomesCooperadoAtivo(buscar));
+			}
+		}else {
+			mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
+		}
+		
+		mv.addObject("mensagem", mensagem);
+		
+		return mv;	
 	}
 	
-	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.GET)
+	//LISTAR COOPERADOS ATIVOS
+	
+	@RequestMapping("/cooperadosA")
+	public ModelAndView listaCooperadosAtivos() {
+		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
+		Iterable<Cooperado>cooperados=cr.encontrarAtivos();
+		
+		mv.addObject("cooperados",cooperados);
+		return mv;			
+	}
+	
+	//LISTAR COOPERADOS INATIVOS
+	
+		@RequestMapping("/cooperadosN")
+		public ModelAndView listaCooperadosInativos() {
+			ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
+			Iterable<Cooperado>cooperados=cr.encontrarInativos();
+			
+			mv.addObject("cooperados",cooperados);
+			return mv;			
+		}
+	
+	//LISTAR ZERADA
+	
+		@RequestMapping("/cooperadosI")
+		public ModelAndView listaCooperadosInicio() {
+			ModelAndView mv = new ModelAndView("cooperado/listainicio");
+			//ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
+			return mv;			
+		}
+	
+	
+	@RequestMapping(value="/{coopmatricula}")
 	public ModelAndView detalhesCooperado(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/detalhesCooperado");
@@ -84,12 +160,14 @@ public class CooperadoController {
 		Iterable<Cotaparte> cotaparte = cpr.findByCooperado(cooperado);
 		mv.addObject("cotaparte",cotaparte);
 		
+		Iterable<Coopcadastro> coopcadastro = cc.findByCooperado(cooperado);
+		mv.addObject("coopcadastro",coopcadastro);
+		
 		return mv;		
 	}
 	//Mostrar Dívidas
-	@RequestMapping(value="/divida{coopmatricula}",method=RequestMethod.GET)
+	@RequestMapping(value="/divida{coopmatricula}")
 	public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula) {
-		//public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula,@RequestParam("buscar") String buscar, @RequestParam("coopdatapagamento") Date coopdatapagamento) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/divida");
 		mv.addObject("cooperado",cooperado);		
@@ -106,14 +184,12 @@ public class CooperadoController {
 		}
 		
 		mv.addObject("dividas",dividas);
-        mv.addObject("soma",soma);
-		
-		//mv.addObject("dividas",dr.findByCoopdividasCooperado(buscar));
+        mv.addObject("soma",soma);		
 		
 		return mv;		
 	}
 	//Mostrar Cota Parte
-	@RequestMapping(value="/cota{coopmatricula}",method=RequestMethod.GET)
+	@RequestMapping(value="/cota{coopmatricula}")
 	public ModelAndView cota(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/cota");
@@ -126,7 +202,7 @@ public class CooperadoController {
 	}
 	
 	//Mostrar Endereço
-		@RequestMapping(value="/coopendereco{coopmatricula}",method=RequestMethod.GET)
+		@RequestMapping(value="/coopendereco{coopmatricula}")
 		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 			ModelAndView mv = new ModelAndView("cooperado/coopendereco");
@@ -134,6 +210,19 @@ public class CooperadoController {
 			
 			Iterable<Coopendereco> coopendereco = er.findByCooperado(cooperado);
 			mv.addObject("coopendereco",coopendereco);
+			
+			return mv;		
+		}
+		
+	//Mostrar Dados de Cadastro
+			@RequestMapping(value="/coopcadastro{coopmatricula}")
+		public ModelAndView coopcadastro(@PathVariable("coopmatricula") int coop_matricula) {
+			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+			ModelAndView mv = new ModelAndView("cooperado/dadoscadastrais");
+			mv.addObject("cooperado",cooperado);		
+			
+			Iterable<Coopcadastro> coopcadastro = cc.findByCooperado(cooperado);
+			mv.addObject("coopcadastro",coopcadastro);
 			
 			return mv;		
 		}
@@ -203,7 +292,7 @@ public class CooperadoController {
 	//METODOS QUE ATUALIZAM COOPERADO
 	//FORMULÁRIO ALTERA COOPERADO
 	
-	@RequestMapping(value="/editar-cooperado",method = RequestMethod.GET)
+	@RequestMapping(value="/editar-cooperado")
 	public ModelAndView editarCooperado(int coop_index_cod) {
 		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
 		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
