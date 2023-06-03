@@ -17,11 +17,12 @@ import javax.validation.constraints.NotNull;
 public class Cooperado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="coop_index_cod")
 	private int coopindexcod;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull
 	@Column(name="coop_matricula",unique = true)
 	private int coopmatricula;

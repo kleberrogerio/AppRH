@@ -98,15 +98,25 @@
 				<div class="form-group">
 					<div class="row">
 
+					<!-- 	<div class="col">
+							<label for=""><b>Matrícula do Cooperado:</b> </label> <input type="text" value=""
+								name="coopmatricula" class="form-control" placeholder="Matricula" required />
+						</div>
+						 -->
+						
 						<div class="col">
 							<label for=""><b>Fone do Cooperado:</b> </label> <input type="text" value=""
 								name="cooptelnumero" class="form-control" placeholder="Telefone" required />
 						</div>
 
 						<div class="col">
-							<label for=""><b>Tipo: </b> </label><input type="text" value="" name="coopteltipo"
-								placeholder="Comercial, Residencial ou Celular" class="validate form-control"
-								required />
+								<select name="coopteltipo" id="coopteltipo" class="custom-select my-3 p-2 w-100" required>
+									<option value="">Escolher...</option>
+									<option value="RESIDENCIAL">RESIDENCIAL</option>
+									<option value="CELULAR">CELULAR</option>
+									<option value="COMERCIAL">COMERCIAL</option>
+									
+										</select>
 						</div>
 
 			

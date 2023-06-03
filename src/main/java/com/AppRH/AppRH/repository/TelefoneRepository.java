@@ -13,7 +13,7 @@ public interface TelefoneRepository extends CrudRepository<Telefone, Long>{
 	
 	Iterable<Telefone>findByCooperado(Cooperado cooperado);
 	
-	Telefone findByCoopmatricula(int coop_matricula);
+	//Telefone findByCoopmatricula(int coop_matricula);
 	
 	Telefone findByCooptelindexcod(int coop_tel_index_cod);
 	

@@ -12,7 +12,7 @@ import com.AppRH.AppRH.models.Cooperado;
 @Repository
 public interface CooperadoRepository extends CrudRepository<Cooperado, Long>{
 		
-	Cooperado findByCoopindexcod(int coop_index_cod);
+	//Cooperado findByCoopindexcod(int coop_index_cod);
 	Cooperado findByCoopmatricula(int coop_matricula);
 	List<Cooperado>findByCoopnome(String coop_nome);
 	

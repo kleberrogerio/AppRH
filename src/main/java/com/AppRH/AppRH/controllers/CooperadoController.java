@@ -1,6 +1,7 @@
 package com.AppRH.AppRH.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -14,18 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.AppRH.AppRH.models.Coopcadastro;
 import com.AppRH.AppRH.models.Coopendereco;
 import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Cotaparte;
 import com.AppRH.AppRH.models.Dividas;
+import com.AppRH.AppRH.models.Lgpd;
 import com.AppRH.AppRH.models.Telefone;
-import com.AppRH.AppRH.models.Coopcadastro;
+import com.AppRH.AppRH.repository.CoopcadastroRepository;
 import com.AppRH.AppRH.repository.CooperadoRepository;
 import com.AppRH.AppRH.repository.CotaRepository;
 import com.AppRH.AppRH.repository.DividasRepository;
 import com.AppRH.AppRH.repository.EnderecoRepository;
+import com.AppRH.AppRH.repository.LgpdRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
-import com.AppRH.AppRH.repository.CoopcadastroRepository;
 
 
 @Controller
@@ -49,11 +52,29 @@ public class CooperadoController {
 	@Autowired
 	private CoopcadastroRepository cc;
 	
+	@Autowired
+	private LgpdRepository lr;
+	
 	//INSERE COOPERADO
 	@RequestMapping(value = "/cadastrarCooperado")
 	public String form() {
 		return "cooperado/formCooperado";
 	}
+	
+	public Integer AchaMaior(List<Cooperado> cooperados) {
+		int maiorMatricula = -1;
+
+		for (Cooperado cooperado : cooperados) {
+		    int matricula = cooperado.getCoopmatricula(); // Supondo que existe um método getMatricula() na classe Cooperado
+		    if (matricula > maiorMatricula) {
+		        maiorMatricula = matricula;
+		    }
+		}
+
+		return maiorMatricula;		
+		
+	}
+	
 	
 	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.POST)
 	public String form(@Valid Cooperado cooperado, BindingResult result, RedirectAttributes attributes) {
@@ -62,6 +83,8 @@ public class CooperadoController {
 			attributes.addFlashAttribute("mensagem","Verifique os campos....");
 			return "redirect:/cadastrarCooperado";
 		}
+		
+		
 		 cr.save(cooperado);
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
 		 return "redirect:/cadastrarCooperado";
@@ -71,9 +94,8 @@ public class CooperadoController {
 	
 	@RequestMapping("/cooperados")
 	public ModelAndView listaCooperados() {
-		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");//tirar o s para voltar ao normal
+		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		Iterable<Cooperado>cooperados= new ArrayList<Cooperado>();	
-		//Iterable<Cooperado>cooperados=cr.encontrarAtivos();
 		mv.addObject("cooperados",cooperados);
 		return mv;
 	}
@@ -83,7 +105,14 @@ public class CooperadoController {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		String mensagem = "Resultados da busca por " + buscar;
 		
-		if(coopnome.equals("all")){
+		if(coopnome.equals("")){
+			if (buscar.equals("")) {				
+				mv.addObject("cooperados",cr.encontrarTodos());
+			} else {
+				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
+			}
+			
+		}else if(coopnome.equals("all")){
 			if (buscar.equals("")) {				
 				mv.addObject("cooperados",cr.encontrarTodos());
 			} else {
@@ -163,6 +192,10 @@ public class CooperadoController {
 		Iterable<Coopcadastro> coopcadastro = cc.findByCooperado(cooperado);
 		mv.addObject("coopcadastro",coopcadastro);
 		
+		Iterable<Lgpd> lgpd = lr.findByCooperado(cooperado);
+		mv.addObject("lgpd",lgpd);
+
+		
 		return mv;		
 	}
 	//Mostrar Dívidas
@@ -236,25 +269,34 @@ public class CooperadoController {
 	}
 	
 	//ADICIONAR TELEFONE
-	@RequestMapping(value="/cooperado/{coopmatricula}",method=RequestMethod.POST)
+	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.POST)
 	public String detalhesCooperadosPost(@PathVariable("coopmatricula") int coop_matricula, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
+		System.out.println("aqui"+coop_matricula);
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
-			return "redirect:/cooperado/{coopmatricula}";
+			return "redirect:/{coopmatricula}";
 		}
 		
 		
 		//TIPO DE TELEFONE DUPLICADO
 		if(tr.findBycooptelnumero(telefone.getCooptelnumero())!=null){
 			attributes.addFlashAttribute("mensagem_erro","Número duplicado");
-			return "redirect:/cooperado/{coopmatricula}";
+			return "redirect:/{coopmatricula}";
 		}
 		
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+		
+		System.out.println("aquiget"+cooperado.getCoopmatricula());
+		System.out.println("aqui2"+coop_matricula);
+		System.out.println("aqui4"+telefone);
+		System.out.println("aqui5"+cooperado);
+		//telefone.setCoopmatricula(coop_matricula);
+		
 		telefone.setCooperado(cooperado);
+		System.out.println("aqui3"+telefone.getCoopmatricula() );
 		tr.save(telefone);
 		attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
-		return "redirect:/cooperado/{coopmatricula}";
+		return "redirect:/{coopmatricula}";
 		
 	}
 	
@@ -274,12 +316,12 @@ public class CooperadoController {
 			BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
-			return "redirect:/{coop_index_cod}";
+			return "redirect:/{coop_matricula}";
 		}
 		//TELEFONE DUPLICADO
 		if(tr.findBycooptelnumero(telefone.getCooptelnumero())!=null) {
 			attributes.addFlashAttribute("mensagem erro","Tipo duplicado");
-			return "redirect:/{coop_index_cod}";
+			return "redirect:/{coop_matricula}";
 		}
 		
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -293,11 +335,17 @@ public class CooperadoController {
 	//FORMULÁRIO ALTERA COOPERADO
 	
 	@RequestMapping(value="/editar-cooperado")
-	public ModelAndView editarCooperado(int coop_index_cod) {
-		Cooperado cooperado = cr.findByCoopindexcod(coop_index_cod);
+	public ModelAndView editarCooperado(Integer coop_matricula) {
+		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
 		mv.addObject("cooperado",cooperado);
-		return mv;		
+		
+		/*Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
+		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
+		mv.addObject("lgpd",lgpd);*/
+		
+		return mv;	
+			
 	}
 	
 	//UPDATE COOPERADO
@@ -309,6 +357,8 @@ public class CooperadoController {
 		String coopmatricula=""+codigoInt;
 		return "redirect:/" +coopmatricula;
 	}
+	
+	
 	
 	
 	

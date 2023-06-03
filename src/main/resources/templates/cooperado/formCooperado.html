@@ -63,6 +63,18 @@
 		<form method="post">			
 
 			<div class="form-group">
+			<tr th:each="cooperado: ${cooperados}">
+			
+			<p>
+			
+			<b>Matrícula222:</b> <span th:text="${cooperado.coopmatricula}"></span>
+			
+			</p>
+<th:block th:with="maiorMatricula=${#sets.max(cooperados.![coopmatricula])}">
+    A maior matrícula entre os cooperados é: <span th:text="${maiorMatricula}"></span>
+</th:block>
+		</tr>
+			
 				<label for=""><b>Matrícula:</b> </label> <input type="number"
 					class="form-control" value="" placeholder="Insira o número da matrícula"
 					name="coopmatricula" required> <small class="form-text text-muted"><i>*

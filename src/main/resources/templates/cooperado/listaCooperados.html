@@ -87,7 +87,7 @@
 							
 
 
-								<select name="coopnome" id="coopnome" class="custom-select my-3 p-2 w-100" required>
+								<select name="coopnome" id="coopnome" class="custom-select my-3 p-2 w-100">
 									<option value="">Escolher...</option>
 									<option value="all">Todos</option>
 									<option value="ativos">Ativos</option>
@@ -104,7 +104,7 @@
 							<div class="col col-14 col-md-4">
 
 								<input class="form-control form-control-lg my-3 p-2 w-100"
-									type="search" placeholder="Insira sua pesquisa..."
+									type="search" placeholder="Matrícula ou Nome ou Apelido"
 									aria-label="Pesquisar" name="buscar" id="buscar" >
 							</div>
 
@@ -156,7 +156,7 @@
 										th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"><button
 												type="button" class="btn btn-danger">Excluir</button></a></td>
 									<td><a
-										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopindexcod)).build()}"
+										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										class="btn btn-primary">Editar
 											</button>
 									</a></td>
