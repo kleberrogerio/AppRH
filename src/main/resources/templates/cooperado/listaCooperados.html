@@ -152,9 +152,13 @@
 									<td><span th:text="${cooperado.coopnome}"></span></td>
 									<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
 
+<!-- th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}" -->
+<!-- deletar-cooperado -->
+<!-- th:attr="data-cooperado-nome=${cooperado.coopnome}" -->
 									<td><a
-										th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"><button
-												type="button" class="btn btn-danger">Excluir</button></a></td>
+										th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+										th:attr="data-cooperado-nome=${cooperado.coopnome}"
+												type="button" class="btn btn-danger deletar-cooperado" >Excluir</a></td>
 									<td><a
 										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										class="btn btn-primary">Editar
@@ -164,12 +168,28 @@
 										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}"><button
 												type="button" class="btn btn-success">Adicionar
 												telefone</button></a></td>
+												
+												
 								</tr>
+								
 							</tbody>
+							
 						</table>
 					</div>
 
-
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		document.querySelectorAll(".deletar-cooperado").forEach(element => {
+			element.addEventListener("click", function(event) {
+				
+				let nome = event.target.dataset["cooperadoNome"];
+				if (!confirm("Deletar cooperado " + nome + "?")) {
+					event.preventDefault();
+				}
+			});
+		});
+	});
+</script>
 				</div>
 			</div>
 		</div>

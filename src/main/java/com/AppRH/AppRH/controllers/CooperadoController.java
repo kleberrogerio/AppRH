@@ -234,6 +234,26 @@ public class CooperadoController {
 		return mv;		
 	}
 	
+	//Mostrar Todas as Cotas Partes Não pagas
+		@RequestMapping("/cotas")
+		public ModelAndView cotas() {
+			ModelAndView mv = new ModelAndView("cooperado/cotas");
+			Iterable<Cotaparte> cotapartes = cpr.encontrarTodos();
+			mv.addObject("cotapartes",cotapartes);
+			
+			/*double somacota=0;
+			
+			for (Cota cotas : cotas) {
+				if(cotas.getCoopdatapagamento()==null) {
+					somacota = somacota + cotas.getCoopvalor();
+				}						    
+			}			
+			*/
+			
+			return mv;		
+		}
+		
+		
 	//Mostrar Endereço
 		@RequestMapping(value="/coopendereco{coopmatricula}")
 		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
