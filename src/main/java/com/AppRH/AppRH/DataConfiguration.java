@@ -1,4 +1,7 @@
 package com.AppRH.AppRH;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -31,6 +34,11 @@ public class DataConfiguration {
 		adapter.setDatabasePlatform("org.hibernate.dialect.MariaDBDialect");
 		adapter.setPrepareConnection(true);
 		return adapter;
+	}
+	
+	@Bean
+	public Connection connection(DataSource dataSource) throws SQLException {
+		return dataSource.getConnection();
 	}
 	
 	

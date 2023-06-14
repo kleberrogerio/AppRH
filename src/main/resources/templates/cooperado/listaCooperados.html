@@ -140,6 +140,10 @@
 									<th scope="col"></th>
 									<th scope="col">Ações:</th>
 									<th scope="col"></th>
+									<th scope="col">L</th>
+									<th scope="col">W</th>
+									<th scope="col">C</th>
+									<th scope="col">N</th>
 								</tr>
 							</thead>
 
@@ -166,10 +170,15 @@
 									</a></td>
 									<td><a
 										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}"><button
-												type="button" class="btn btn-success">Adicionar
+												type="button" class="btn btn-success">Adic.
 												telefone</button></a></td>
+												<td>
+												<input id="lgpd1" type="checkbox" name="ligacao" th:checked="*{coop_ligacao}" /></td>
+												<td><input id="lgpd2" type="checkbox" name="whats" th:checked="*{coop_whatsapp}" /></td>
+												<td><input id="lgpd3" type="checkbox" name="correio" th:checked="*{coop_correio}" /></td>
+												<td><input id="lgpd4" type="checkbox" name="nenhum" th:checked="*{coop_nenhum}" />
 												
-												
+												</td>
 								</tr>
 								
 							</tbody>
