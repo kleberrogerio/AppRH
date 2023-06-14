@@ -18,7 +18,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 @Service
 public class JasperService {
 	
-	private static final String JASPER_DIRETORIO="classpath:jasper/";
+	private static final String JASPER_DIRETORIO="classpath:relatorios/jasper/";
 	private static final String JASPER_PREFIXO="Cooperados-";
 	private static final String JASPER_SUFIXO=".jasper";
 

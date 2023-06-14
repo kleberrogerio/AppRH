@@ -253,6 +253,13 @@ public class CooperadoController {
 			return mv;		
 		}
 		
+		//Abre a página de relatórios
+				@RequestMapping("/relatorios")
+				public ModelAndView relatorios() {
+					ModelAndView mv = new ModelAndView("cooperado/relatorios");
+					return mv;		
+				}
+		
 		
 	//Mostrar Endereço
 		@RequestMapping(value="/coopendereco{coopmatricula}")
