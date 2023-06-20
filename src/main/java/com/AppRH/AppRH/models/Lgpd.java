@@ -108,9 +108,7 @@ public class Lgpd implements Serializable{
 
 	public void setCooperado(Cooperado cooperado) {
 		this.cooperado = cooperado;
-	}
-
-	
+	}	
 	
 }
 

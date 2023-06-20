@@ -141,62 +141,13 @@ public class CooperadoController {
 		LogAlteracao log = new LogAlteracao();
 		log.setCoopmatricula(coop_matricula);
 		log.setData(LocalDateTime.now(ZoneId.of("Brazil/East")));
-		log.setDetalhes("Alterou o valor: " + type + " para " + value);
+		log.setDetalhes("Alterou o valor: " + type + " para " + valor);
 		log.setTabela("coop_lgpd");
 		log.setOperacao("Update");
 		
-		la.save(log);
+		la.save(log);		
 		
-		
-		
-
-		//lr.save(lgpd);
-		//attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
-		//return "redirect:cooperado/listaCooperados";
-		
-		// lr.save(lgpd);
-		// attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
-		// return "redirect:cooperado/listaCooperados";
-		 
-		 /*
-		  ADICIONAR TELEFONE
-		}
-		
-		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
-			
-		telefone.setCooperado(cooperado);
-		System.out.println("aqui3"+telefone.getCoopmatricula() );
-		tr.save(telefone);
-		attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
-		return "redirect:/{coopmatricula}";
-		
-	}
-		  * 
-		  * @RequestMapping(value="/editar-cooperado")
-	public ModelAndView editarCooperado(Integer coop_matricula) {
-		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
-		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
-		mv.addObject("cooperado",cooperado);
-		
-		/*Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
-		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
-		mv.addObject("lgpd",lgpd);
-		
-		return mv;	
-			
-	}
-	//UPDATE COOPERADO
-	@RequestMapping(value="/editar-cooperado",method = RequestMethod.POST)
-	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
-		cr.save(cooperado);
-		attributes.addFlashAttribute("sucess","Cooperado alterado com sucesso");
-		long codigoInt = cooperado.getCoopmatricula();
-		String coopmatricula=""+codigoInt;
-		return "redirect:/" +coopmatricula;
-	}
-	
-		  */
-	}
+			}
 	//LISTAR COOPERADOS
 	
 	@RequestMapping("/cooperados")

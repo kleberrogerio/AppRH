@@ -32,7 +32,7 @@ public class LogAlteracao {
 	private String detalhes;
     
     @NotNull
-	@Column(name="coop_matricula",insertable = false, updatable = false)
+	@Column(name="coop_matricula",insertable = true, updatable = false)
 	private int coopmatricula;
 
 	public Integer getId() {

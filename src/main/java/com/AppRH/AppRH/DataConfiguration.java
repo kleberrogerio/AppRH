@@ -18,7 +18,7 @@ public class DataConfiguration {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/serco?useTimezone=true&serverTimezone=UTC");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/serco?useTimezone=true&serverTimezone=America/Sao_Paulo");
 		dataSource.setUsername("root");
 		dataSource.setPassword("root");
 		return dataSource;
