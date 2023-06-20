@@ -43,15 +43,26 @@
 						<li class="nav-item"><a class="nav-link active"
 							aria-current="page" href="/">Home</a></li>
 
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+						
 						<li class="nav-item"><a class="nav-link" href="/funcionarios">Funcionários</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="/cadastrarFuncionario">Cadastrar Funcionário</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cadastrarFuncionario">Cadastrar Funcionário</a>
+						</li>
 
 						<li class="nav-item"><a class="nav-link" href="/cooperados">
-								<< Listar Cooperados>> </a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="/cadastrarCooperado"> << Cadastrar Cooperado>> </a></li>
-						<li class="nav-item"><a class="nav-link" href="/logout">Sair</a>
+								 Listar Cooperados
+							</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cadastrarCooperado">
+								 Cadastrar Cooperado
+							</a></li>
+							
+							<li class="nav-item"><a class="nav-link" href="/cotas">
+								 Cotas
+							</a></li>
+							<li class="nav-item"><a class="nav-link" href="/relatorios">
+								 Relatórios
+							</a></li>
+							<li class="nav-item"><a class="nav-link" href="/logout">Sair</a>
 					</ul>
 				</div>
 			</div>
@@ -139,26 +150,23 @@
 									<th scope="col">Nome de guerra:</th>
 									<th scope="col"></th>
 									<th scope="col">Ações:</th>
-									<th scope="col"></th>
 									<th scope="col">L</th>
 									<th scope="col">W</th>
 									<th scope="col">C</th>
-									<th scope="col">N</th>
+									<th scope="col"></th>
 								</tr>
 							</thead>
 
 							
-								<tr th:each="cooperado: ${cooperados}">
+								<tr th:each="cooperado: ${cooperados}" th:attr="data-cooperado-id=${cooperado.coopmatricula}">
+
 									<td><a
 										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula).build())}">
 											<span th:text="${cooperado.coopmatricula}"></span>
 									</a></td>
 									<td><span th:text="${cooperado.coopnome}"></span></td>
 									<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
-
-<!-- th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}" -->
-<!-- deletar-cooperado -->
-<!-- th:attr="data-cooperado-nome=${cooperado.coopnome}" -->
+									
 									<td><a
 										th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										th:attr="data-cooperado-nome=${cooperado.coopnome}"
@@ -167,16 +175,31 @@
 										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										class="btn btn-primary">Editar
 											</button>
-									</a></td>
-									<td><a
-										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula)).build()}"><button
-												type="button" class="btn btn-success">Adic.
-												telefone</button></a></td>
+									</a></td>									
+											 	<!--	<form method="post" th:object="${lgpd}">
+												
+												<td><select name="coopligacao" id="lgpd.coopligacao" class="custom-select my-3 p-2 w-100" required>
+									<option value="SIM">S</option>
+									
+									<option value="NÃO">N</option></select></td>
+									<td><select name="coopwhatsapp" id="lgpd.coopwhatsapp" class="custom-select my-3 p-2 w-100" required>
+									<option value="SIM">S</option>
+									<option value="NÃO">N</option></select></td>
+									<td><select name="coopcorreio" id="lgpd.coopcorreio" class="custom-select my-3 p-2 w-100" required>
+									<option value="SIM">S</option>
+									<option value="NÃO">N</option></select></td>
+									</form>
+												 -->
+											 	<td>
+											 	
+												<input class="form-check-input lgpd" id="lgpd1" data-lgpd="ligacao" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopligacao()}" /></td>
+												<td><input class="form-check-input lgpd" id="lgpd2" data-lgpd="whatsapp" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopwhatsapp()}" /></td>
+												<td><input class="form-check-input lgpd" id="lgpd3" data-lgpd="correio" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopcorreio()}" /></td>
 												<td>
-												<input id="lgpd1" type="checkbox" name="ligacao" th:checked="*{coop_ligacao}" /></td>
-												<td><input id="lgpd2" type="checkbox" name="whats" th:checked="*{coop_whatsapp}" /></td>
-												<td><input id="lgpd3" type="checkbox" name="correio" th:checked="*{coop_correio}" /></td>
-												<td><input id="lgpd4" type="checkbox" name="nenhum" th:checked="*{coop_nenhum}" />
+												
+												 <td><a
+										th:href="${(#mvc.url('CC#controlaLGPD').arg(0, cooperado.coopmatricula)).build()}"><button
+												type="submit" class="btn btn-success">Salvar Lgpd</button></a></td>
 												
 												</td>
 								</tr>
@@ -184,6 +207,19 @@
 							</tbody>
 							
 						</table>
+						<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
 					</div>
 
 <script>
@@ -197,6 +233,22 @@
 				}
 			});
 		});
+		
+		document.querySelectorAll("input[type='checkbox'].lgpd").forEach(element => {
+			element.addEventListener("click", function(event) {
+				let value = event.target.checked;
+				let type = event.target.dataset.lgpd;
+				let cooperadoId = event.target.parentElement.parentElement.dataset.cooperadoId
+				
+				fetch(`/ControlaLGPD/${cooperadoId}?type=${type}&value=${value}`, {
+					method: "POST"
+				}).then().then();
+				
+				
+				console.log(value, cooperadoId, type);
+			});
+		});
+		
 	});
 </script>
 				</div>

@@ -1,17 +1,22 @@
 package com.AppRH.AppRH.controllers;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,6 +26,7 @@ import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Cotaparte;
 import com.AppRH.AppRH.models.Dividas;
 import com.AppRH.AppRH.models.Lgpd;
+import com.AppRH.AppRH.models.LogAlteracao;
 import com.AppRH.AppRH.models.Telefone;
 import com.AppRH.AppRH.repository.CoopcadastroRepository;
 import com.AppRH.AppRH.repository.CooperadoRepository;
@@ -28,6 +34,7 @@ import com.AppRH.AppRH.repository.CotaRepository;
 import com.AppRH.AppRH.repository.DividasRepository;
 import com.AppRH.AppRH.repository.EnderecoRepository;
 import com.AppRH.AppRH.repository.LgpdRepository;
+import com.AppRH.AppRH.repository.LogAlteracaoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
 
 
@@ -54,6 +61,9 @@ public class CooperadoController {
 	
 	@Autowired
 	private LgpdRepository lr;
+	
+	@Autowired
+    private LogAlteracaoRepository la;
 	
 	//INSERE COOPERADO
 	@RequestMapping(value = "/cadastrarCooperado")
@@ -84,12 +94,109 @@ public class CooperadoController {
 			return "redirect:/cadastrarCooperado";
 		}
 		
+		//SALVANDO UM LOG DE INCLUSÃO
+		  LogAlteracao lalte= new LogAlteracao();
+		  lalte.setData(LocalDateTime.now());
+		  lalte.setTabela("Cooperado");
+		  lalte.setOperacao("Inclusão");
+		  lalte.setDetalhes("Cooperado Inserido");
+
+	      la.save(lalte);
+
 		
 		 cr.save(cooperado);
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
 		 return "redirect:/cadastrarCooperado";
 	}
 	
+	//public String controlaLGPD(@PathVariable("coopmatricula") int coop_matricula, @Valid Lgpd lgpd,BindingResult result, RedirectAttributes attributes) {
+
+	//CONTROLANDO O LGPD
+	@RequestMapping(value = "/ControlaLGPD/{coopmatricula}",method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void controlaLGPD(@PathVariable("coopmatricula") int coop_matricula, @RequestParam("value") String value, @RequestParam("type") String type) {
+		//Lgpd lgpd1 = cr.findByCoopmatricula(coop_matricula);
+		
+		// Como que acha o Lgpd?
+		Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
+		
+		String valor = value.equals("true") ? "SIM" : "NÃO";
+		
+		System.out.println(valor);
+		
+		if (type.equals("ligacao")) {
+			lgpd.setCoopligacao(valor);
+		}
+		
+		if (type.equals("whatsapp")) {
+			lgpd.setCoopwhatsapp(valor);
+		}
+		
+		if (type.equals("correio")) {
+			lgpd.setCoopcorreio(valor);
+		}
+		
+		lr.save(lgpd);
+		
+		LogAlteracao log = new LogAlteracao();
+		log.setCoopmatricula(coop_matricula);
+		log.setData(LocalDateTime.now(ZoneId.of("Brazil/East")));
+		log.setDetalhes("Alterou o valor: " + type + " para " + value);
+		log.setTabela("coop_lgpd");
+		log.setOperacao("Update");
+		
+		la.save(log);
+		
+		
+		
+
+		//lr.save(lgpd);
+		//attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
+		//return "redirect:cooperado/listaCooperados";
+		
+		// lr.save(lgpd);
+		// attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
+		// return "redirect:cooperado/listaCooperados";
+		 
+		 /*
+		  ADICIONAR TELEFONE
+		}
+		
+		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+			
+		telefone.setCooperado(cooperado);
+		System.out.println("aqui3"+telefone.getCoopmatricula() );
+		tr.save(telefone);
+		attributes.addFlashAttribute("mensagem","Telefone adicionado com sucesso!");
+		return "redirect:/{coopmatricula}";
+		
+	}
+		  * 
+		  * @RequestMapping(value="/editar-cooperado")
+	public ModelAndView editarCooperado(Integer coop_matricula) {
+		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
+		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
+		mv.addObject("cooperado",cooperado);
+		
+		/*Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
+		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
+		mv.addObject("lgpd",lgpd);
+		
+		return mv;	
+			
+	}
+	//UPDATE COOPERADO
+	@RequestMapping(value="/editar-cooperado",method = RequestMethod.POST)
+	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
+		cr.save(cooperado);
+		attributes.addFlashAttribute("sucess","Cooperado alterado com sucesso");
+		long codigoInt = cooperado.getCoopmatricula();
+		String coopmatricula=""+codigoInt;
+		return "redirect:/" +coopmatricula;
+	}
+	
+		  */
+	}
 	//LISTAR COOPERADOS
 	
 	@RequestMapping("/cooperados")
@@ -312,13 +419,7 @@ public class CooperadoController {
 		}
 		
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
-		
-		System.out.println("aquiget"+cooperado.getCoopmatricula());
-		System.out.println("aqui2"+coop_matricula);
-		System.out.println("aqui4"+telefone);
-		System.out.println("aqui5"+cooperado);
-		//telefone.setCoopmatricula(coop_matricula);
-		
+			
 		telefone.setCooperado(cooperado);
 		System.out.println("aqui3"+telefone.getCoopmatricula() );
 		tr.save(telefone);
@@ -366,10 +467,6 @@ public class CooperadoController {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
 		mv.addObject("cooperado",cooperado);
-		
-		/*Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
-		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
-		mv.addObject("lgpd",lgpd);*/
 		
 		return mv;	
 			

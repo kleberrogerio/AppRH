@@ -2,6 +2,7 @@ package com.AppRH.AppRH.models;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -47,6 +49,9 @@ public class Cooperado implements Serializable {
 	
 	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
 	private List<Coopcadastro> coopcadastro;
+	
+	@OneToOne(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
+	private Lgpd lgpd;
 	
 	
 
@@ -129,7 +134,16 @@ public class Cooperado implements Serializable {
 	public void setCoopcadastro(List<Coopcadastro> coopcadastro) {
 		this.coopcadastro = coopcadastro;
 	}
-	
+
+
+	public Lgpd getLgpd() {
+		return lgpd;
+	}
+
+
+	public void setLgpd(Lgpd lgpd) {
+		this.lgpd = lgpd;
+	}
 	
 	
 }
