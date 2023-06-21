@@ -93,6 +93,8 @@ public class CooperadoController {
 			attributes.addFlashAttribute("mensagem","Verifique os campos....");
 			return "redirect:/cadastrarCooperado";
 		}
+		Integer maior =cr.achaMaior();
+		System.out.println("MAIOR"+maior);
 		
 		//SALVANDO UM LOG DE INCLUSÃO
 		  LogAlteracao lalte= new LogAlteracao();
@@ -100,8 +102,11 @@ public class CooperadoController {
 		  lalte.setTabela("Cooperado");
 		  lalte.setOperacao("Inclusão");
 		  lalte.setDetalhes("Cooperado Inserido");
+		  lalte.setCoopmatricula(maior+1);
 
 	      la.save(lalte);
+	      cooperado.setCoopindexcod(maior+1);
+
 
 		
 		 cr.save(cooperado);
@@ -109,15 +114,12 @@ public class CooperadoController {
 		 return "redirect:/cadastrarCooperado";
 	}
 	
-	//public String controlaLGPD(@PathVariable("coopmatricula") int coop_matricula, @Valid Lgpd lgpd,BindingResult result, RedirectAttributes attributes) {
-
+	
 	//CONTROLANDO O LGPD
 	@RequestMapping(value = "/ControlaLGPD/{coopmatricula}",method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void controlaLGPD(@PathVariable("coopmatricula") int coop_matricula, @RequestParam("value") String value, @RequestParam("type") String type) {
-		//Lgpd lgpd1 = cr.findByCoopmatricula(coop_matricula);
 		
-		// Como que acha o Lgpd?
 		Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
 		
 		String valor = value.equals("true") ? "SIM" : "NÃO";

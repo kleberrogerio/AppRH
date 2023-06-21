@@ -169,13 +169,49 @@
 					<td><span th:text="${telefone.cooptelnumero}"></span></td>
 					<br>
 					<td><span th:text="${telefone.coopteltipo}"></span></td>
-					<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelindexcod)).build()}"><button type="button"
-								class="btn btn-danger">Excluir</button></a></td>
+					<td><a class="waves-effect waves-light btn-small" 
+					th:href="${(#mvc.url('CC#deletarTelefone').arg(0, telefone.cooptelindexcod)).build()}"
+					>
+					<button type="button" class="btn btn-danger deletar-telefone">Excluir</button></a></td>
 				</tr>
+				
+				<!--  <td><a
+					th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+					th:attr="data-cooperado-nome=${cooperado.coopnome}"
+					type="button" class="btn btn-danger deletar-cooperado" >Excluir</a></td>
 
-
+-->
 			</tbody>
 		</table>
+		<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		document.querySelectorAll(".deletar-telefone").forEach(element => {
+			element.addEventListener("click", function(event) {
+				
+				let nome = event.target.dataset["cooperadoNome"];
+				if (!confirm("Deletar telefone ?")) {
+					event.preventDefault();
+				}
+			});
+		});
+		
+		document.querySelectorAll("input[type='checkbox'].lgpd").forEach(element => {
+			element.addEventListener("click", function(event) {
+				let value = event.target.checked;
+				let type = event.target.dataset.lgpd;
+				let cooperadoId = event.target.parentElement.parentElement.dataset.cooperadoId
+				
+				fetch(`/ControlaLGPD/${cooperadoId}?type=${type}&value=${value}`, {
+					method: "POST"
+				}).then().then();
+				
+				
+				console.log(value, cooperadoId, type);
+			});
+		});
+		
+	});
+</script>
 
 
 	</div>

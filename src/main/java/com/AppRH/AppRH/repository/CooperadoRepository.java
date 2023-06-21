@@ -39,5 +39,7 @@ public interface CooperadoRepository extends CrudRepository<Cooperado, Long>{
 	@Query(value = "SELECT * FROM coop c, coop_cadastro e WHERE c.coop_matricula = e.coop_matricula AND e.coop_cooperado = 'NAO' And (c.coop_nome LIKE CONCAT('%' :param '%') OR c.coop_matricula = :param OR c.coop_nome_guerra LIKE CONCAT('%' :param '%'))", nativeQuery = true)
 	List<Cooperado>findByCoopnomesCooperadoInativo(@Param(value = "param") String coopnome);
 	
+	@Query(value="SELECT Max(c.coop_matricula) from coop c", nativeQuery = true)
+	Integer achaMaior();
 	
 }
