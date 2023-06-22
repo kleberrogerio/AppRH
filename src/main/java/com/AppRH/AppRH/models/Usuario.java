@@ -1,98 +1,90 @@
-/*package com.AppRH.AppRH.models;
+package com.AppRH.AppRH.models;
 
-import java.util.Collection;
+
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import com.AppRH.AppRH.controllers.View;
 
 @Entity
-@Table(name="usuario")
-public class Usuario implements UserDetails {
+@Table(name="usr_usuario")
+public class Usuario {
+    
+    @JsonView(View.UsuarioResumo.class)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="usr_id")
+    private Long id;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	private String login;
-	
-	@Column(name="nomeCompleto")
-	private String nomecompleto;
-	
-	private String senha;
+    @JsonView(View.UsuarioResumo.class)
+    @Column(name="usr_nome")
+    private String nome;
+    
+    @JsonView(View.UsuarioResumo.class)
+    @Column(name="usr_email")
+    private String email;
 
-	public String getLogin() {
-		return login;
-	}
+    
+    @JsonView(View.UsuarioResumo.class)
+    @Column(name="usr_senha")
+    private String senha;
 
+    @JsonView(View.UsuarioResumo.class)
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="uau_usuario_autorizacao",
+        joinColumns = { @JoinColumn(name="usr_id") },
+        inverseJoinColumns = { @JoinColumn(name = "aut_id") })
+    private Set<Autorizacao> autorizacoes;
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getNomecompleto() {
-		return nomecompleto;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setNomeCompleto(String nomecompleto) {
-		this.nomecompleto = nomecompleto;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public Set<Autorizacao> getAutorizacoes() {
+        return autorizacoes;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
+        this.autorizacoes = autorizacoes;
+    }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return this.senha;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return this.login;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+    public String getSenha() {
+        return senha;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	
-	
-
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }    
 }
-
-*/
