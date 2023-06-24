@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +68,7 @@ public class CooperadoController {
     private LogAlteracaoRepository la;
 	
 	//INSERE COOPERADO
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/cadastrarCooperado")
 	public String form() {
 		return "cooperado/formCooperado";
@@ -153,12 +156,15 @@ public class CooperadoController {
 	//LISTAR COOPERADOS
 	
 	@RequestMapping("/cooperados")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView listaCooperados() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		Iterable<Cooperado>cooperados= new ArrayList<Cooperado>();	
 		mv.addObject("cooperados",cooperados);
 		return mv;
 	}
+	
+	//MÉTODO UTILIZADO PARA A BUSCA
 	@RequestMapping(value = "/cooperados", method = RequestMethod.POST)
 	public ModelAndView buscarIndex(@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
 		
@@ -202,8 +208,7 @@ public class CooperadoController {
 		return mv;	
 	}
 	
-	//LISTAR COOPERADOS ATIVOS
-	
+	//LISTAR COOPERADOS ATIVOS	
 	@RequestMapping("/cooperadosA")
 	public ModelAndView listaCooperadosAtivos() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
@@ -233,7 +238,7 @@ public class CooperadoController {
 			return mv;			
 		}
 	
-	
+	//VER DETALHES DOS COOPERADOS
 	@RequestMapping(value="/{coopmatricula}")
 	public ModelAndView detalhesCooperado(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -258,7 +263,7 @@ public class CooperadoController {
 		
 		return mv;		
 	}
-	//Mostrar Dívidas
+	//MOSTRAR DÍVIDAS
 	@RequestMapping(value="/divida{coopmatricula}")
 	public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -281,7 +286,7 @@ public class CooperadoController {
 		
 		return mv;		
 	}
-	//Mostrar Cota Parte
+	//MOSTRAR COTA PARTE
 	@RequestMapping(value="/cota{coopmatricula}")
 	public ModelAndView cota(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -294,26 +299,17 @@ public class CooperadoController {
 		return mv;		
 	}
 	
-	//Mostrar Todas as Cotas Partes Não pagas
+	//MOSTRAR TODAS AS COTAS PARTES NÃO DEVOLVIDAS AOS COOPERADOS
 		@RequestMapping("/cotas")
 		public ModelAndView cotas() {
 			ModelAndView mv = new ModelAndView("cooperado/cotas");
 			Iterable<Cotaparte> cotapartes = cpr.encontrarTodos();
 			mv.addObject("cotapartes",cotapartes);
 			
-			/*double somacota=0;
-			
-			for (Cota cotas : cotas) {
-				if(cotas.getCoopdatapagamento()==null) {
-					somacota = somacota + cotas.getCoopvalor();
-				}						    
-			}			
-			*/
-			
 			return mv;		
 		}
 		
-		//Abre a página de relatórios
+		//ABRE PÁGINA DE RELATÓRIOS
 				@RequestMapping("/relatorios")
 				public ModelAndView relatorios() {
 					ModelAndView mv = new ModelAndView("cooperado/relatorios");
@@ -321,7 +317,7 @@ public class CooperadoController {
 				}
 		
 		
-	//Mostrar Endereço
+	//MOSTRA OS ENDEREÇOS
 		@RequestMapping(value="/coopendereco{coopmatricula}")
 		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -334,7 +330,7 @@ public class CooperadoController {
 			return mv;		
 		}
 		
-	//Mostrar Dados de Cadastro
+	//MOSTRA OS DADOS DO CADASTRO
 			@RequestMapping(value="/coopcadastro{coopmatricula}")
 		public ModelAndView coopcadastro(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -435,8 +431,10 @@ public class CooperadoController {
 		return "redirect:/" +coopmatricula;
 	}
 	
-	
-	
-	
-	
+	//MÉTODO PARA TRABALHAR COM ENCRIPTAÇÃO
+	@Autowired
+	private PasswordEncoder passwordEncorderBean() {
+		return new BCryptPasswordEncoder();
+	}
+		
 }

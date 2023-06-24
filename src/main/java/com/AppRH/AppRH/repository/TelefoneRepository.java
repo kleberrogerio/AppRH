@@ -1,15 +1,15 @@
 package com.AppRH.AppRH.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 //import java.util.List;
 import com.AppRH.AppRH.models.Cooperado;
-
 import com.AppRH.AppRH.models.Telefone;
 
 @Repository
-public interface TelefoneRepository extends CrudRepository<Telefone, Long>{
+public interface TelefoneRepository extends JpaRepository<Telefone, Long>{
 	
 	Iterable<Telefone>findByCooperado(Cooperado cooperado);
 	

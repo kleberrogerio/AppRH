@@ -1,4 +1,4 @@
-package com.AppRH.AppRH;
+/*package com.AppRH.AppRH;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -38,3 +38,5 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
 	
 }
+
+*/

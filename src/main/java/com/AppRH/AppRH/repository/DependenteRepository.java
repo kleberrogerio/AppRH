@@ -2,13 +2,13 @@ package com.AppRH.AppRH.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import com.AppRH.AppRH.models.Dependentes;
 import com.AppRH.AppRH.models.Funcionario;
 
-public interface DependenteRepository extends CrudRepository<Dependentes, Long> {
+public interface DependenteRepository extends JpaRepository<Dependentes, Long> {
 
 	Iterable<Dependentes> findByFuncionario(Funcionario funcionario);
 

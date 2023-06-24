@@ -2,15 +2,15 @@ package com.AppRH.AppRH.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Cotaparte;
 
 @Repository
-public interface CotaRepository extends CrudRepository<Cotaparte, Long> {
+public interface CotaRepository extends JpaRepository<Cotaparte, Long> {
 	Iterable<Cotaparte>findByCooperado(Cooperado cooperado);
 
 	//Para Buscar
