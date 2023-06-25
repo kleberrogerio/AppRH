@@ -68,7 +68,7 @@ public class CooperadoController {
     private LogAlteracaoRepository la;
 	
 	//INSERE COOPERADO
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/cadastrarCooperado")
 	public String form() {
 		return "cooperado/formCooperado";
@@ -264,6 +264,7 @@ public class CooperadoController {
 		return mv;		
 	}
 	//MOSTRAR DÍVIDAS
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/divida{coopmatricula}")
 	public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -287,6 +288,7 @@ public class CooperadoController {
 		return mv;		
 	}
 	//MOSTRAR COTA PARTE
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/cota{coopmatricula}")
 	public ModelAndView cota(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -299,8 +301,9 @@ public class CooperadoController {
 		return mv;		
 	}
 	
-	//MOSTRAR TODAS AS COTAS PARTES NÃO DEVOLVIDAS AOS COOPERADOS
+	//MOSTRAR TODAS AS COTAS PARTES NÃO DEVOLVIDAS AOS COOPERADOS	
 		@RequestMapping("/cotas")
+		@PreAuthorize("hasRole('ADMIN')")
 		public ModelAndView cotas() {
 			ModelAndView mv = new ModelAndView("cooperado/cotas");
 			Iterable<Cotaparte> cotapartes = cpr.encontrarTodos();
@@ -310,15 +313,17 @@ public class CooperadoController {
 		}
 		
 		//ABRE PÁGINA DE RELATÓRIOS
-				@RequestMapping("/relatorios")
-				public ModelAndView relatorios() {
-					ModelAndView mv = new ModelAndView("cooperado/relatorios");
-					return mv;		
-				}
+		@PreAuthorize("isAuthenticated")
+		@RequestMapping("/relatorios")
+		public ModelAndView relatorios() {
+			ModelAndView mv = new ModelAndView("cooperado/relatorios");
+			return mv;		
+		}
 		
 		
 	//MOSTRA OS ENDEREÇOS
 		@RequestMapping(value="/coopendereco{coopmatricula}")
+		@PreAuthorize("isAuthenticated")
 		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 			ModelAndView mv = new ModelAndView("cooperado/coopendereco");
@@ -332,7 +337,8 @@ public class CooperadoController {
 		
 	//MOSTRA OS DADOS DO CADASTRO
 			@RequestMapping(value="/coopcadastro{coopmatricula}")
-		public ModelAndView coopcadastro(@PathVariable("coopmatricula") int coop_matricula) {
+			@PreAuthorize("isAuthenticated")
+			public ModelAndView coopcadastro(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 			ModelAndView mv = new ModelAndView("cooperado/dadoscadastrais");
 			mv.addObject("cooperado",cooperado);		
@@ -344,6 +350,7 @@ public class CooperadoController {
 		}
 		
 	//DELETA COOPERADO
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping("/deletarCooperado")
 	public String deletarCooperado(int coopmatricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coopmatricula);
@@ -352,6 +359,7 @@ public class CooperadoController {
 	}
 	
 	//ADICIONAR TELEFONE
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.POST)
 	public String detalhesCooperadosPost(@PathVariable("coopmatricula") int coop_matricula, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
 		System.out.println("aqui"+coop_matricula);
@@ -378,6 +386,7 @@ public class CooperadoController {
 	}
 	
 	//DELETA TELEFONE
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping("/deletarTelefone")
 	public String deletarTelefone(int cooptelindexcod) {
 		Telefone telefone = tr.findByCooptelindexcod(cooptelindexcod);
@@ -412,6 +421,7 @@ public class CooperadoController {
 	//FORMULÁRIO ALTERA COOPERADO
 	
 	@RequestMapping(value="/editar-cooperado")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView editarCooperado(Integer coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
@@ -422,6 +432,7 @@ public class CooperadoController {
 	}
 	
 	//UPDATE COOPERADO
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/editar-cooperado",method = RequestMethod.POST)
 	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
 		cr.save(cooperado);
