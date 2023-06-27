@@ -19,15 +19,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	@Override
+	/*@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().httpBasic().and()
 				// .addFilterBefore(new JwtAuthenticationFilter(),
 				// UsernamePasswordAuthenticationFilter.class)
 				// this disables session creation on Spring Security
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	}
+	}*/
 	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable().httpBasic().and().logout((logout) -> logout.logoutSuccessUrl("/"))
+				// .addFilterBefore(new JwtAuthenticationFilter(),
+				// UsernamePasswordAuthenticationFilter.class)
+				// this disables session creation on Spring Security
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	}
 	@Override
 	  public void configure(AuthenticationManagerBuilder auth) throws Exception {
 	    auth.userDetailsService(userDetailsService);
