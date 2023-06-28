@@ -156,7 +156,8 @@ public class CooperadoController {
 	//LISTAR COOPERADOS
 	
 	@RequestMapping("/cooperados")
-	@PreAuthorize("isAuthenticated()")
+	//@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
 	public ModelAndView listaCooperados() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		Iterable<Cooperado>cooperados= new ArrayList<Cooperado>();	
@@ -313,7 +314,8 @@ public class CooperadoController {
 		}
 		
 		//ABRE PÁGINA DE RELATÓRIOS
-		@PreAuthorize("isAuthenticated")
+		//@PreAuthorize("isAuthenticated")
+		@PreAuthorize("hasRole('ADMIN')")
 		@RequestMapping("/relatorios")
 		public ModelAndView relatorios() {
 			ModelAndView mv = new ModelAndView("cooperado/relatorios");
@@ -323,7 +325,8 @@ public class CooperadoController {
 		
 	//MOSTRA OS ENDEREÇOS
 		@RequestMapping(value="/coopendereco{coopmatricula}")
-		@PreAuthorize("isAuthenticated")
+		@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
+		//@PreAuthorize("isAuthenticated")
 		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 			ModelAndView mv = new ModelAndView("cooperado/coopendereco");
@@ -337,7 +340,8 @@ public class CooperadoController {
 		
 	//MOSTRA OS DADOS DO CADASTRO
 			@RequestMapping(value="/coopcadastro{coopmatricula}")
-			@PreAuthorize("isAuthenticated")
+			//@PreAuthorize("isAuthenticated")
+			@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
 			public ModelAndView coopcadastro(@PathVariable("coopmatricula") int coop_matricula) {
 			Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 			ModelAndView mv = new ModelAndView("cooperado/dadoscadastrais");

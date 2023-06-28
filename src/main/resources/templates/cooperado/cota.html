@@ -56,9 +56,26 @@
 							<li class="nav-item"><a class="nav-link" href="/relatorios">
 								 Relatórios
 							</a></li>
-							<li class="nav-item"><a class="nav-link" href="/logout">Sair</a>
-
+							<li class="nav-item">
+								<a class="nav-link" id="logout-link" href="/logout">Sair</a
+							></li>
 					</ul>
+					<script>
+						document.addEventListener("DOMContentLoaded", function() {
+							let logoutLink = document.getElementById("logout-link");
+							logoutLink.addEventListener("click", (event) => {
+								event.preventDefault();
+								var xmlhttp = new XMLHttpRequest();
+						        xmlhttp.open("GET", "/cooperados", true);
+						        xmlhttp.setRequestHeader("Authorization", "Basic logout");
+						        xmlhttp.send();
+						        
+						        setTimeout(function () {
+						            window.location.href = "http://localhost:8080/";
+						        }, 200);
+							});
+						});
+					</script>
 				</div>
 			</div>
 		</nav>
