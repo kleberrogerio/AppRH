@@ -3,7 +3,6 @@ package com.AppRH.AppRH.controllers;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -73,7 +72,7 @@ public class CooperadoController {
 	public String form() {
 		return "cooperado/formCooperado";
 	}
-	
+	/*
 	public Integer AchaMaior(List<Cooperado> cooperados) {
 		int maiorMatricula = -1;
 
@@ -88,7 +87,8 @@ public class CooperadoController {
 		
 	}
 	
-	
+	*/
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.POST)
 	public String form(@Valid Cooperado cooperado, BindingResult result, RedirectAttributes attributes) {
 		
@@ -97,22 +97,38 @@ public class CooperadoController {
 			return "redirect:/cadastrarCooperado";
 		}
 		Integer maior =cr.achaMaior();
-		System.out.println("MAIOR"+maior);
-		
-		//SALVANDO UM LOG DE INCLUSÃO
+		     
+	     cooperado.setCoopindexcod(maior+1);
+	     
+	     Coopcadastro coopcadastro = new Coopcadastro();
+	     coopcadastro.setCoopcooperado("ATIVO");
+	     coopcadastro.setCoopdataadmissao(LocalDateTime.now());
+	     cooperado.setCoopcadastro(coopcadastro);
+	     coopcadastro.setCooperado(cooperado);
+	  
+	      
+	     Lgpd lgpd = new Lgpd();
+		 lgpd.setCoopligacao("SIM");
+		 lgpd.setCoopwhatsapp("SIM");
+		 lgpd.setCoopcorreio("SIM");
+		 lgpd.setCoopnenhum("SIM");
+			 
+		 cooperado.setLgpd(lgpd);
+		 lgpd.setCooperado(cooperado); 
+
+		 cr.save(cooperado);
+		 
+		//SALVANDO UM LOG DE INCLUSÃO	
 		  LogAlteracao lalte= new LogAlteracao();
 		  lalte.setData(LocalDateTime.now());
 		  lalte.setTabela("Cooperado");
 		  lalte.setOperacao("Inclusão");
 		  lalte.setDetalhes("Cooperado Inserido");
-		  lalte.setCoopmatricula(maior+1);
-
+		  lalte.setCoopmatricula(cooperado.getCoopindexcod());
 	      la.save(lalte);
-	      cooperado.setCoopindexcod(maior+1);
-
-
-		
-		 cr.save(cooperado);
+	      
+		 System.out.println("Maior"+maior);
+	
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
 		 return "redirect:/cadastrarCooperado";
 	}

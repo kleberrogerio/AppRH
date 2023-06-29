@@ -47,15 +47,16 @@ public class Cooperado implements Serializable {
 	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
 	private List<Coopendereco> coopendereco;
 	
-	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
-	private List<Coopcadastro> coopcadastro;
+	@OneToOne(mappedBy = "cooperado", cascade = CascadeType.ALL)
+	private Coopcadastro coopcadastro;
 	
-	@OneToOne(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
+	
+	//@OneToOne(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
+	@OneToOne(mappedBy = "cooperado", cascade = CascadeType.ALL)
+	//@JoinColumn(name="coop_matricula", referencedColumnName = "coop_matricula")
+	//@OneToOne(cascade = CascadeType.ALL)
 	private Lgpd lgpd;
 	
-	
-
-
 	public List<Coopendereco> getCoopendereco() {
 		return coopendereco;
 	}
@@ -125,13 +126,14 @@ public class Cooperado implements Serializable {
 		this.telefones = telefones;
 	}
 
+	
 
-	public List<Coopcadastro> getCoopcadastro() {
+	public Coopcadastro getCoopcadastro() {
 		return coopcadastro;
 	}
 
 
-	public void setCoopcadastro(List<Coopcadastro> coopcadastro) {
+	public void setCoopcadastro(Coopcadastro coopcadastro) {
 		this.coopcadastro = coopcadastro;
 	}
 

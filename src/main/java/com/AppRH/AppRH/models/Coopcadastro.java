@@ -3,20 +3,18 @@ package com.AppRH.AppRH.models;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-
-
-
-import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="coop_cadastro")
@@ -33,10 +31,10 @@ private static final long serialVersionUID = 1L;
 	private int coopmatricula;
 	
 	@Column(name="coop_data_cadastro")
-	private Date coopdatacadastro;
+	private LocalDateTime coopdatacadastro;
 	
 	@Column(name="coop_data_admissao")
-	private Date coopdataadmissao;
+	private LocalDateTime coopdataadmissao;
 	
 	@Column(name="coop_data_desligamento")
 	private Date coopdatadesligamento;
@@ -102,20 +100,22 @@ private static final long serialVersionUID = 1L;
 		this.coopmatricula = coopmatricula;
 	}
 
-	public Date getCoopdatacadastro() {
+	
+
+	public LocalDateTime getCoopdatacadastro() {
 		return coopdatacadastro;
 	}
 
-	public void setCoopdatacadastro(Date coopdatacadastro) {
+	public void setCoopdatacadastro(LocalDateTime coopdatacadastro) {
 		this.coopdatacadastro = coopdatacadastro;
 	}
 
-	public Date getCoopdataadmissao() {
+	public LocalDateTime getCoopdataadmissao() {
 		return coopdataadmissao;
 	}
 
-	public void setCoopdataadmissao(Date coopdataadmissao) {
-		this.coopdataadmissao = coopdataadmissao;
+	public void setCoopdataadmissao(LocalDateTime localDateTime) {
+		this.coopdataadmissao = localDateTime;
 	}
 
 	public Date getCoopdatadesligamento() {

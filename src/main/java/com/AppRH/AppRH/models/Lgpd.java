@@ -2,6 +2,7 @@ package com.AppRH.AppRH.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class Lgpd implements Serializable{
 	
 	@NotNull
 	@Column(name="coop_matricula",insertable = false, updatable = false)
+	//@Column(name="coop_matricula")
 	private int coopmatricula;
 	
 	@Column(name="coop_ligacao")
@@ -38,7 +40,7 @@ public class Lgpd implements Serializable{
 	@Column(name="coop_nenhum")
 	private String coopnenhum;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "coop_matricula")
 	private Cooperado cooperado;
 

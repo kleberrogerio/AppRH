@@ -59,5 +59,31 @@ public class JasperController {
 		}
 		response.getOutputStream().write(bytes);
 	}
+	@GetMapping("/relatorio/pdf/jr4")
+	public void exibirRelatorio04(@RequestParam("code") String code,
+			@RequestParam("acao") String acao,
+			HttpServletResponse response) throws IOException {
+		byte[] bytes= service.exportarPdf(code);
+		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+		if(acao.equals("v")) {
+			response.setHeader("Content-disposition","inline; filename=relatorio-"+code+".pdf");
+		}else {
+			response.setHeader("Content-disposition","attachment; filename=relatorio-"+code+".pdf");			
+		}
+		response.getOutputStream().write(bytes);
+	}
+	@GetMapping("/relatorio/pdf/jr5")
+	public void exibirRelatorio05(@RequestParam("code") String code,
+			@RequestParam("acao") String acao,
+			HttpServletResponse response) throws IOException {
+		byte[] bytes= service.exportarPdf(code);
+		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+		if(acao.equals("v")) {
+			response.setHeader("Content-disposition","inline; filename=relatorio-"+code+".pdf");
+		}else {
+			response.setHeader("Content-disposition","attachment; filename=relatorio-"+code+".pdf");			
+		}
+		response.getOutputStream().write(bytes);
+	}
 
 }
