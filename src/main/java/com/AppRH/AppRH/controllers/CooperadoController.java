@@ -219,6 +219,13 @@ public class CooperadoController {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
 		Iterable<Cooperado>cooperados=cr.encontrarAtivos();
 		
+		double soma=0;
+		
+		for (Cooperado cooperado : cooperados) {
+				soma = soma + 1;					    
+		}
+		
+		mv.addObject("soma",soma);		
 		mv.addObject("cooperados",cooperados);
 		return mv;			
 	}
