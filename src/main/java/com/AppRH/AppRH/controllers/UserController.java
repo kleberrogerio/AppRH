@@ -1,8 +1,11 @@
 package com.AppRH.AppRH.controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,11 +24,33 @@ public class UserController {
  	@GetMapping("/user")
     @ResponseBody
     public String getCurrentUser() {
+ 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+ 	    // Obtém todas as autorizações associadas ao usuário autenticado
+ 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+ 	    // Percorre as autorizações para obter os nomes das roles
+ 	    StringBuilder roles = new StringBuilder();
+ 	    for (GrantedAuthority authority : authorities) {
+ 	        roles.append(authority.getAuthority()).append(", ");
+ 	    }
+
+ 	    // Remove a vírgula e o espaço extras no final da string
+ 	    if (roles.length() > 2) {
+ 	        roles.setLength(roles.length() - 2);
+ 	    }
+
+ 	    return "Usuário logado: " + authentication.getName() + ", Tipo de autorização: " + roles.toString();
+    }
+ 	
+ 	/*@GetMapping("/user")
+    @ResponseBody
+    public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return "Usuário logado: " + username;
     }
-	
+	*/
 	@GetMapping("/trocar-usuario/{nome}")
     public String trocarUsuario(@PathVariable("nome") String nome) {
         try {

@@ -35,7 +35,7 @@ public class TestaCooperado {
 		usuario.setEmail("kleber@serco.com.br");
 		usuario.setAutorizacoes(new HashSet<Autorizacao>());
 		Autorizacao aut = new Autorizacao();
-		aut.setNome("ROLE_USUARIO");
+		aut.setNome("ROLE_DEVELOPER");
 		ar.save(aut);
 		usuario.getAutorizacoes().add(aut);
 		ur.save(usuario);

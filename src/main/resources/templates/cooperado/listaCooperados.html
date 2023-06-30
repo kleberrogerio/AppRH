@@ -182,11 +182,20 @@
 									<td><span th:text="${cooperado.coopnome}"></span></td>
 									<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
 									
-									<td><a
+									<!--  <td><a
 										th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										th:attr="data-cooperado-nome=${cooperado.coopnome}"
-												type="button" class="btn btn-danger deletar-cooperado" >Excluir</a></td>
-									<td><a
+												type="button" class="btn btn-danger deletar-cooperado" >Excluir</a>
+												</td>-->
+								<td><a
+									th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+									th:attr="data-cooperado-nome=${cooperado.coopnome}"
+									type="button" class="btn btn-danger deletar-cooperado"
+									sec:authorize="hasRole('ROLE_ADMIN')"
+									sec:disabled="!hasRole('ROLE_ADMIN')">Excluir</a></td>
+
+
+								<td><a
 										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										class="btn btn-primary">Editar
 											</button>
