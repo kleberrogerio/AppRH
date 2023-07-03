@@ -23,7 +23,7 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="func_id")
-	private int funcid;
+	private Integer funcid;
 	
 	@Column(name="func_matricula")
 	private int funcmatricula;

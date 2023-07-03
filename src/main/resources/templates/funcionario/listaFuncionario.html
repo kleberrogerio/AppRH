@@ -74,6 +74,7 @@
 		<table class="table table-hover table-responsive w-auto table-striped">
 			<thead>
 				<tr>
+					<th scope="col">Matricula:</th>
 					<th scope="col">Nome:</th>
 					<th scope="col">Data de nascimento:</th>
 					<th scope="col">E-mail:</th>
@@ -84,24 +85,33 @@
 			</thead>
 			<tbody>
 				<tr th:each="funcionario : ${funcionarios}">
+				
+				<td><span th:text="${funcionario.funcmatricula}"></span></td>
+				<td><span th:text="${funcionario.funcnome}"></span></td>
 
+				<!-- 	<td><a
+						th:href="${(#mvc.url('FC#detalhesFuncionario').arg(0, funcionario.funcmatricula)).build()}"><span
+							th:text="${funcionario.funcnome}"></span></a></td> 
+							<td><a
+						th:href="${funcionario.funcmatricula)).build()}"><span
+							th:text="${funcionario.funcnome}"></span></a></td>-->
+					<td><span th:text="${funcionario.funcdata}"></span></td>
+					<td><span th:text="${funcionario.funcemail}"></span></td>
+					<!-- <td><span th:text="${funcionario.funcemail}"></span></td> -->
+					<!--  
 					<td><a
-						th:href="${(#mvc.url('FC#detalhesFuncionario').arg(0, funcionario.id)).build()}"><span
-							th:text="${funcionario.nome}"></span></a></td>
-					<td><span th:text="${funcionario.data}"></span></td>
-					<td><span th:text="${funcionario.email}"></span></td>
-					<td><a
-						th:href="${(#mvc.url('FC#deletarFuncionario').arg(0, funcionario.id)).build()}"
+						th:href="${(#mvc.url('FC#deletarFuncionario').arg(0, funcionario.funcmatricula)).build()}"
 						class="waves-effect waves-light btn-small"><button
 								type="button" class="btn btn-danger">Excluir</button></a></td>
 					<td><a
-						th:href="${(#mvc.url('FC#editarFuncionario').arg(0, funcionario.id)).build()}"><button
+						th:href="${(#mvc.url('FC#editarFuncionario').arg(0, funcionario.funcmatricula)).build()}"><button
 								type="button" class="btn btn-primary">Editar</button></a></td>
 
 					<td><a
-						th:href="${(#mvc.url('FC#detalhesFuncionario').arg(0, funcionario.id)).build()}"><button
+						th:href="${(#mvc.url('FC#detalhesFuncionario').arg(0, funcionario.funcmatricula)).build()}"><button
 								type="button" class="btn btn-success">Adicionar
 								dependente</button></a></td>
+								-->
 
 				</tr>
 			</tbody>
@@ -111,9 +121,9 @@
 		<div style="height: 100px;"></div>
 
 		<div class="footer-copyright fixed-bottom bg-dark text-center py-3">
-			<span class="text-light align-middle">| App RH - UC 12 | - ©
-				2022 Copyright: CTM Supervisão de Educação Online</span>
-		</div>
+		<span class="text-light align-middle">| App Serco | - © 2023
+			Copyright: Kleber Rogério do Nascimento</span>
+	</div>
 
 
 
