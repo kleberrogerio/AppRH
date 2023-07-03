@@ -13,9 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -68,13 +68,13 @@ public class CooperadoController {
 	
 	//INSERE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-	@RequestMapping(value = "/cadastrarCooperado")
+	@GetMapping(value = "/cadastrarCooperado")
 	public String form() {
 		return "cooperado/formCooperado";
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-	@RequestMapping(value = "/cadastrarCooperado",method = RequestMethod.POST)
+	@PostMapping(value = "/cadastrarCooperado")
 	public String form(@Valid Cooperado cooperado, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
@@ -123,7 +123,7 @@ public class CooperadoController {
 	
 	//CONTROLANDO O LGPD
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-	@RequestMapping(value = "/ControlaLGPD/{coopmatricula}",method = RequestMethod.POST)
+	@PostMapping(value = "/ControlaLGPD/{coopmatricula}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public void controlaLGPD(@PathVariable("coopmatricula") int coop_matricula, @RequestParam("value") String value, @RequestParam("type") String type) {
 		
@@ -159,7 +159,7 @@ public class CooperadoController {
 			}
 	//LISTAR COOPERADOS
 	
-	@RequestMapping("/cooperados")
+	@GetMapping("/cooperados")
 	//@PreAuthorize("isAuthenticated()")
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public ModelAndView listaCooperados() {
@@ -170,7 +170,7 @@ public class CooperadoController {
 	}
 	
 	//MÉTODO UTILIZADO PARA A BUSCA
-	@RequestMapping(value = "/cooperados", method = RequestMethod.POST)
+	@PostMapping(value = "/cooperados")
 	public ModelAndView buscarIndex(@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
 		
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
@@ -214,7 +214,7 @@ public class CooperadoController {
 	}
 	
 	//LISTAR COOPERADOS ATIVOS	
-	@RequestMapping("/cooperadosA")
+	@GetMapping("/cooperadosA")
 	public ModelAndView listaCooperadosAtivos() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
 		Iterable<Cooperado>cooperados=cr.encontrarAtivos();		
@@ -225,7 +225,7 @@ public class CooperadoController {
 	
 	//LISTAR COOPERADOS INATIVOS
 	
-		@RequestMapping("/cooperadosN")
+		@GetMapping("/cooperadosN")
 		public ModelAndView listaCooperadosInativos() {
 			ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
 			Iterable<Cooperado>cooperados=cr.encontrarInativos();
@@ -236,7 +236,7 @@ public class CooperadoController {
 	
 	//LISTAR ZERADA
 	
-		@RequestMapping("/cooperadosI")
+		@GetMapping("/cooperadosI")
 		public ModelAndView listaCooperadosInicio() {
 			ModelAndView mv = new ModelAndView("cooperado/listainicio");
 			//ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
@@ -245,7 +245,7 @@ public class CooperadoController {
 	
 	//VER DETALHES DOS COOPERADOS
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
-	@RequestMapping(value="/{coopmatricula}")
+	@GetMapping(value="/{coopmatricula}")
 	public ModelAndView detalhesCooperado(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/detalhesCooperado");
@@ -271,7 +271,7 @@ public class CooperadoController {
 	}
 	//MOSTRAR DÍVIDAS
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
-	@RequestMapping(value="/divida{coopmatricula}")
+	@GetMapping(value="/divida{coopmatricula}")
 	public ModelAndView divida(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/divida");
@@ -295,7 +295,7 @@ public class CooperadoController {
 	}
 	//MOSTRAR COTA PARTE
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
-	@RequestMapping(value="/cota{coopmatricula}")
+	@GetMapping(value="/cota{coopmatricula}")
 	public ModelAndView cota(@PathVariable("coopmatricula") int coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
 		ModelAndView mv = new ModelAndView("cooperado/cota");
@@ -308,7 +308,7 @@ public class CooperadoController {
 	}
 	
 	//MOSTRAR TODAS AS COTAS PARTES NÃO DEVOLVIDAS AOS COOPERADOS	
-		@RequestMapping("/cotas")
+		@GetMapping("/cotas")
 		@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
 		public ModelAndView cotas() {
 			ModelAndView mv = new ModelAndView("cooperado/cotas");
@@ -321,7 +321,7 @@ public class CooperadoController {
 		//ABRE PÁGINA DE RELATÓRIOS
 		//@PreAuthorize("isAuthenticated")
 		@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
-		@RequestMapping("/relatorios")
+		@GetMapping("/relatorios")
 		public ModelAndView relatorios() {
 			ModelAndView mv = new ModelAndView("cooperado/relatorios");
 			return mv;		
@@ -329,7 +329,7 @@ public class CooperadoController {
 		
 		
 	//MOSTRA OS ENDEREÇOS
-		@RequestMapping(value="/coopendereco{coopmatricula}")
+		@GetMapping(value="/coopendereco{coopmatricula}")
 		@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 		//@PreAuthorize("isAuthenticated")
 		public ModelAndView coopendereco(@PathVariable("coopmatricula") int coop_matricula) {
@@ -344,7 +344,7 @@ public class CooperadoController {
 		}
 		
 	//MOSTRA OS DADOS DO CADASTRO
-			@RequestMapping(value="/coopcadastro{coopmatricula}")
+			@GetMapping(value="/coopcadastro{coopmatricula}")
 			//@PreAuthorize("isAuthenticated")
 			@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 			public ModelAndView coopcadastro(@PathVariable("coopmatricula") int coop_matricula) {
@@ -360,7 +360,7 @@ public class CooperadoController {
 		
 	//DELETA COOPERADO
 	@PreAuthorize("hasAnyRole('DEVELOPER')")
-	@RequestMapping("/deletarCooperado")
+	@GetMapping("/deletarCooperado")
 	public String deletarCooperado(int coopmatricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coopmatricula);
 		cr.delete(cooperado);
@@ -369,7 +369,7 @@ public class CooperadoController {
 	
 	//ADICIONAR TELEFONE
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
-	@RequestMapping(value="/{coopmatricula}",method=RequestMethod.POST)
+	@PostMapping(value="/{coopmatricula}")
 	public String detalhesCooperadosPost(@PathVariable("coopmatricula") int coop_matricula, @Valid Telefone telefone,BindingResult result, RedirectAttributes attributes) {
 		System.out.println("aqui"+coop_matricula);
 		if(result.hasErrors()) {
@@ -396,7 +396,7 @@ public class CooperadoController {
 	
 	//DELETA TELEFONE
 	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
-	@RequestMapping("/deletarTelefone")
+	@GetMapping("/deletarTelefone")
 	public String deletarTelefone(int cooptelindexcod) {
 		Telefone telefone = tr.findByCooptelindexcod(cooptelindexcod);
 		Cooperado cooperado = telefone.getCooperado();
@@ -429,7 +429,7 @@ public class CooperadoController {
 	//METODOS QUE ATUALIZAM COOPERADO
 	//FORMULÁRIO ALTERA COOPERADO
 	
-	@RequestMapping(value="/editar-cooperado")
+	@GetMapping(value="/editar-cooperado")
 	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
 	public ModelAndView editarCooperado(Integer coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
@@ -442,7 +442,7 @@ public class CooperadoController {
 	
 	//UPDATE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
-	@RequestMapping(value="/editar-cooperado",method = RequestMethod.POST)
+	@PostMapping(value="/editar-cooperado")
 	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
 		cooperado.setCoopnome(cooperado.getCoopnome().toUpperCase());
 	    cooperado.setCoopnomeguerra(cooperado.getCoopnomeguerra().toUpperCase());
