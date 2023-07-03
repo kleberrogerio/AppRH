@@ -217,15 +217,8 @@ public class CooperadoController {
 	@RequestMapping("/cooperadosA")
 	public ModelAndView listaCooperadosAtivos() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
-		Iterable<Cooperado>cooperados=cr.encontrarAtivos();
-		
-		double soma=0;
-		
-		for (Cooperado cooperado : cooperados) {
-				soma = soma + 1;					    
-		}
-		
-		mv.addObject("soma",soma);		
+		Iterable<Cooperado>cooperados=cr.encontrarAtivos();		
+			
 		mv.addObject("cooperados",cooperados);
 		return mv;			
 	}

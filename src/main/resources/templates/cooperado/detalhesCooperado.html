@@ -129,39 +129,45 @@
 								name="coopmatricula" class="form-control" placeholder="Matricula" required />
 						</div>
 						 -->
-						
-						<div class="col">
-							<label for=""><b>Fone do Cooperado:</b> </label> <input type="text"  id="telefone" value=""
-								name="cooptelnumero" class="form-control" placeholder="Telefone" required />
+
+						<div class="row">
+							<div class="row">
+								<div class="col">
+									<label for="telefone"><b>Fone do Cooperado:</b></label> <input
+										type="text" id="telefone" name="cooptelnumero"
+										class="form-control" placeholder="Telefone" required />
+								</div>
+
+								<div class="col">
+									<label for="coopteltipo"><b>Tipo:</b></label> <select
+										name="coopteltipo" id="coopteltipo" class="custom-select"
+										required>
+										<option value="">Escolher...</option>
+										<option value="RESIDENCIAL">RESIDENCIAL</option>
+										<option value="CELULAR">CELULAR</option>
+										<option value="COMERCIAL">COMERCIAL</option>
+									</select>
+								</div>
 								
-								<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-								<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-								<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-								<script>
-								$(document).ready(function(){
-									$('#telefone').inputmask('(99) 99999-9999');
-								});
-								</script>
-						</div>
-
-						<div class="col">
-						
-								<select name="coopteltipo" id="coopteltipo" class="custom-select my-3 p-2 w-100" required>
-									<option value="">Escolher...</option>
-									<option value="RESIDENCIAL">RESIDENCIAL</option>
-									<option value="CELULAR">CELULAR</option>
-									<option value="COMERCIAL">COMERCIAL</option>
-									
-										</select>
-						</div>
-
+							</div>
 			
+							<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+							<script
+								src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+							<script
+								src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+							<script>
+								  $(document).ready(function() {
+								    $('#telefone').inputmask('(99) 99999-9999');
+								  });
+								</script>
+
+						</div>
+
+
+
 					</div>
-
-
-
-				</div>
-
+<br>
 				<button type="submit" class="btn btn-success">Adicionar
 					Telefone</button>
 			</form>
