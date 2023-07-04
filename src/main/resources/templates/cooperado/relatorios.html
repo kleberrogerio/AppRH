@@ -110,6 +110,21 @@
 <a th:href="@{/relatorio/pdf/jr5(code='05',acao='v')}">Abrir Relatório</a>
 <a th:href="@{/relatorio/pdf/jr5(code='05',acao='d')}">Fazer Download</a>
 	 -->
+	 
+<!--  
+<div>
+	<h2>Com Parametros)</h2>
+	<form th:action="@{/relatorio/pdf/jr3/03}" method="get">
+		<select id="mat" name="mat">
+			<option value="">Selecione as matrículas</option>
+			<option th:each="mat : ${mats}" th:value="${mats}" th:text="${mat}">Selecione a Matricula</option>		
+		</select>		
+		<button type="submit">Buscar</button>	
+	</form>
+
+
+
+</div>-->
 	<div style="height: 100px;"></div>
 
 

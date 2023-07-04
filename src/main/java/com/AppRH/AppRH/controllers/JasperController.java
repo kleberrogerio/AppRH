@@ -1,6 +1,7 @@
 package com.AppRH.AppRH.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.AppRH.AppRH.repository.CooperadoRepository;
 import com.AppRH.AppRH.service.JasperService;
 
 @Controller
@@ -17,6 +21,9 @@ public class JasperController {
 	
 	@Autowired
 	private JasperService service;
+	
+	@Autowired
+	private CooperadoRepository cr;
 	
 	@GetMapping("/relatorio/pdf/jr1")
 	public void exibirRelatorio01(@RequestParam("code") String code,
@@ -59,6 +66,7 @@ public class JasperController {
 		}
 		response.getOutputStream().write(bytes);
 	}
+	
 	@GetMapping("/relatorio/pdf/jr4")
 	public void exibirRelatorio04(@RequestParam("code") String code,
 			@RequestParam("acao") String acao,
@@ -85,5 +93,21 @@ public class JasperController {
 		}
 		response.getOutputStream().write(bytes);
 	}
-
+	
+	/*@GetMapping("/relatorio/pdf/jr3/{code}")
+	public void exibirRelatorio03(@PathVariable("code") String code,
+			@RequestParam(name="mat",required=false) Long mat,
+			HttpServletResponse response) throws IOException {
+		service.addParams("Matricula", mat!=null ? null : mat);
+		byte[] bytes= service.exportarPdf(code);
+		response.setContentType(MediaType.APPLICATION_PDF_VALUE);	
+		response.setHeader("Content-disposition","inline; filename=relatorio-"+code+".pdf");
+		response.getOutputStream().write(bytes);
+	}
+	
+	@ModelAttribute("matriculas")
+	public List<Long>getMatriculas(){
+		return cr.encontrarMatriculas();
+	}
+*/
 }

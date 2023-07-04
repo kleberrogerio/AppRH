@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.AppRH.AppRH.models.Cooperado;
+import com.AppRH.AppRH.util.PaginacaoUtil;
 
 @Repository
 public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
@@ -41,5 +42,9 @@ public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
 	
 	@Query(value="SELECT Max(c.coop_matricula) from coop c", nativeQuery = true)
 	Integer achaMaior();
+	
+	//Busca para etiquetas
+	@Query(value = "SELECT coop_matricula FROM coop order by coop_matricula asc", nativeQuery = true)
+	List<Long> encontrarMatriculas();
 	
 }

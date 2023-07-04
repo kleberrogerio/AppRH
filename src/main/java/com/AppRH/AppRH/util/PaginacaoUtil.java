@@ -4,16 +4,13 @@ import java.util.List;
 
 public class PaginacaoUtil<T> {
 	
-	private int tamanho;
-	
+	private int tamanho;	
 	
 	private int pagina;
 	
-	private Long totaldepaginas;
-	
+	private Long totaldepaginas;	
 	
 	private List<T> registros;
-
 
 	public PaginacaoUtil(int tamanho, int pagina, Long totaldepaginas, List<T> registros) {
 		super();
