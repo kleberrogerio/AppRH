@@ -37,7 +37,7 @@ import com.AppRH.AppRH.repository.EnderecoRepository;
 import com.AppRH.AppRH.repository.LgpdRepository;
 import com.AppRH.AppRH.repository.LogAlteracaoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
-import com.AppRH.AppRH.service.CooperadoService;
+//import com.AppRH.AppRH.service.CooperadoService;
 
 
 @Controller
@@ -67,8 +67,8 @@ public class CooperadoController {
 	@Autowired
     private LogAlteracaoRepository la;
 	
-	@Autowired
-	private CooperadoService cs;
+	//@Autowired
+	//private CooperadoService cs;
 	
 	//INSERE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
@@ -176,8 +176,9 @@ public class CooperadoController {
 		return mv;
 	}
 	*/
+	
+	//LISTAR COOPERADOS
 	@GetMapping("/cooperados")
-	//@PreAuthorize("isAuthenticated()")
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public ModelAndView listaCooperados() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");

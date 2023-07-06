@@ -6,15 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.AppRH.AppRH.dao.CooperadoDao;
 import com.AppRH.AppRH.models.Cooperado;
-import com.AppRH.AppRH.repository.CooperadoRepository;
+//import com.AppRH.AppRH.repository.CooperadoRepository;
 import com.AppRH.AppRH.util.PaginacaoUtil;
 
 
 @Service @Transactional(readOnly=false)
 public class CooperadoServiceImpl implements CooperadoService {
 	
-	@Autowired
-	private CooperadoRepository cr;
+	//@Autowired
+	//private CooperadoRepository cr;
 	
 	@Autowired
 	private CooperadoDao cd;

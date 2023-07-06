@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.AppRH.AppRH.models.Cooperado;
-import com.AppRH.AppRH.util.PaginacaoUtil;
+//import com.AppRH.AppRH.util.PaginacaoUtil;
 
 @Repository
 public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
