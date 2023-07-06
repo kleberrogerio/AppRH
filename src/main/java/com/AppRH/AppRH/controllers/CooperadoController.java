@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,6 @@ import com.AppRH.AppRH.repository.EnderecoRepository;
 import com.AppRH.AppRH.repository.LgpdRepository;
 import com.AppRH.AppRH.repository.LogAlteracaoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
-//import com.AppRH.AppRH.service.CooperadoService;
 
 
 @Controller
@@ -109,14 +110,20 @@ public class CooperadoController {
 
 		 cr.save(cooperado);
 		 
-		//SALVANDO UM LOG DE INCLUSÃO	
-		  LogAlteracao lalte= new LogAlteracao();
-		  lalte.setData(LocalDateTime.now());
-		  lalte.setTabela("Cooperado");
-		  lalte.setOperacao("Inclusão");
-		  lalte.setDetalhes("Cooperado Inserido");
-		  lalte.setCoopmatricula(cooperado.getCoopindexcod());
-	      la.save(lalte);
+		
+		//SALVANDO UM LOG DE INCLUSÃO
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 String username = authentication.getName();
+		 
+		 
+		 LogAlteracao lalte= new LogAlteracao();
+		 lalte.setData(LocalDateTime.now());
+		 lalte.setTabela("Cooperado");
+		 lalte.setOperacao("Inclusão");
+		 lalte.setDetalhes("Cooperado Inserido");
+		 lalte.setCoopmatricula(cooperado.getCoopindexcod());
+		 lalte.setUsuario(username);
+	     la.save(lalte);
 	      
 		 System.out.println("Maior"+maior);
 	
@@ -151,12 +158,16 @@ public class CooperadoController {
 		
 		lr.save(lgpd);
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		
 		LogAlteracao log = new LogAlteracao();
 		log.setCoopmatricula(coop_matricula);
 		log.setData(LocalDateTime.now(ZoneId.of("Brazil/East")));
 		log.setDetalhes("Alterou o valor: " + type + " para " + valor);
 		log.setTabela("coop_lgpd");
 		log.setOperacao("Update");
+		log.setUsuario(username);
 		
 		la.save(log);		
 		

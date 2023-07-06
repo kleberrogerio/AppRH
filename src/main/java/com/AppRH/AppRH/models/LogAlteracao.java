@@ -34,6 +34,17 @@ public class LogAlteracao {
     @NotNull
 	@Column(name="coop_matricula",insertable = true, updatable = false)
 	private int coopmatricula;
+    
+    @Column(name="coop_usuario")
+	private String usuario;
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
 	public Integer getId() {
 		return id;
