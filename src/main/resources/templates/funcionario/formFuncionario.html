@@ -73,12 +73,13 @@
 		<br>
 
 
+	<th:block th:include="mensagemValidacao"></th:block>
 
 		<form method="post">
 
 			<div class="form-group">
 				<label for=""><b>Nome:</b> </label> <input type="text" class="form-control" value=""
-					placeholder="Insira o nome do funcionário" name="nome" required>
+					placeholder="Insira o nome do funcionário" name="funcnome" required>
 				<small class="form-text text-muted"><i>* Nome completo.</i></small>
 			</div>
 
@@ -86,13 +87,13 @@
 				<div class="col">
 
 					<div class="form-group">
-						<label for=""><b>Data de nascimento:</b></label> <input type="date" value="" name="data"
+						<label for=""><b>Data de nascimento:</b></label> <input type="date" value="" name="funcdata"
 							class="form-control" required />
 						<small class="form-text text-muted"><i>* Dia/Mês/Ano.</i></small>
 					</div>
 				</div>
 				<div class="col">
-					<label for=""><b>E-mail:</b> </label> <input type="text" value="" name="email" class="form-control"
+					<label for=""><b>E-mail:</b> </label> <input type="text" value="" name="funcemail" class="form-control"
 						placeholder="email@email.com" required />
 				</div>
 

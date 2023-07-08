@@ -3,11 +3,12 @@ package com.AppRH.AppRH.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,13 +27,15 @@ public class FuncionarioController {
 	private DependenteRepository dr;
 
 	// GET que chama o form para cadastrar funcionários
-	@RequestMapping("/cadastrarFuncionario")
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
+	@GetMapping("/cadastrarFuncionario")
 	public String form() {
 		return "funcionario/formFuncionario";
 	}
 
 	// POST que cadastra funcionários
-	@RequestMapping(value = "/cadastrarFuncionario", method = RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
+	@PostMapping(value = "/cadastrarFuncionario")
 	public String form(@Valid Funcionario funcionario, BindingResult result, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
@@ -46,7 +49,8 @@ public class FuncionarioController {
 	}
 
 	// GET que lista funcionários
-	@RequestMapping("/funcionarios")
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER', 'USUARIO')")
+	@GetMapping("/funcionarios")
 	public ModelAndView listaFuncionarios() {
 		ModelAndView mv = new ModelAndView("funcionario/listaFuncionario");
 		Iterable<Funcionario> funcionarios = fr.findAll();
@@ -55,9 +59,10 @@ public class FuncionarioController {
 	}
 
 	// GET que lista dependentes e detalhes dos funcionário
-	@RequestMapping("/detalhes-funcionario/{id}")
-	public ModelAndView detalhesFuncionario(@PathVariable("id") long id) {
-		Funcionario funcionario = fr.findById(id);
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER', 'USUARIO')")
+	@GetMapping("/detalhes-funcionario/{id}")
+	public ModelAndView detalhesFuncionario(@PathVariable("funcmatricula") int funcmatricula) {
+		Funcionario funcionario = fr.findByFuncmatricula(funcmatricula);
 		ModelAndView mv = new ModelAndView("funcionario/detalhes-funcionario");
 		mv.addObject("funcionarios", funcionario);
 
@@ -70,7 +75,8 @@ public class FuncionarioController {
 	}
 
 	// POST que adiciona dependentes
-	@RequestMapping(value="/detalhes-funcionario/{id}", method = RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
+	@PostMapping(value="/detalhes-funcionario/{id}")
 	public String detalhesFuncionarioPost(@PathVariable("id") long id, Dependentes dependentes, BindingResult result,
 			RedirectAttributes attributes) {
 		
@@ -93,9 +99,10 @@ public class FuncionarioController {
 	}
 	
 	//GET que deleta funcionário
-	@RequestMapping("/deletarFuncionario")
-	public String deletarFuncionario(long id) {
-		Funcionario funcionario = fr.findById(id);
+	@PreAuthorize("hasAnyRole('DEVELOPER')")
+	@GetMapping("/deletarFuncionario")
+	public String deletarFuncionario(int funcmatricula) {
+		Funcionario funcionario = fr.findById(funcmatricula);
 		fr.delete(funcionario);
 		return "redirect:/funcionarios";
 		
@@ -103,16 +110,18 @@ public class FuncionarioController {
 	
 	// Métodos que atualizam funcionário
 	// GET que chama o FORM de edição do funcionário
-	@RequestMapping("/editar-funcionario")
-	public ModelAndView editarFuncionario(long id) {
-		Funcionario funcionario = fr.findById(id);
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
+	@GetMapping("/editar-funcionario")
+	public ModelAndView editarFuncionario(int funcmatricula) {
+		Funcionario funcionario = fr.findByFuncmatricula(funcmatricula);
 		ModelAndView mv = new ModelAndView("funcionario/update-funcionario");
 		mv.addObject("funcionario", funcionario);
 		return mv;
 	}
 	
 	// POST que atualiza o funcionário
-	@RequestMapping(value = "/editar-funcionario", method = RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
+	@PostMapping(value = "/editar-funcionario")
 	public String updateFuncionario(@Valid Funcionario funcionario,  BindingResult result, RedirectAttributes attributes){
 		
 		fr.save(funcionario);
@@ -125,7 +134,8 @@ public class FuncionarioController {
 	}
 	
 	// GET que deleta dependente
-	@RequestMapping("/deletarDependente")
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
+	@GetMapping("/deletarDependente")
 	public String deletarDependente(String funcdepcpf) {
 		Dependentes dependente = dr.findByFuncdepcpf(funcdepcpf);
 		

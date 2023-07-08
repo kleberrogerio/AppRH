@@ -13,6 +13,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 	
 	Funcionario findById(long id);
 	
+	Funcionario findByFuncmatricula(int funcmatricula);
+	
 	List<Funcionario>findByFuncnome(String funcnome);
 	
 	//Para Buscar

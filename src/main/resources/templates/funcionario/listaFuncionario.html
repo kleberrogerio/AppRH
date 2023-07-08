@@ -97,13 +97,13 @@
 							th:text="${funcionario.funcnome}"></span></a></td>-->
 					<td><span th:text="${funcionario.funcdata}"></span></td>
 					<td><span th:text="${funcionario.funcemail}"></span></td>
-					<!-- <td><span th:text="${funcionario.funcemail}"></span></td> -->
-					<!--  
+					 
 					<td><a
 						th:href="${(#mvc.url('FC#deletarFuncionario').arg(0, funcionario.funcmatricula)).build()}"
 						class="waves-effect waves-light btn-small"><button
-								type="button" class="btn btn-danger">Excluir</button></a></td>
-					<td><a
+								type="button" class="btn btn-danger">Excluir</button></a></td>								
+								
+					 <td><a
 						th:href="${(#mvc.url('FC#editarFuncionario').arg(0, funcionario.funcmatricula)).build()}"><button
 								type="button" class="btn btn-primary">Editar</button></a></td>
 
@@ -111,7 +111,7 @@
 						th:href="${(#mvc.url('FC#detalhesFuncionario').arg(0, funcionario.funcmatricula)).build()}"><button
 								type="button" class="btn btn-success">Adicionar
 								dependente</button></a></td>
-								-->
+								
 
 				</tr>
 			</tbody>

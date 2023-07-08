@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -20,11 +21,12 @@ public class Funcionario implements Serializable{
 	
 private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="func_id")
 	private Integer funcid;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull
 	@Column(name="func_matricula")
 	private int funcmatricula;
 	

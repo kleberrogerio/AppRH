@@ -75,10 +75,17 @@
 
 			<br>
 
+			
+			<div class="form-group">
+				<label for=""><b>Matrícula:</b> </label> <input type="text" readonly
+					class="form-control" value="" placeholder=""
+					name="funcmatricula" th:attr="value = ${funcionario.funcmatricula}" required> <small class="form-text text-muted"><i>*
+						Somente visualização.</i></small>
+			</div>
+			
 			<div class="form-group">
 				<label for=""><b>Nome do funcionário:</b> </label> <input type="text" class="form-control" value=""
-					name="nome" required /> <small class="form-text text-muted"><i>* Utilize nomes e
-						termos mais utilizados no mercado.</i></small>
+					name="funcnome" th:attr="value = ${funcionario.funcnome}" required /> <small class="form-text text-muted"><i>* Coloque o nome completo.</i></small>
 			</div>
 
 
@@ -87,7 +94,7 @@
 				<div class="col">
 					<div class="form-group">
 						<label for=""><b>Data de nascimento:</b></label> <input type="date" class="form-control"
-							value="" name="data" required /><small class="form-text text-muted"><i>* Data de
+							value="" name="funcdata" th:attr="value = ${funcionario.funcdata}" required /><small class="form-text text-muted"><i>* Data de
 								nascimento.</i></small>
 					</div>
 				</div>
@@ -95,7 +102,7 @@
 
 					<div class="form-group">
 						<label for=""><b>E-mail:</b></label><input type="text" class="form-control" value=""
-							name="email" required /><small class="form-text text-muted"><i>* email@email.com</i></small>
+							name="funcemail" th:attr="value = ${funcionario.funcemail}" required /><small class="form-text text-muted"><i>* email@email.com</i></small>
 					</div>
 
 				</div>
