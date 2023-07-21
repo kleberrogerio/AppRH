@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -205,9 +207,13 @@ public class CooperadoController {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		String mensagem = "Resultados da busca por " + buscar;
 		
+		Pageable pageable = PageRequest.of(1, 20);
+		
 		if(coopnome.equals("")){
 			if (buscar.equals("")) {				
 				mv.addObject("cooperados",cr.encontrarTodos());
+				//Preparando para paginar
+				//mv.addObject("cooperados",cr.encontrarTodos(pageable));
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
 			}
@@ -215,6 +221,8 @@ public class CooperadoController {
 		}else if(coopnome.equals("all")){
 			if (buscar.equals("")) {				
 				mv.addObject("cooperados",cr.encontrarTodos());
+				//Preparando para paginar
+				//mv.addObject("cooperados",cr.encontrarTodos(pageable));
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
 			}

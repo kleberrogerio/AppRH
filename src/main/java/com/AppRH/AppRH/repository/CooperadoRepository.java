@@ -2,6 +2,7 @@ package com.AppRH.AppRH.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +21,8 @@ public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
 	//Para Buscar
 	@Query(value = "SELECT * FROM coop c", nativeQuery = true)
 	List<Cooperado> encontrarTodos();
+	//Preparando para paginar
+	//List<Cooperado> encontrarTodos(Pageable pageable);
 	
 	@Query(value = "SELECT * FROM coop c, coop_cadastro e WHERE c.coop_matricula = e.coop_matricula AND e.coop_cooperado = 'ATIVO'", nativeQuery = true)
 	List<Cooperado> encontrarAtivos();
