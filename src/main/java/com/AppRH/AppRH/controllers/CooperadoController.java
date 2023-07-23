@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ import com.AppRH.AppRH.repository.EnderecoRepository;
 import com.AppRH.AppRH.repository.LgpdRepository;
 import com.AppRH.AppRH.repository.LogAlteracaoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
-
+import com.AppRH.AppRH.service.CooperadoService;
 
 @Controller
 public class CooperadoController {
@@ -70,8 +71,8 @@ public class CooperadoController {
 	@Autowired
     private LogAlteracaoRepository la;
 	
-	//@Autowired
-	//private CooperadoService cs;
+	@Autowired
+	private CooperadoService cs;
 	
 	//INSERE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
@@ -202,27 +203,31 @@ public class CooperadoController {
 	
 	//MÉTODO UTILIZADO PARA A BUSCA
 	@PostMapping(value = "/cooperados")
-	public ModelAndView buscarIndex(@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
+	public ModelAndView buscarIndex(@RequestParam(name="page",defaultValue="1") int pageNum,@RequestParam(name="size",defaultValue="10") int pageSize,@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
 		
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		String mensagem = "Resultados da busca por " + buscar;
+		Page<Cooperado> page=cs.getCooperadosPaginados(pageNum, pageSize);
 		
-		Pageable pageable = PageRequest.of(1, 20);
+		Pageable pageable = PageRequest.of(77, 20);
 		
 		if(coopnome.equals("")){
 			if (buscar.equals("")) {				
-				mv.addObject("cooperados",cr.encontrarTodos());
+				//mv.addObject("cooperados",cr.encontrarTodos());
 				//Preparando para paginar
-				//mv.addObject("cooperados",cr.encontrarTodos(pageable));
+				mv.addObject("cooperados",page.getContent());
+				mv.addObject("currentPage",pageNum);
+				mv.addObject("totalPages",page.getTotalPages());
+				mv.addObject("cooperados",cr.encontrarTodos(pageable));
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
 			}
 			
 		}else if(coopnome.equals("all")){
 			if (buscar.equals("")) {				
-				mv.addObject("cooperados",cr.encontrarTodos());
+				//mv.addObject("cooperados",cr.encontrarTodos());
 				//Preparando para paginar
-				//mv.addObject("cooperados",cr.encontrarTodos(pageable));
+				mv.addObject("cooperados",cr.encontrarTodos(pageable));
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
 			}
