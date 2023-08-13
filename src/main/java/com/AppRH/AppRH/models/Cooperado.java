@@ -23,11 +23,11 @@ public class Cooperado implements Serializable {
 	@Column(name="coop_index_cod")
 	private int coopindexcod;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
-	@Column(name="coop_matricula",unique = true)
-	private int coopmatricula;
+	@Id //(Anotação que identifica que é chave primária)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//(Anotação que faz com que esse campo seja auto increment)
+	@NotNull//(Anotação que faz com que esse campo não seja nulo)
+	@Column(name="coop_matricula",unique = true)//)(Anotação que indica o nome do campo na tabela no banco de dados)
+	private int coopmatricula;//(Campo matrícula)
 	
 	@NotNull
 	@Column(name="coop_nome")
