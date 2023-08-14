@@ -27,7 +27,7 @@ public class Cooperado implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//(Anotação que faz com que esse campo seja auto increment)
 	@NotNull//(Anotação que faz com que esse campo não seja nulo)
 	@Column(name="coop_matricula",unique = true)//)(Anotação que indica o nome do campo na tabela no banco de dados)
-	private int coopmatricula;//(Campo matrícula)
+	private int coopmatricula;//(Indica o nome do campo na tabela no banco de dados)
 	
 	@NotNull
 	@Column(name="coop_nome")
@@ -38,7 +38,8 @@ public class Cooperado implements Serializable {
 	private String coopnomeguerra;
 	
 	
-	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)//(Indica que um cooperado pode ter muitos telefones, 
+																	//essa anotação que faz o relacionamento da tabela cooperado com a tabela telefone)
 	private List<Telefone> telefones;
 	
 	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)

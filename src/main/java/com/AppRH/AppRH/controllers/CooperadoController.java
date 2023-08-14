@@ -136,30 +136,28 @@ public class CooperadoController {
 	
 	
 	//CONTROLANDO O LGPD
-	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-	@PostMapping(value = "/ControlaLGPD/{coopmatricula}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")//(Anotação que define qual nível de autorização pode usar esse método.)
+	@PostMapping(value = "/ControlaLGPD/{coopmatricula}")//Anotação que mostra a URK que chamará o método.
 	@ResponseStatus(value = HttpStatus.OK)
 	public void controlaLGPD(@PathVariable("coopmatricula") int coop_matricula, @RequestParam("value") String value, @RequestParam("type") String type) {
 		
-		Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);
+		Lgpd lgpd = lr.findByCoopmatricula(coop_matricula);// Localiza a matrícula e salva no LGPD
 		
-		String valor = value.equals("true") ? "SIM" : "NÃO";
+		String valor = value.equals("true") ? "SIM" : "NÃO"; //Se na variável value estiver como true, salva como SIM, se não, salva como NÂO 
 		
-		System.out.println(valor);
-		
-		if (type.equals("ligacao")) {
+		if (type.equals("ligacao")) {// Se o tipo for Ligação, salva o que estiver na variável valor
 			lgpd.setCoopligacao(valor);
 		}
 		
-		if (type.equals("whatsapp")) {
+		if (type.equals("whatsapp")) {// Se o tipo for whatsapp, salva o que estiver na variável valor
 			lgpd.setCoopwhatsapp(valor);
 		}
 		
-		if (type.equals("correio")) {
+		if (type.equals("correio")) {// Se o tipo for correio, salva o que estiver na variável valor
 			lgpd.setCoopcorreio(valor);
 		}
 		
-		lr.save(lgpd);
+		lr.save(lgpd); //Salva tudo que foi selecionado na tabela LGPD
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
