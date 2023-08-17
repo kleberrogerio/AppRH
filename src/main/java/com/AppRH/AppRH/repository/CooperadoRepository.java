@@ -26,19 +26,19 @@ public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
 	//List<Cooperado> encontrarTodos(Pageable pageable);
 	Page<Cooperado> encontrarTodos(Pageable pageable);
 	
-	//(Usa a anotação para poder usar o select pata buscar todos os Cooperados Ativos)
+	//(Usa a anotação para poder usar o select para buscar todos os Cooperados Ativos)
 	@Query(value = "SELECT * FROM coop c, coop_cadastro e WHERE c.coop_matricula = e.coop_matricula AND e.coop_cooperado = 'ATIVO'", nativeQuery = true)
 	List<Cooperado> encontrarAtivos();
 	
-	//(Usa a anotação para poder usar o select pata buscar todos os Cooperados Ativos)
+	//(Usa a anotação para poder usar o select para buscar todos os Cooperados Inativos)
 	@Query(value = "SELECT * FROM coop c, coop_cadastro e WHERE c.coop_matricula = e.coop_matricula AND e.coop_cooperado = 'NAO'", nativeQuery = true)
 	List<Cooperado> encontrarInativos();
 		
-	//(Usa a anotação para poder usar o select pata buscar todos os Cooperados pelo nome)
+	//(Usa a anotação para poder usar o select para buscar todos os Cooperados por "parte" do nome)
 	@Query(value = "select u from Cooperado u where u.coopnome like %?1%")
 	List<Cooperado>findByCoopnomesCooperado(String coopnome);
 	
-	//(Usa a anotação para poder usar o select pata buscar todos os Cooperados pelo apelido)
+	//(Usa a anotação para poder usar o select pata buscar todos os Cooperados pelo apelido, nome ou matrícula)
 	@Query(value = "SELECT * FROM coop c WHERE (c.coop_nome like CONCAT('%' :param '%') OR c.coop_matricula = :param OR c.coop_nome_guerra LIKE CONCAT('%' :param '%'))", nativeQuery = true)
 	List<Cooperado>findByCoopnomesCooperados(@Param(value = "param") String coopnome);
 		

@@ -22,7 +22,7 @@ public class JasperController {
 	//@Autowired
 	//private CooperadoRepository cr;
 	
-	@GetMapping("/relatorio/pdf/jr1")
+	@GetMapping("/relatorio/pdf/jr1")//Url chamada no relatório
 	public void exibirRelatorio01(@RequestParam("code") String code,
 			@RequestParam("acao") String acao,
 			HttpServletResponse response) throws IOException {
@@ -38,7 +38,7 @@ public class JasperController {
 	
 	@GetMapping("/relatorio/pdf/jr2")
 	public void exibirRelatorio02(@RequestParam("code") String code,
-			@RequestParam("acao") String acao,
+			@RequestParam("acao") String acao,//Recebe os parâmetros code (no caso o código do relatório e a ação (Visualizar = “v” e Download = “d”)
 			HttpServletResponse response) throws IOException {
 		byte[] bytes= service.exportarPdf(code);
 		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
