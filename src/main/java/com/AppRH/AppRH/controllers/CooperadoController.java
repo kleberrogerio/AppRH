@@ -476,6 +476,9 @@ public class CooperadoController {
 		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
 		mv.addObject("cooperado",cooperado);
 		
+		Iterable<Coopendereco> coopendereco = er.findByCooperado(cooperado);
+		mv.addObject("coopendereco",coopendereco);
+				
 		return mv;	
 			
 	}
@@ -483,7 +486,7 @@ public class CooperadoController {
 	//UPDATE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
 	@PostMapping(value="/editar-cooperado")
-	public String updateCooperado(@Valid Cooperado cooperado,BindingResult result, RedirectAttributes attributes) {
+	public String updateCooperado(@Valid Cooperado cooperado,Coopendereco coopendereco,BindingResult result, RedirectAttributes attributes) {
 		cooperado.setCoopnome(cooperado.getCoopnome().toUpperCase());
 	    cooperado.setCoopnomeguerra(cooperado.getCoopnomeguerra().toUpperCase());
 		cr.save(cooperado);
@@ -492,6 +495,7 @@ public class CooperadoController {
 		String coopmatricula=""+codigoInt;
 		return "redirect:/" +coopmatricula;
 	}
+		
 	
 	//MÉTODO PARA TRABALHAR COM ENCRIPTAÇÃO
 	@Autowired

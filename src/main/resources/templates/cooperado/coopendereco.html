@@ -129,11 +129,34 @@
 					<td><span th:text="${coopendereco.coopestado}"></span></td>
 					<td><span th:text="${coopendereco.coopcep}"></span></td>
 					<td><span th:text="${coopendereco.cooppais}"></span></td>
-				</tr>
+				</tr>		
 			
 				</tbody>
+				
 		</table>
-		
+		<div class="container">
+
+
+	<th:block th:include="mensagemValidacao"></th:block>
+
+
+		 	<!--  <div class="form-group">
+				<label for=""><b>Aceita Ligação:</b> </label> <input type="text"
+					class="form-control" value="" placeholder="Responda SIM OU NÃo"
+					name="coopligacao" th:attr="value = ${lgpd.coopligacao}"required> <small class="form-text text-muted"><i>*
+						Coloque o nome de guerra simplificado.</i></small>
+			</div>
+			-->
+			 
+
+			
+		</form>
+	</div>
+		<a
+										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+										class="btn btn-primary">Editar
+											</button>
+									</a>
 
 	</div>
 
