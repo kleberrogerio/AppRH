@@ -473,10 +473,9 @@ public class CooperadoController {
 	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
 	public ModelAndView editarCooperado(Integer coop_matricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coop_matricula);
-		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
-		mv.addObject("cooperado",cooperado);
-		
 		Iterable<Coopendereco> coopendereco = er.findByCooperado(cooperado);
+		ModelAndView mv = new ModelAndView("cooperado/update-cooperado");
+		mv.addObject("cooperado",cooperado);		
 		mv.addObject("coopendereco",coopendereco);
 				
 		return mv;	
@@ -490,6 +489,7 @@ public class CooperadoController {
 		cooperado.setCoopnome(cooperado.getCoopnome().toUpperCase());
 	    cooperado.setCoopnomeguerra(cooperado.getCoopnomeguerra().toUpperCase());
 		cr.save(cooperado);
+		er.save(coopendereco);
 		attributes.addFlashAttribute("sucess","Cooperado alterado com sucesso");
 		long codigoInt = cooperado.getCoopmatricula();
 		String coopmatricula=""+codigoInt;
