@@ -489,7 +489,7 @@ public class CooperadoController {
 		cooperado.setCoopnome(cooperado.getCoopnome().toUpperCase());
 	    cooperado.setCoopnomeguerra(cooperado.getCoopnomeguerra().toUpperCase());
 		cr.save(cooperado);
-		er.save(coopendereco);
+		//er.save(coopendereco);
 		attributes.addFlashAttribute("sucess","Cooperado alterado com sucesso");
 		long codigoInt = cooperado.getCoopmatricula();
 		String coopmatricula=""+codigoInt;
