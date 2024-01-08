@@ -342,7 +342,17 @@ public class CooperadoController {
 		mv.addObject("cooperado",cooperado);		
 		
 		Iterable<Cotaparte> cotaparte = cpr.findByCooperado(cooperado);
+		
+		double soma=0;
+		
+		for (Cotaparte cota : cotaparte) {
+			if(cota.getCoopdatapagamento()!=null) {
+				soma = soma + cota.getCoopvalor();
+			}
+					    
+		}	
 		mv.addObject("cotaparte",cotaparte);
+		mv.addObject("soma",soma);	
 		
 		return mv;		
 	}

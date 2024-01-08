@@ -117,19 +117,21 @@
 			</thead>
 			<tbody>
 
-				<tr th:each="cotaparte : ${cotaparte}">
+				<tr th:each="cotaparte : ${cotaparte}" th:if="${cotaparte.coopdatapagamento!=null}">
 					<td><span th:text="${cotaparte.coopdescricao}"></span></td>
 					<td><span th:text="${{(cotaparte.coopvalor)}}"></span></td>
 					<td><span th:text="${cotaparte.coopformapagto}"></span></td>
 					<td><span th:text="${cotaparte.coopdatavencimento}"></span></td>
 					<td><span th:text="${cotaparte.coopdatapagamento}"></span></td>
+					<td><span th:with="soma = ${soma + (cotaparte.coopvalor)}"></span></td>
 					
 				</tr>
 					<tr>
 						<td colspan="2">Total</td>
 						<td
-							th:text="${#numbers.formatCurrency(#aggregates.sum(cotaparte.![coopvalor]))}">R$
-							180,00</td>
+							th:text="${#numbers.formatCurrency(soma)}"></td>
+							<!--th:text="${#numbers.formatCurrency(#aggregates.sum(cotaparte.![coopvalor]))}">R$
+							180,00</td>-->
 					</tr>
 
 
