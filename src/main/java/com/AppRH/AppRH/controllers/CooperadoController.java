@@ -100,7 +100,18 @@ public class CooperadoController {
 	     coopcadastro.setCoopdataadmissao(LocalDateTime.now());
 	     cooperado.setCoopcadastro(coopcadastro);
 	     coopcadastro.setCooperado(cooperado);
-	  
+	     
+	     Coopendereco coopendereco = new Coopendereco();
+	     coopendereco.setCoopendereco(coopendereco.getCoopendereco().toUpperCase());
+	     coopendereco.setCoopendindexcod(maior+1);
+	     coopendereco.setCoopmatricula(maior+1);
+	     coopendereco.setCoopbairro("Itaim");
+	     coopendereco.setCoopcidade("São Paulo");
+	     coopendereco.setCoopestado("SP");
+	     coopendereco.setCoopcep("12239-041");
+	     coopendereco.setCooppais("Brasil");	     
+	     
+	     
 	      
 	     Lgpd lgpd = new Lgpd();
 		 lgpd.setCoopligacao("SIM");
