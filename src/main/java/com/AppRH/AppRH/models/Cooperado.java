@@ -150,8 +150,3 @@ public class Cooperado implements Serializable {
 	
 	
 }
-
-
-
-
-
