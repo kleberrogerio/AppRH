@@ -102,7 +102,7 @@ public class CooperadoController {
 	     cooperado.setCoopcadastro(coopcadastro);
 	     coopcadastro.setCooperado(cooperado);
 	     
-	     Coopendereco coopendereco = new Coopendereco();
+	 /*    Coopendereco coopendereco = new Coopendereco();
 	     coopendereco.setCoopendereco(coopendereco.getCoopendereco().toUpperCase());
 	     coopendereco.setCoopendindexcod(maior+1);
 	     coopendereco.setCoopmatricula(maior+1);
@@ -111,7 +111,7 @@ public class CooperadoController {
 	     coopendereco.setCoopestado("SP");
 	     coopendereco.setCoopcep("12239-041");
 	     coopendereco.setCooppais("Brasil");	     
-	     
+	     */
 	     
 	      
 	     Lgpd lgpd = new Lgpd();
@@ -143,7 +143,9 @@ public class CooperadoController {
 		 System.out.println("Maior"+maior);
 	
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
-		 return "redirect:/cadastrarCooperado";
+		 //return "redirect:/cadastrarCooperado";
+		 return "redirect:/";
+		 
 	}
 	
 	
