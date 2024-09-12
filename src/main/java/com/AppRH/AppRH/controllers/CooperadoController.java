@@ -143,8 +143,8 @@ public class CooperadoController {
 		 System.out.println("Maior"+maior);
 	
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
-		 //return "redirect:/cadastrarCooperado";
-		 return "redirect:/";
+		 return "redirect:/cadastrarCooperado";
+		 //return "redirect:/";
 		 
 	}
 	
