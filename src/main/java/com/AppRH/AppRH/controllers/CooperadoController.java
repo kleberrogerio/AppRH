@@ -144,8 +144,7 @@ public class CooperadoController {
 	
 		 attributes.addFlashAttribute("mensagem","Cooperado cadastrado com sucesso!");
 		 return "redirect:/cadastrarCooperado";
-		 //return "redirect:/";
-		 
+		 		 
 	}
 	
 	
