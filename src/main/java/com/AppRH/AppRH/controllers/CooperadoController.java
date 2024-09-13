@@ -109,6 +109,7 @@ public class CooperadoController {
 	     coopendereco.setCoopmatricula(maior+1);
 	     coopendereco.setCoopendendereco("rua");
 	     coopendereco.setCoopendendereco(coopendereco.getCoopendendereco());
+	     cooperado.setCoopnome(cooperado.getCoopnome().toUpperCase());
 	     coopendereco.setCoopbairro("Itaim");
 	     coopendereco.setCoopcidade("São Paulo");
 	     coopendereco.setCoopestado("SP");
