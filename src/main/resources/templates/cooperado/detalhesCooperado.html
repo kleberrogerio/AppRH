@@ -112,7 +112,10 @@
 			
 			
 			<br> <br>
-			
+			<br>
+				<button onclick="location.href = document.referrer;">Voltar</button>
+				
+				
 					<h2>Adicionar telefone:</h2>
 
 			<th:block th:include="mensagemValidacao"></th:block>
@@ -206,6 +209,8 @@
 -->
 			</tbody>
 		</table>
+		<br>
+<a href="javascript:history.back()">Voltar</a>
 		<script>
 	document.addEventListener("DOMContentLoaded", function() {
 		document.querySelectorAll(".deletar-telefone").forEach(element => {

@@ -229,6 +229,9 @@
 							</tbody>
 							
 						</table>
+						<a href="#">Topo</a>
+						<br>
+<a href="javascript:history.back()">Voltar</a>
 						<!-- 
 						 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
@@ -251,18 +254,22 @@
 		<li class = "page-item"><a class="page-link" href="#">1</a></li>
 		<li class = "page-item"><a class="page-link" href="#">2</a></li>
 		<li class = "page-item"><a class="page-link" href="#">3</a></li>
-		<li class = "page-item"><a class="page-link" href="#">Next</a></li>	
+		<li class = "page-item"><a class="page-link" href="#">Next</a></li>			
 	</ul>
+	
 </nav>
 					</div>
-					
+					  
 					 <div th:if="${totalPages > 1}">
         <ul class="pagination">
             <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:class="${pageNum == currentPage} ? 'active'">
                 <a th:href="@{/cooperados(page=${pageNum}, size=${#numbers.formatInteger(size)})}" th:text="${pageNum}"></a>
             </li>
+          
         </ul>
+        
     </div>
+
 
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
