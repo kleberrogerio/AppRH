@@ -88,9 +88,7 @@
 
 			<div class="form-group">
 			<tr th:each="cooperado: ${cooperados}">
-			<tr th:each="coopendereco: ${coopenderecos}">
-			
-			
+						
 			<p>
 			
 			<b>Matrícula222:</b> <span th:text="${cooperado.coopmatricula}"></span>
@@ -112,14 +110,14 @@
 					name="coopnomeguerra" required> <small class="form-text text-muted"><i>*
 						Coloque o nome de guerra simplificado.</i></small>
 			</div>
-<!--			<div class="form-group">
+			<div class="form-group">
 				<label for=""><b>Endereço:</b> </label> <input type="text"
 					class="form-control" value="" placeholder="Insira o logradouro"
-					name="coopendereco" required> <small class="form-text text-muted"><i>*
+					name="coopendereco" > <small class="form-text text-muted"><i>*
 						Coloque o Logradouro.</i></small>
 			</div>
 			
--->
+
 
 			<button type="submit" class="btn btn-success">Adicionar Cooperado</button>
 			<a href="javascript:history.back()">Voltar</a>
