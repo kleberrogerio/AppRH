@@ -4,6 +4,7 @@ package com.AppRH.AppRH.controllers;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -85,12 +86,13 @@ public class CooperadoController {
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
 	@PostMapping(value = "/cadastrarCooperado")
 	public String form(@Valid Cooperado cooperado, BindingResult result, RedirectAttributes attributes) {
-		
-		if(result.hasErrors()) {
+	/*	if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem","Verifique os campos....");
 			return "redirect:/cadastrarCooperado";
-		}
+		}*/
+		System.out.println("Aqui-----------------------------------------------------------");
 		Integer maior =cr.achaMaior();
+		 System.out.println("Maior"+maior);
 		     
 	     cooperado.setCoopindexcod(maior+1);
 	     cooperado.setCoopnome(cooperado.getCoopnome().toUpperCase());
@@ -103,14 +105,28 @@ public class CooperadoController {
 	     coopcadastro.setCooperado(cooperado);
 	     
 	     Coopendereco coopendereco = new Coopendereco();
-	     coopendereco.setCoopendindexcod(maior+1);
+	     //coopendereco.setCoopendindexcod(maior+1);
 	     coopendereco.setCoopmatricula(maior+1);
-	     coopendereco.setCoopendereco(coopendereco.getCoopendereco().toUpperCase());
+	     coopendereco.setCoopendendereco("rua");
+	     coopendereco.setCoopendendereco(coopendereco.getCoopendendereco());
 	     coopendereco.setCoopbairro("Itaim");
 	     coopendereco.setCoopcidade("São Paulo");
 	     coopendereco.setCoopestado("SP");
 	     coopendereco.setCoopcep("12239-041");
-	     coopendereco.setCooppais("Brasil");	     
+	     coopendereco.setCooppais("Brasil");
+	     
+	  // Cria uma lista de Coopendereco e adiciona o objeto coopendereco
+	     List<Coopendereco> listaEnderecos = new ArrayList<>();
+	     listaEnderecos.add(coopendereco);
+
+	     // Vincular o endereço ao cooperado
+	     cooperado.setCoopendereco(listaEnderecos);  // Passa a lista de endereços
+	     coopendereco.setCooperado(cooperado);
+	     /*
+	     cooperado.setCoopendereco(coopendereco);
+	     coopendereco.setCooperado(cooperado);
+	     
+	     */
 	     
 	     
 	      
@@ -122,7 +138,8 @@ public class CooperadoController {
 			 
 		 cooperado.setLgpd(lgpd);
 		 lgpd.setCooperado(cooperado); 
-
+		 System.out.println("Maior"+maior);
+		 
 		 cr.save(cooperado);
 		 
 		
