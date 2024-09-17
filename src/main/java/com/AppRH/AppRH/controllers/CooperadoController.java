@@ -4,7 +4,7 @@ package com.AppRH.AppRH.controllers;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 import javax.validation.Valid;
 
@@ -86,10 +86,10 @@ public class CooperadoController {
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
 	@PostMapping(value = "/cadastrarCooperado")
 	public String form(@Valid Cooperado cooperado, BindingResult result, RedirectAttributes attributes) {
-	/*	if(result.hasErrors()) {
+		if(result.hasErrors()) {
 			attributes.addFlashAttribute("mensagem","Verifique os campos....");
 			return "redirect:/cadastrarCooperado";
-		}*/
+		}
 		System.out.println("Aqui-----------------------------------------------------------");
 		Integer maior =cr.achaMaior();
 		 System.out.println("Maior"+maior);
@@ -104,6 +104,8 @@ public class CooperadoController {
 	     cooperado.setCoopcadastro(coopcadastro);
 	     coopcadastro.setCooperado(cooperado);
 	     
+	     //SERÁ IMPLANTADO POSTERIORMENTE
+	     /*
 	     Coopendereco coopendereco = new Coopendereco();
 	     //coopendereco.setCoopendindexcod(maior+1);
 	     coopendereco.setCoopmatricula(maior+1);
@@ -127,8 +129,7 @@ public class CooperadoController {
 	     cooperado.setCoopendereco(coopendereco);
 	     coopendereco.setCooperado(cooperado);
 	     
-	     */
-	     
+	     */    
 	     
 	      
 	     Lgpd lgpd = new Lgpd();
