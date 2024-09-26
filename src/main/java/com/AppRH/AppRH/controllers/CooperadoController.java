@@ -233,13 +233,15 @@ public class CooperadoController {
 	
 	//MÉTODO UTILIZADO PARA A BUSCA
 	@PostMapping(value = "/cooperados")
-	public ModelAndView buscarIndex(@RequestParam(name="page",defaultValue="1") int pageNum,@RequestParam(name="size",defaultValue="10") int pageSize,@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
+	public ModelAndView buscarIndex(@RequestParam(defaultValue="1") int pageNum,@RequestParam(name="size",defaultValue="10") int pageSize,@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
 		
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		String mensagem = "Resultados da busca por " + buscar;
 		Page<Cooperado> page=cs.getCooperadosPaginados(pageNum, pageSize);
 		
-		Pageable pageable = PageRequest.of(77, 20);
+		//Pageable pageable = PageRequest.of(77, 20);
+		Pageable pageable = PageRequest.of(pageNum-1, 20);
+		Page<Cooperado> resultPage=cr.encontrarAtivos(pageable);
 		
 		if(coopnome.equals("")){
 			if (buscar.equals("")) {				
@@ -272,7 +274,9 @@ public class CooperadoController {
 		}else if(coopnome.equals("ativos")) {
 			if (buscar.equals("")) {
 				
-				mv.addObject("cooperados",cr.encontrarAtivos());
+				//mv.addObject("cooperados",cr.encontrarAtivos());
+				mv.addObject("cooperados",resultPage);
+				
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperadoAtivo(buscar));
 			}
@@ -289,9 +293,10 @@ public class CooperadoController {
 	@GetMapping("/cooperadosA")
 	public ModelAndView listaCooperadosAtivos() {
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
-		Iterable<Cooperado>cooperados=cr.encontrarAtivos();		
+		//Iterable<Cooperado>cooperados=cr.encontrarAtivos();	
+		//Iterable<Cooperado>cooperados=cr.findAll(pageable);	
 			
-		mv.addObject("cooperados",cooperados);
+	//	mv.addObject("cooperados",cooperados);
 		return mv;			
 	}
 	

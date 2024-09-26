@@ -248,12 +248,22 @@
 </nav>
 -->
 <!--  Paginação -->
-<nav arial-label="Page navigation example">
+<!--  <nav arial-label="Page navigation example">
 	<ul class = "pagination justify-content-center">
 		<li class = "page-item"><a class="page-link" href="#">Previus</a></li>
 		<li class = "page-item"><a class="page-link" href="#">1</a></li>
 		<li class = "page-item"><a class="page-link" href="#">2</a></li>
 		<li class = "page-item"><a class="page-link" href="#">3</a></li>
+		<li class = "page-item"><a class="page-link" href="#">Next</a></li>			
+	</ul>
+	
+</nav>
+-->
+<nav arial-label="Page navigation example">
+	<ul class = "pagination justify-content-center">
+		<li class = "page-item" ><a class="page-link" href="#">Previus</a></li>
+	<!-- 	<li class = "page-item" th:each=" i : ${#numbers.sequence(1,cooperados.totalPages)}"> -->
+		<a class="page-link" th:text="${i}" th:href="@{/(pageNum=${i})}">1</a></li>
 		<li class = "page-item"><a class="page-link" href="#">Next</a></li>			
 	</ul>
 	

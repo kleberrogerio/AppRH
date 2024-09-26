@@ -28,7 +28,8 @@ public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
 	
 	//(Usa a anotação para poder usar o select para buscar todos os Cooperados Ativos)
 	@Query(value = "SELECT * FROM coop c, coop_cadastro e WHERE c.coop_matricula = e.coop_matricula AND e.coop_cooperado = 'ATIVO'", nativeQuery = true)
-	List<Cooperado> encontrarAtivos();
+	//List<Cooperado> encontrarAtivos();
+	Page<Cooperado> encontrarAtivos(Pageable page);
 	
 	//(Usa a anotação para poder usar o select para buscar todos os Cooperados Inativos)
 	@Query(value = "SELECT * FROM coop c, coop_cadastro e WHERE c.coop_matricula = e.coop_matricula AND e.coop_cooperado = 'NAO'", nativeQuery = true)

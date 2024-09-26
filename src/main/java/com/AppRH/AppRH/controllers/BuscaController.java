@@ -46,7 +46,7 @@ public class BuscaController {
 		if(coopnome.equals("all")){
 			mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
 		}else if(coopnome.equals("ativos")) {
-			mv.addObject("cooperados",cr.encontrarAtivos());
+			//mv.addObject("cooperados",cr.encontrarAtivos());
 		}else if(coopnome.equals("inativos")) {
 		//	mv.addObject("cooperados",cr.findByCoopnomesCooperado(buscar));
 		}else if(coopnome.equals("nometelefone")) {
