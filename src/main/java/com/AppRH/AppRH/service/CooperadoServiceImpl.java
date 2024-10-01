@@ -16,9 +16,6 @@ import com.AppRH.AppRH.util.PaginacaoUtil;
 @Service @Transactional(readOnly=false)
 public class CooperadoServiceImpl implements CooperadoService {
 	
-	//@Autowired
-	//private CooperadoRepository cr;
-	
 	@Autowired
 	private CooperadoDao cd;
 	
@@ -35,6 +32,12 @@ public class CooperadoServiceImpl implements CooperadoService {
 	public Page<Cooperado> getCooperadosPaginados(int pageNum, int pageSize){
 		Pageable pageable = PageRequest.of(pageNum -1,pageSize);
 		return cr.findAll(pageable);
+	}
+
+	@Override
+	public Page<Cooperado> findPaginated(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+		return this.cr.encontrarTodos(pageable);
 	}
 
 }

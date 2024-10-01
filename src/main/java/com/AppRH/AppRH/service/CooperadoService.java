@@ -12,5 +12,7 @@ public interface CooperadoService {
 	PaginacaoUtil<Cooperado> buscarPorPagina(int pagina);
 	
 	public Page<Cooperado> getCooperadosPaginados(int pageNum, int pageSize);
+	
+	Page<Cooperado> findPaginated(int pageNo, int pageSize);
 
 }
