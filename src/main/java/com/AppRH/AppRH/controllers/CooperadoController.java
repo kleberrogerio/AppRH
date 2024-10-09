@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 //import java.util.List;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -233,7 +235,7 @@ public class CooperadoController {
 	
 	//MÉTODO UTILIZADO PARA A BUSCA
 	@PostMapping(value = "/cooperados")
-	public ModelAndView buscarIndex(@RequestParam(defaultValue="1") int pageNum,@RequestParam(name="size",defaultValue="10") int pageSize,@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome) {
+	public ModelAndView buscarIndex(@RequestParam(defaultValue="1") int pageNum,@RequestParam(name="size",defaultValue="10") int pageSize,@RequestParam("buscar") String buscar, @RequestParam("coopnome") String coopnome, Model model) {
 		
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		String mensagem = "Resultados da busca por " + buscar;
@@ -258,6 +260,7 @@ public class CooperadoController {
 		}else if(coopnome.equals("all")){
 			if (buscar.equals("")) {				
 				//mv.addObject("cooperados",cr.encontrarTodos());
+				findPaginated(1, model);
 				//Preparando para paginar
 				mv.addObject("cooperados",cr.encontrarTodos(pageable));
 			} else {
@@ -544,6 +547,21 @@ public class CooperadoController {
 	@Autowired
 	private PasswordEncoder passwordEncorderBean() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable (value = "pageNo")int pageNo, Model model) {
+		int pageSize=5;
+		
+		Page<Cooperado> page = cs.findPaginated(pageNo, pageSize);
+		List<Cooperado> listCooperados= page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("listCooperados", listCooperados);
+		return "/";
+		
 	}
 		
 }
