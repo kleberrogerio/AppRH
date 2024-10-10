@@ -220,9 +220,9 @@
 								</tr>
 								<tr>
 						<td colspan="2" th:style="'text-align: right;'"><h5>Total</h5></td>
-						<td
-							th:text="${#lists.size(cooperados)}" th:style="'font-weight: bold;'">
-							</td>									
+			<!--			<td
+					  		th:text="${#lists.size(cooperados)}" th:style="'font-weight: bold;'">  
+							</td>	-->								
 					</tr>	
 								
 								
@@ -271,9 +271,9 @@
 					</div>
 					  
 					 <div th:if="${totalPages > 1}">
-					 <div class = "row col-sm-10">
-					 	<div class = "col-sm-2">
-					 		Total Rows: [[${totalItems}]]
+					 <div class = "row col-sm-190">
+					 	<div class = "col-sm-25">
+					 		Total Registros: [[${totalItems}]]
 					 	</div>
 					 	<div class = "col-sm-1">
 					 		<span th:each="i: ${#numbers.sequence(1,totalPages)}">
@@ -282,12 +282,12 @@
 					 		</span>
 					 	</div>
 					 	<div class = "col-sm-1">
-					 		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
-					 		<span th:unless="${currentPage < totalPages}">Next</span>					 	
+					 		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Próximo</a>
+					 		<span th:unless="${currentPage < totalPages}">Próximo</span>					 	
 					 	</div>
 					 	<div class = "col-sm-1">
-					 		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
-					 		<span th:unless="${currentPage < totalPages}">Last</span>					 	
+					 		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Anterior</a>
+					 		<span th:unless="${currentPage < totalPages}">Anterior</span>					 	
 					 	</div>
 					 </div>
 					 

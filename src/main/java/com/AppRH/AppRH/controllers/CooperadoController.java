@@ -545,13 +545,15 @@ public class CooperadoController {
 	
 	//MÉTODO PARA TRABALHAR COM ENCRIPTAÇÃO
 	@Autowired
+	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	private PasswordEncoder passwordEncorderBean() {
 		return new BCryptPasswordEncoder();
 	}
 	
 	@GetMapping("/page/{pageNo}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public String findPaginated(@PathVariable (value = "pageNo")int pageNo, Model model) {
-		int pageSize=5;
+		int pageSize=20;
 		
 		Page<Cooperado> page = cs.findPaginated(pageNo, pageSize);
 		List<Cooperado> listCooperados= page.getContent();
@@ -560,7 +562,7 @@ public class CooperadoController {
 		model.addAttribute("totalPages",page.getTotalPages());
 		model.addAttribute("totalItems",page.getTotalElements());
 		model.addAttribute("listCooperados", listCooperados);
-		return "/";
+		return "cooperado/listaCooperados";
 		
 	}
 		
