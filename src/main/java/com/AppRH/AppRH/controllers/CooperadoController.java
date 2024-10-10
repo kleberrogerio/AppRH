@@ -497,6 +497,7 @@ public class CooperadoController {
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")
 	public String detalhesTelefonePost(@PathVariable("coopmatricula") int coop_matricula, @Valid Telefone telefone,
 			BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
