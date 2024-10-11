@@ -556,14 +556,17 @@ public class CooperadoController {
 	public String findPaginated(@PathVariable (value = "pageNo")int pageNo, Model model) {
 		int pageSize=20;
 		
+		System.out.println(pageNo);
+		
 		Page<Cooperado> page = cs.findPaginated(pageNo, pageSize);
 		List<Cooperado> listCooperados= page.getContent();
 		
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",page.getTotalPages());
 		model.addAttribute("totalItems",page.getTotalElements());
-		model.addAttribute("listCooperados", listCooperados);
+		model.addAttribute("cooperados", listCooperados);
 		return "cooperado/listaCooperados";
+		
 		
 	}
 		
