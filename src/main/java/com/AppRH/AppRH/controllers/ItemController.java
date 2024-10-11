@@ -1,4 +1,4 @@
-package com.AppRH.AppRH.controllers;
+/*package com.AppRH.AppRH.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,3 +26,4 @@ public class ItemController {
         return itemRepository.findAll(pageable);
     }
 }
+*/

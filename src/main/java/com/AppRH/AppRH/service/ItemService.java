@@ -1,4 +1,4 @@
-package com.AppRH.AppRH.service;
+/*package com.AppRH.AppRH.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,3 +20,4 @@ public class ItemService {
         return itemRepository.findAll(pageable);
     }
 }
+*/

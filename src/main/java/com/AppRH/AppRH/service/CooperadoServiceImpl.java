@@ -29,11 +29,11 @@ public class CooperadoServiceImpl implements CooperadoService {
 		return cd.buscaPaginada(pagina);
 	}
 	
-	public Page<Cooperado> getCooperadosPaginados(int pageNum, int pageSize){
+	/*public Page<Cooperado> getCooperadosPaginados(int pageNum, int pageSize){
 		Pageable pageable = PageRequest.of(pageNum -1,pageSize);
 		return cr.findAll(pageable);
 	}
-
+*/
 	@Override
 	public Page<Cooperado> findPaginated(int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo -1, pageSize);

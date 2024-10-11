@@ -239,26 +239,23 @@ public class CooperadoController {
 		
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 		String mensagem = "Resultados da busca por " + buscar;
-		Page<Cooperado> page=cs.getCooperadosPaginados(pageNum, pageSize);
+		//Page<Cooperado> page=cs.getCooperadosPaginados(pageNum, pageSize);
 		
-		//Pageable pageable = PageRequest.of(77, 20);
 		Pageable pageable = PageRequest.of(pageNum-1, 20);
-		Page<Cooperado> resultPage=cr.encontrarAtivos(pageable);
+		//Page<Cooperado> resultPage=cr.encontrarAtivos(pageable);
 		
 		if(coopnome.equals("")){
-			if (buscar.equals("")) {				
-				//mv.addObject("cooperados",cr.encontrarTodos());
+			if (buscar.equals("")) {	
+				System.out.println("Vazio");
 				//Preparando para paginar
-				mv.addObject("cooperados",page.getContent());
-				mv.addObject("currentPage",pageNum);
-				mv.addObject("totalPages",page.getTotalPages());
-				mv.addObject("cooperados",cr.encontrarTodos(pageable));
+				findPaginated(1, model);
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperados(buscar));
 			}
 			
 		}else if(coopnome.equals("all")){
-			if (buscar.equals("")) {				
+			if (buscar.equals("")) {	
+				System.out.println("all");
 				//mv.addObject("cooperados",cr.encontrarTodos());
 				findPaginated(1, model);
 				//Preparando para paginar
@@ -269,17 +266,22 @@ public class CooperadoController {
 			
 		}else if(coopnome.equals("inativos")) {
 			if (buscar.equals("")) {
+				findPaginated(1, model);
+				System.out.println("inativos");
 				
-				mv.addObject("cooperados",cr.encontrarInativos());
+				//mv.addObject("cooperados",cr.encontrarInativos());
+				mv.addObject("cooperados",cr.encontrarInativos(pageable));
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperadoInativo(buscar));
 			}
 		}else if(coopnome.equals("ativos")) {
 			if (buscar.equals("")) {
-				
+				findPaginated(1, model);
+				System.out.println("ativos");
+				findPaginated(1, model);
 				//mv.addObject("cooperados",cr.encontrarAtivos());
-				mv.addObject("cooperados",resultPage);
-				
+				//mv.addObject("cooperados",resultPage);
+				mv.addObject("cooperados",cr.encontrarAtivos(pageable));
 			} else {
 				mv.addObject("cooperados",cr.findByCoopnomesCooperadoAtivo(buscar));
 			}
@@ -292,9 +294,12 @@ public class CooperadoController {
 		return mv;	
 	}
 	
+	//COMENTEI PARA TER CERTEZA DE QUE NÃO ESTÁ SENDO USADO 11/10/2024
+	/*
 	//LISTAR COOPERADOS ATIVOS	
 	@GetMapping("/cooperadosA")
 	public ModelAndView listaCooperadosAtivos() {
+		System.out.println("cooperadosA");
 		ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
 		//Iterable<Cooperado>cooperados=cr.encontrarAtivos();	
 		//Iterable<Cooperado>cooperados=cr.findAll(pageable);	
@@ -309,6 +314,7 @@ public class CooperadoController {
 		public ModelAndView listaCooperadosInativos() {
 			ModelAndView mv = new ModelAndView("cooperado/listaCooperado");
 			Iterable<Cooperado>cooperados=cr.encontrarInativos();
+			System.out.println("cooperadosN");
 			
 			mv.addObject("cooperados",cooperados);
 			return mv;			
@@ -318,11 +324,12 @@ public class CooperadoController {
 	
 		@GetMapping("/cooperadosI")
 		public ModelAndView listaCooperadosInicio() {
+			System.out.println("cooperadosI");
 			ModelAndView mv = new ModelAndView("cooperado/listainicio");
 			//ModelAndView mv = new ModelAndView("cooperado/listaCooperados");
 			return mv;			
 		}
-	
+	*/
 	//VER DETALHES DOS COOPERADOS
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	@GetMapping(value="/{coopmatricula}")
@@ -556,10 +563,10 @@ public class CooperadoController {
 	public String findPaginated(@PathVariable (value = "pageNo")int pageNo, Model model) {
 		int pageSize=20;
 		
-		System.out.println(pageNo);
+		System.out.println("Numero da Página"+pageNo);
 		
 		Page<Cooperado> page = cs.findPaginated(pageNo, pageSize);
-		List<Cooperado> listCooperados= page.getContent();
+		List<Cooperado> listCooperados= page.getContent();		
 		
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",page.getTotalPages());
