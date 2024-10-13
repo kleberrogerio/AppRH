@@ -13,4 +13,7 @@ public interface CooperadoService {
 	
 	Page<Cooperado> findPaginated(int pageNo, int pageSize);
 
+	Page<Cooperado> findPaginatedA(int pageNo, int pageSize);
+
+	Page<Cooperado> findPaginatedI(int pageNo, int pageSize);
 }

@@ -39,5 +39,17 @@ public class CooperadoServiceImpl implements CooperadoService {
 		Pageable pageable = PageRequest.of(pageNo -1, pageSize);
 		return this.cr.encontrarTodos(pageable);
 	}
+	
+	@Override
+	public Page<Cooperado> findPaginatedA(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+		return this.cr.encontrarAtivos(pageable);
+	}
+	
+	@Override
+	public Page<Cooperado> findPaginatedI(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+		return this.cr.encontrarInativos(pageable);
+	}
 
 }

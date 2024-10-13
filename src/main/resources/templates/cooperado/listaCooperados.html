@@ -227,14 +227,14 @@
         <div class="col-sm-4 d-flex justify-content-center">
             <!-- Botão "Anterior" -->
             <a th:if="${currentPage > 1}" 
-               th:href="@{'/page/' + ${currentPage - 1}}" 
+               th:href="@{'/page/' + ${currentPage - 1} + '/' + ${contextPath}}" 
                class="btn btn-outline-secondary btn-sm mr-2">&laquo; Anterior</a>
             <span th:unless="${currentPage > 1}" class="btn btn-secondary btn-sm disabled mr-2">&laquo; Anterior</span>
 
             <!-- Exibir as primeiras páginas -->
             <span th:each="i : ${#numbers.sequence(1, 2)}">
                 <a th:if="${currentPage != i}" 
-                   th:href="@{'/page/' + ${i}}" 
+                   th:href="@{'/page/' + ${i} + '/' + ${contextPath}}" 
                    class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
                 <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
             </span>
@@ -246,7 +246,7 @@
             <span th:each="i : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
                   th:if="${i > 2 && i < totalPages}">
                 <a th:if="${currentPage != i}" 
-                   th:href="@{'/page/' + ${i}}" 
+                   th:href="@{'/page/' + ${i} + '/' + ${contextPath}}" 
                    class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
                 <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
             </span>
@@ -258,14 +258,14 @@
             <span th:each="i : ${#numbers.sequence(totalPages - 1, totalPages)}" 
                   th:if="${totalPages > 3}">
                 <a th:if="${currentPage != i}" 
-                   th:href="@{'/page/' + ${i}}" 
+                   th:href="@{'/page/' + ${i} + '/' + ${contextPath}}" 
                    class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
                 <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
             </span>
 
             <!-- Botão "Próximo" -->
             <a th:if="${currentPage < totalPages}" 
-               th:href="@{'/page/' + ${currentPage + 1}}" 
+               th:href="@{'/page/' + ${currentPage - 1} + '/' + ${contextPath}}" 
                class="btn btn-outline-secondary btn-sm ml-2">Próximo &raquo;</a>
             <span th:unless="${currentPage < totalPages}" class="btn btn-secondary btn-sm disabled ml-2">Próximo &raquo;</span>
         </div>

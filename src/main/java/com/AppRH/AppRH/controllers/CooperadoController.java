@@ -266,7 +266,8 @@ public class CooperadoController {
 			
 		}else if(coopnome.equals("inativos")) {
 			if (buscar.equals("")) {
-				findPaginated(1, model);
+				ListarInicio();
+				findPaginatedI(1, model);
 				System.out.println("inativos");
 				
 				//mv.addObject("cooperados",cr.encontrarInativos());
@@ -276,9 +277,8 @@ public class CooperadoController {
 			}
 		}else if(coopnome.equals("ativos")) {
 			if (buscar.equals("")) {
-				findPaginated(1, model);
+				findPaginatedA(1, model);
 				System.out.println("ativos");
-				findPaginated(1, model);
 				//mv.addObject("cooperados",cr.encontrarAtivos());
 				//mv.addObject("cooperados",resultPage);
 				mv.addObject("cooperados",cr.encontrarAtivos(pageable));
@@ -558,7 +558,8 @@ public class CooperadoController {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@GetMapping("/page/{pageNo}")
+	//Para paginar todos os cooperados
+	@GetMapping("/page/{pageNo}/todos")
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public String findPaginated(@PathVariable (value = "pageNo")int pageNo, Model model) {
 		int pageSize=20;
@@ -568,6 +569,7 @@ public class CooperadoController {
 		Page<Cooperado> page = cs.findPaginated(pageNo, pageSize);
 		List<Cooperado> listCooperados= page.getContent();		
 		
+		model.addAttribute("contextPath","todos");
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages",page.getTotalPages());
 		model.addAttribute("totalItems",page.getTotalElements());
@@ -576,5 +578,53 @@ public class CooperadoController {
 		
 		
 	}
+	
+	//Para paginar os cooperados Ativos
+	@GetMapping("/page/{pageNo}/ativos")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
+	public String findPaginatedA(@PathVariable (value = "pageNo")int pageNo, Model model) {
+		int pageSize=20;
+		
+		System.out.println("Numero da Página"+pageNo);
+		
+		Page<Cooperado> page = cs.findPaginatedA(pageNo, pageSize);
+		List<Cooperado> listCooperados= page.getContent();		
+		
+		model.addAttribute("contextPath","ativos");
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("cooperados", listCooperados);
+		return "cooperado/listaCooperados";
+		
+		
+	}
+	
+	//Para paginar os cooperados Inativos
+	@GetMapping("/page/{pageNo}/inativos")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
+	public String findPaginatedI(@PathVariable (value = "pageNo")int pageNo, Model model) {
+		int pageSize=20;
+		
+		System.out.println("Numero da Página"+pageNo);
+		
+		Page<Cooperado> page = cs.findPaginatedI(pageNo, pageSize);
+		List<Cooperado> listCooperados= page.getContent();		
+		
+		model.addAttribute("contextPath","inativos");
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages",page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("cooperados", listCooperados);
+		return "cooperado/listaCooperados";		
+	}
+	
+	//Para ir para a página de Listar
+		@GetMapping()
+		@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
+		public String ListarInicio() {
+			
+			return "redirect:/cooperados";		
+		}
 		
 }
