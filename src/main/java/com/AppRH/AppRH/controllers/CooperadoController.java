@@ -266,9 +266,11 @@ public class CooperadoController {
 			
 		}else if(coopnome.equals("inativos")) {
 			if (buscar.equals("")) {
+				System.out.println("inativosAntes");
 				ListarInicio();
+				System.out.println("inativosdepois");
 				findPaginatedI(1, model);
-				System.out.println("inativos");
+				
 				
 				//mv.addObject("cooperados",cr.encontrarInativos());
 				mv.addObject("cooperados",cr.encontrarInativos(pageable));
