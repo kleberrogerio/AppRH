@@ -561,7 +561,7 @@ public class CooperadoController {
 	}
 	
 	//Para paginar todos os cooperados
-	@GetMapping("/page/{pageNo}/todos")
+	@GetMapping("/cooperados/{pageNo}/todos")
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public String findPaginated(@PathVariable (value = "pageNo")int pageNo, Model model) {
 		int pageSize=20;
@@ -582,7 +582,7 @@ public class CooperadoController {
 	}
 	
 	//Para paginar os cooperados Ativos
-	@GetMapping("/page/{pageNo}/ativos")
+	@GetMapping("/cooperados/{pageNo}/ativos")
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public String findPaginatedA(@PathVariable (value = "pageNo")int pageNo, Model model) {
 		int pageSize=20;
@@ -603,7 +603,7 @@ public class CooperadoController {
 	}
 	
 	//Para paginar os cooperados Inativos
-	@GetMapping("/page/{pageNo}/inativos")
+	@GetMapping("/cooperados/{pageNo}/inativos")
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO','DEVELOPER')")
 	public String findPaginatedI(@PathVariable (value = "pageNo")int pageNo, Model model) {
 		int pageSize=20;
