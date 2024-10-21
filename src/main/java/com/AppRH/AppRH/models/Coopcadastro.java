@@ -80,6 +80,9 @@ private static final long serialVersionUID = 1L;
 	@Column(name="coop_ocorrencias")
 	private Blob coopocorrencias;
 	
+	@Column(name="coop_foto")
+	private String coopfoto;
+	
 	@ManyToOne
 	@JoinColumn(name = "coop_matricula")
 	private Cooperado cooperado;
@@ -237,6 +240,16 @@ private static final long serialVersionUID = 1L;
 	public void setCooperado(Cooperado cooperado) {
 		this.cooperado = cooperado;
 	}
+
+	public String getCoopfoto() {
+		return coopfoto;
+	}
+
+	public void setCoopfoto(String coopfoto) {
+		this.coopfoto = coopfoto;
+	}
+
+	
 	
 	
 }

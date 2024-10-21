@@ -39,17 +39,26 @@
 			<br>
 
 			<p>
-					<a th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Dívida</button></a>
-					 <a th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Cota Parte</button></a>
-					 <a th:href="${(#mvc.url('CC#coopendereco').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Endereço</button></a>
-					 <a th:href="${(#mvc.url('CC#coopcadastro').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Dados Cadastrais</button></a>
-					 <br><br>
-				<b>Matrícula:</b> <span th:text="${cooperado.coopmatricula}"></span>
+				<a
+					th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-danger">Dívida</button></a> <a
+					th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-primary">Cota Parte</button></a> <a
+					th:href="${(#mvc.url('CC#coopendereco').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-danger">Endereço</button></a> <a
+					th:href="${(#mvc.url('CC#coopcadastro').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-primary">Dados Cadastrais</button></a> <br>
+				<br>
+				 <div>
+   					 <img th:src="@{|/uploads/${cooperado.coopmatricula}.jpg|}" alt="Foto do Cooperado" width="200" height="200" />
+				</div>
+				
+				<b>Matrícula:</b> <span
+					th:text="${cooperado.coopmatricula}"></span>
 			</p>
+			
+			
+			
 			<p>
 				<b>Nome:</b> <span th:text="${cooperado.coopnome}"></span>
 			</p>
