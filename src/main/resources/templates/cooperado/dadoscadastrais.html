@@ -79,12 +79,7 @@
 			<tbody>
 
 				<tr th:each="coopcadastro : ${coopcadastro}" >
-				<!-- Exibindo a foto -->
-						<div>
-							<img th:src="@{'/updates/' + ${coopcadastro.coopfoto}}"
-								alt="Foto do Cooperado" width="200" height="200" />
-						</div>
-						<td><span th:text="${coopcadastro.coopdatacadastro}"></span></td>
+					<td><span th:text="${coopcadastro.coopdatacadastro}"></span></td>
 					<td><span th:text="${coopcadastro.coopdataadmissao}"></span></td>
 					<td><span th:text="${coopcadastro.coopdatadesligamento}"></span></td>
 					<td><span th:text="${coopcadastro.coopmotivodesl}"></span></td>
