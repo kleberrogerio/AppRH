@@ -1,5 +1,10 @@
 package com.AppRH.AppRH.controllers;
 
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +47,15 @@ public class FuncionarioController {
 			attributes.addFlashAttribute("mensagem", "Verifique os campos");
 			return "redirect:/cadastrarFuncionario";
 		}
+		
+		Integer maior =fr.achaMaior();
+		 System.out.println("Maior"+maior);
+		     
+	     funcionario.setFuncmatricula(maior+1);
+	     funcionario.setFuncnome(funcionario.getFuncnome().toUpperCase());
+	     funcionario.setFuncdata(funcionario.getFuncdata());
+	     funcionario.setFuncemail(funcionario.getFuncemail());
+	        
 
 		fr.save(funcionario);
 		attributes.addFlashAttribute("mensagem", "Funcionário cadastrado com sucesso!");
@@ -53,7 +67,13 @@ public class FuncionarioController {
 	@GetMapping("/funcionarios")
 	public ModelAndView listaFuncionarios() {
 		ModelAndView mv = new ModelAndView("funcionario/listaFuncionario");
-		Iterable<Funcionario> funcionarios = fr.findAll();
+		Iterable<Funcionario> funcionariosIterable = fr.findAll(); // Recupera os funcionários como Iterable
+		List<Funcionario> funcionarios = new ArrayList<>(); // Converte Iterable para List
+	    
+	    funcionariosIterable.forEach(funcionarios::add); // Adiciona os funcionários à lista
+	    
+	    // Ordena a lista manualmente pela matrícula
+	    funcionarios.sort(Comparator.comparing(Funcionario::getFuncmatricula));
 		mv.addObject("funcionarios", funcionarios);
 		return mv;
 	}

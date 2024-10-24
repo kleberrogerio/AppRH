@@ -24,5 +24,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 	// Query para a busca
 	@Query(value = "select u from Funcionario u where u.funcnome like %?1%")
 	List<Funcionario>findByFuncnomes(String funcnome);
+	
+	@Query(value="SELECT Max(f.func_matricula) from func f", nativeQuery = true)
+	Integer achaMaior();
 
 }

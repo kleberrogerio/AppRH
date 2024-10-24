@@ -21,13 +21,13 @@ public class Funcionario implements Serializable{
 	
 private static final long serialVersionUID = 1L;
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="func_id")
-	private Integer funcid;
+	private int funcid;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull
-	@Column(name="func_matricula")
+	@Column(name="func_matricula",unique = true)
 	private int funcmatricula;
 	
 	@Column(name="func_nome")
