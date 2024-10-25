@@ -463,6 +463,22 @@ public class CooperadoController {
 	public String deletarCooperado(int coopmatricula) {
 		Cooperado cooperado = cr.findByCoopmatricula(coopmatricula);
 		cr.delete(cooperado);
+		
+		//SALVANDO UM LOG DE INCLUSÃO
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 String username = authentication.getName();
+		 
+		 
+		 LogAlteracao lalte= new LogAlteracao();
+		 lalte.setData(LocalDateTime.now());
+		 lalte.setTabela("Cooperado");
+		 lalte.setOperacao("Deleção");
+		 lalte.setDetalhes("Cooperado Deletado");
+		 lalte.setCoopmatricula(cooperado.getCoopindexcod());
+		 lalte.setUsuario(username);
+	     la.save(lalte);
+		
+		
 		return "redirect:/cooperados";
 	}
 	

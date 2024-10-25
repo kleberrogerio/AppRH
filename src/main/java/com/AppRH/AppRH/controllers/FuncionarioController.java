@@ -148,6 +148,21 @@ public class FuncionarioController {
 	public String deletarFuncionario(int funcmatricula) {
 		Funcionario funcionario = fr.findByFuncmatricula(funcmatricula);
 		fr.delete(funcionario);
+		
+		//SALVANDO UM LOG DE INCLUSÃO
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 String username = authentication.getName();
+		 
+		 
+		 LogAlteracao lalte= new LogAlteracao();
+		 lalte.setData(LocalDateTime.now());
+		 lalte.setTabela("Funcionário");
+		 lalte.setOperacao("Deleção");
+		 lalte.setDetalhes("Funcionário Deletado");
+		 lalte.setCoopmatricula(funcionario.getFuncmatricula());
+		 lalte.setUsuario(username);
+	     la.save(lalte);
+	     
 		return "redirect:/funcionarios";
 		
 	}
