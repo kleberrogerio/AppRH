@@ -1,6 +1,7 @@
 package com.AppRH.AppRH.controllers;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -9,6 +10,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.AppRH.AppRH.models.Cooperado;
 import com.AppRH.AppRH.models.Dependentes;
 import com.AppRH.AppRH.models.Funcionario;
+import com.AppRH.AppRH.models.LogAlteracao;
 import com.AppRH.AppRH.repository.DependenteRepository;
 import com.AppRH.AppRH.repository.FuncionarioRepository;
+import com.AppRH.AppRH.repository.LogAlteracaoRepository;
 
 @Controller
 public class FuncionarioController {
@@ -30,6 +36,9 @@ public class FuncionarioController {
 
 	@Autowired
 	private DependenteRepository dr;
+	
+	@Autowired
+    private LogAlteracaoRepository la;
 
 	// GET que chama o form para cadastrar funcionários
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
@@ -54,10 +63,25 @@ public class FuncionarioController {
 	     funcionario.setFuncmatricula(maior+1);
 	     funcionario.setFuncnome(funcionario.getFuncnome().toUpperCase());
 	     funcionario.setFuncdata(funcionario.getFuncdata());
-	     funcionario.setFuncemail(funcionario.getFuncemail());
+	     funcionario.setFuncemail(funcionario.getFuncemail());     
 	        
 
 		fr.save(funcionario);
+		
+		//SALVANDO UM LOG DE INCLUSÃO
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 String username = authentication.getName();
+		 
+		 
+		 LogAlteracao lalte= new LogAlteracao();
+		 lalte.setData(LocalDateTime.now());
+		 lalte.setTabela("Funcionário");
+		 lalte.setOperacao("Inclusão");
+		 lalte.setDetalhes("Funcionário Inserido");
+		 lalte.setCoopmatricula(funcionario.getFuncmatricula());
+		 lalte.setUsuario(username);
+	     la.save(lalte);
+	     
 		attributes.addFlashAttribute("mensagem", "Funcionário cadastrado com sucesso!");
 		return "redirect:/cadastrarFuncionario";
 	}
@@ -122,11 +146,12 @@ public class FuncionarioController {
 	@PreAuthorize("hasAnyRole('DEVELOPER')")
 	@GetMapping("/deletarFuncionario")
 	public String deletarFuncionario(int funcmatricula) {
-		Funcionario funcionario = fr.findById(funcmatricula);
+		Funcionario funcionario = fr.findByFuncmatricula(funcmatricula);
 		fr.delete(funcionario);
 		return "redirect:/funcionarios";
 		
 	}
+	
 	
 	// Métodos que atualizam funcionário
 	// GET que chama o FORM de edição do funcionário

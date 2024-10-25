@@ -61,10 +61,17 @@
 					<td><span th:text="${funcionario.funcdata}"></span></td>
 					<td><span th:text="${funcionario.funcemail}"></span></td>
 					 
-					<td><a
+					<!--  <td><a
 						th:href="${(#mvc.url('FC#deletarFuncionario').arg(0, funcionario.funcmatricula)).build()}"
 						class="waves-effect waves-light btn-small"><button
-								type="button" class="btn btn-danger">Excluir</button></a></td>								
+								type="button" class="btn btn-danger">Excluir</button></a></td>		-->
+								
+								<td><a
+									th:href="${(#mvc.url('FC#deletarFuncionario').arg(0, funcionario.funcmatricula)).build()}"
+									th:attr="data-funcionario-nome=${funcionario.funcnome}"
+									type="button" class="btn btn-danger deletar-funcionario"
+									sec:authorize="hasRole('ROLE_DEVELOPER')"
+									sec:disabled="!hasRole('ROLE_DEVELOPER')">Excluir</a></td>						
 								
 					 <td><a
 						th:href="${(#mvc.url('FC#editarFuncionario').arg(0, funcionario.funcmatricula)).build()}"><button
