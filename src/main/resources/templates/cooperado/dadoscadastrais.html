@@ -54,53 +54,67 @@
 		<br>
 <a href="javascript:history.back()">Voltar</a>	
 		<h3>Dados cadastrais:</h3>
-		<table class="table table-hover table-responsive w-auto table-striped">
-			<thead>
-				<tr>
-					<th scope="col">Data Cadastro
-					<th scope="col">Data Admissão
-					<th scope="col">Data Desligamento<br>
-					<th scope="col">Motivo do desligamento
-					<th scope="col">Ativo</th>
-					<th scope="col">Data Admissibilidade
-					<th scope="col">Data Teste psicológico
-					<th scope="col">Data Teste  Técnico
-					<th scope="col">Informações
-					<th scope="col">Restrições
-					<th scope="col">Anotações
-					<th scope="col">Data Teste psicológico
-					<th scope="col">Data Teste  Técnico
-					<th scope="col">Seleção
-					<th scope="col">Indicação
-					<th scope="col">Ocorrências
-					
-				</tr>
-			</thead>
-			<tbody>
+<div class="dados-cadastrais">
+    <div th:each="coopcadastro : ${coopcadastro}">
+        <div class="dado-item">
+            <strong>Data Cadastro:</strong>
+            <span th:text="${coopcadastro.coopdatacadastro}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Admissão:</strong>
+            <span th:text="${coopcadastro.coopdataadmissao}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Desligamento:</strong>
+            <span th:text="${coopcadastro.coopdatadesligamento}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Motivo do desligamento:</strong>
+            <span th:text="${coopcadastro.coopmotivodesl}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Ativo:</strong>
+            <span th:text="${coopcadastro.coopcooperado}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Admissibilidade:</strong>
+            <span th:text="${coopcadastro.coopdataadmissibilidade}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Teste Psicológico:</strong>
+            <span th:text="${coopcadastro.cooptestepsicologico}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Teste Técnico:</strong>
+            <span th:text="${coopcadastro.cooptestetecnico}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Informações:</strong>
+            <span th:text="${coopcadastro.coopinformacoes}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Restrições:</strong>
+            <span th:text="${coopcadastro.cooprestricao}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Anotações:</strong>
+            <span th:text="${coopcadastro.coopanotacoes}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Seleção:</strong>
+            <span th:text="${coopcadastro.coopsel}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Indicação:</strong>
+            <span th:text="${coopcadastro.coopindicacao}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Ocorrências:</strong>
+            <span th:text="${coopcadastro.coopocorrencias}"></span>
+        </div>
+    </div>
+</div>
 
-				<tr th:each="coopcadastro : ${coopcadastro}" >
-					<td><span th:text="${coopcadastro.coopdatacadastro}"></span></td>
-					<td><span th:text="${coopcadastro.coopdataadmissao}"></span></td>
-					<td><span th:text="${coopcadastro.coopdatadesligamento}"></span></td>
-					<td><span th:text="${coopcadastro.coopmotivodesl}"></span></td>
-					<td><span th:text="${coopcadastro.coopcooperado}"></span></td>	
-					<td><span th:text="${coopcadastro.coopdataadmissibilidade}"></span></td>
-					<td><span th:text="${coopcadastro.cooptestepsicologico}"></span></td>
-					<td><span th:text="${coopcadastro.cooptestetecnico}"></span></td>
-					<td><span th:text="${coopcadastro.coopinformacoes}"></span></td>
-					<td><span th:text="${coopcadastro.cooprestricao}"></span></td>
-					<td><span th:text="${coopcadastro.coopanotacoes}"></span></td>
-					<td><span th:text="${coopcadastro.coopdataatestepsico}"></span></td>
-					<td><span th:text="${coopcadastro.coopsel}"></span></td>
-					<td><span th:text="${coopcadastro.coopindicacao}"></span></td>
-					<td><span th:text="${coopcadastro.coopocorrencias}"></span></td>					
-					
-				</tr>
-				</tbody>
-		</table>
-		</div>
-
-	</div>
 
 
 	<div style="height: 100px;"></div>
