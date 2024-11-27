@@ -29,9 +29,9 @@ public class Telefone {
 	@Column(name="coop_tel_tipo")
 	private String coopteltipo;
 	
-	@ManyToOne
-	@JoinColumn(name = "coop_matricula")
-	private Cooperado cooperado;
+	@ManyToOne//(Indica que um cooperado pode ter muitos telefones)
+	@JoinColumn(name = "coop_matricula")//")(indica qual o campo que fará a ligação entre as tabelas)
+	private Cooperado cooperado;//(Nome da tabela que será relacionada.)
 
 	public int getCooptelindexcod() {
 		return cooptelindexcod;

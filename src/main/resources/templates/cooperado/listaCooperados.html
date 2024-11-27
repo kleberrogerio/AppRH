@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=”pt-br” xmlns:th="http://thymeleaf.org"
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
@@ -11,80 +11,19 @@
 <title>| App Serco |</title>
 
 <!-- Bootstrap -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap para testes, apagar depois que configurar thymeleaf-->
-<link href="cooperado/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/cooperado/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
-<!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 
 </head>
 
 <body>
-
-	<header>
-
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/">App Serco</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarNav"
-					aria-controls="navbarNav" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-						
-						<li class="nav-item"><a class="nav-link" href="/funcionarios">Funcionários</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cadastrarFuncionario">Cadastrar Funcionário</a>
-						</li>
-
-						<li class="nav-item"><a class="nav-link" href="/cooperados">
-								 Listar Cooperados
-							</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cadastrarCooperado">
-								 Cadastrar Cooperado
-							</a></li>
-							
-							<li class="nav-item"><a class="nav-link" href="/cotas">
-								 Cotas
-							</a></li>
-							<li class="nav-item"><a class="nav-link" href="/relatorios">
-								 Relatórios
-							</a></li>
-							<li class="nav-item">
-								<a class="nav-link" id="logout-link" href="/logout">Sair</a
-							></li>
-					</ul>
-					<script>
-						document.addEventListener("DOMContentLoaded", function() {
-							let logoutLink = document.getElementById("logout-link");
-							logoutLink.addEventListener("click", (event) => {
-								event.preventDefault();
-								var xmlhttp = new XMLHttpRequest();
-						        xmlhttp.open("GET", "/cooperados", true);
-						        xmlhttp.setRequestHeader("Authorization", "Basic logout");
-						        xmlhttp.send();
-						        
-						        setTimeout(function () {
-						            window.location.href = "http://localhost:8080/";
-						        }, 200);
-							});
-						});
-					</script>
-				</div>
-			</div>
-		</nav>
-
-	</header>
-
+<!-- Incluir o fragmento do menu -->
+    <div th:insert="fragments/menu :: menu"></div>
+ 
 	<div class="container">
 
 		<!-- 	nova busca -->
@@ -147,9 +86,9 @@
 
 					<div class="row form-group justify-content-center w-100 p-2">
 						<h4>
-							<i><span th:text="${mensagem}"></i>
+							<i><span th:text="${mensagem}"></span></i>
 						</h4>
-						</span>
+						
 					</div>
 
 					<div class="row form-group justify-content-center w-100 p-2">
@@ -162,7 +101,7 @@
 								<tr>
 									<th scope="col">Matrícula:</th>
 									<th scope="col">Nome do cooperado:</th>
-									<th scope="col">Nome de guerra:</th>
+									<th scope="col">Apelido:</th>
 									<th scope="col"></th>
 									<th scope="col">Ações:</th>
 									<th ><abbr title="Recebe Ligação">L</abbr></th>
@@ -173,7 +112,6 @@
 							</thead>
 
 							
-								<!-- <tr th:each="cooperado: ${pageCooperado.registros}" th:attr="data-cooperado-id=${cooperado.coopmatricula}"> -->
 								<tr th:each="cooperado: ${cooperados}" th:attr="data-cooperado-id=${cooperado.coopmatricula}">
 
 									<td><a
@@ -181,13 +119,8 @@
 											<span th:text="${cooperado.coopmatricula}"></span>
 									</a></td>
 									<td><span th:text="${cooperado.coopnome}"></span></td>
-									<td><span th:text="${cooperado.coopnomeguerra}"></span></td>
+									<td><span th:text="${cooperado.coopnomeguerra}"></span></td>									
 									
-									<!--  <td><a
-										th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
-										th:attr="data-cooperado-nome=${cooperado.coopnome}"
-												type="button" class="btn btn-danger deletar-cooperado" >Excluir</a>
-												</td>-->
 								<td><a
 									th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 									th:attr="data-cooperado-nome=${cooperado.coopnome}"
@@ -206,13 +139,8 @@
 												<input class="form-check-input lgpd" id="lgpd1" data-lgpd="ligacao" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopligacao()}" /></td>
 												<td><input class="form-check-input lgpd" id="lgpd2" data-lgpd="whatsapp" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopwhatsapp()}" /></td>
 												<td><input class="form-check-input lgpd" id="lgpd3" data-lgpd="correio" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopcorreio()}" /></td>
-												<td>
+												<td>												
 												
-												<!--   <td><a
-										th:href="${(#mvc.url('CC#controlaLGPD').arg(0, cooperado.coopmatricula)).build()}"><button
-												type="submit" class="btn btn-success">Salvar Lgpd</button></a></td>
-												
-												</td>-->
 												<body>
     
 </body>
@@ -220,49 +148,81 @@
 								</tr>
 								<tr>
 						<td colspan="2" th:style="'text-align: right;'"><h5>Total</h5></td>
-						<td
-							th:text="${#lists.size(cooperados)}" th:style="'font-weight: bold;'">
-							</td>									
-					</tr>	
-								
+										
+					</tr>								
 								
 							</tbody>
 							
 						</table>
-						<!-- 
-						 <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Prev</a>
-    </li>
-    <li class="page-item"><a class="page-link" th:href="@{/cooperados/listar/(page=${pageCooperado.pagina-1})}">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" th:href="@{/cooperados/listar/(page=${pageCooperado.pagina+1})}">Next</a>
-    </li>
-  </ul>
-</nav>
--->
-<!--  Paginação -->
-<nav arial-label="Page navigation example">
-	<ul class = "pagination justify-content-center">
-		<li class = "page-item"><a class="page-link" href="#">Previus</a></li>
-		<li class = "page-item"><a class="page-link" href="#">1</a></li>
-		<li class = "page-item"><a class="page-link" href="#">2</a></li>
-		<li class = "page-item"><a class="page-link" href="#">3</a></li>
-		<li class = "page-item"><a class="page-link" href="#">Next</a></li>	
-	</ul>
-</nav>
+						<a href="#">Topo</a>
+						<br>
+<button onclick="location.href = document.referrer;">Voltar</button>
+						
 					</div>
-					
-					 <div th:if="${totalPages > 1}">
-        <ul class="pagination">
-            <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:class="${pageNum == currentPage} ? 'active'">
-                <a th:href="@{/cooperados(page=${pageNum}, size=${#numbers.formatInteger(size)})}" th:text="${pageNum}"></a>
-            </li>
-        </ul>
+					  
+					<div th:if="${totalPages > 1}" class="pagination-container">
+    <div class="row">
+        <!-- Total de Registros -->
+        <div class="col-sm-4 text-left">
+            Total Registros: [[${totalItems}]]
+        </div>
+
+        <!-- Paginação Reduzida -->
+        <div class="col-sm-4 d-flex justify-content-center">
+            <!-- Botão "Anterior" -->
+            <a th:if="${currentPage > 1}" 
+               th:href="@{'/cooperados/' + ${currentPage - 1} + '/' + ${contextPath}}" 
+               class="btn btn-outline-secondary btn-sm mr-2">&laquo; Anterior</a>
+            <span th:unless="${currentPage > 1}" class="btn btn-secondary btn-sm disabled mr-2">&laquo; Anterior</span>
+
+            <!-- Exibir as primeiras páginas -->
+            <span th:each="i : ${#numbers.sequence(1, 2)}">
+                <a th:if="${currentPage != i}" 
+                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
+                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
+                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
+            </span>
+
+            <!-- Ponto de reticências se há muitas páginas entre o início e a página atual -->
+            <span th:if="${currentPage > 4}">...</span>
+
+            <!-- Páginas próximas à página atual -->
+            <span th:each="i : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
+                  th:if="${i > 2 && i < totalPages}">
+                <a th:if="${currentPage != i}" 
+                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
+                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
+                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
+            </span>
+
+            <!-- Ponto de reticências se há muitas páginas entre a página atual e o fim -->
+            <span th:if="${currentPage < totalPages - 3}">...</span>
+
+            <!-- Exibir as últimas páginas -->
+            <span th:each="i : ${#numbers.sequence(totalPages - 1, totalPages)}" 
+                  th:if="${totalPages > 3}">
+                <a th:if="${currentPage != i}" 
+                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
+                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
+                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
+            </span>
+
+            <!-- Botão "Próximo" -->
+            <a th:if="${currentPage < totalPages}" 
+               th:href="@{'/cooperados/' + ${currentPage - 1} + '/' + ${contextPath}}" 
+               class="btn btn-outline-secondary btn-sm ml-2">Próximo &raquo;</a>
+            <span th:unless="${currentPage < totalPages}" class="btn btn-secondary btn-sm disabled ml-2">Próximo &raquo;</span>
+        </div>
+
+        <!-- Exibe a página atual -->
+        <div class="col-sm-4 text-right">
+            Página [[${currentPage}]] de [[${totalPages}]]
+        </div>
     </div>
+</div>
+
+
+
 
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
@@ -311,10 +271,8 @@
 
 
 
-	<div class="footer-copyright fixed-bottom bg-dark text-center py-3">
-		<span class="text-light align-middle">| App Serco | - © 2023
-			Copyright: Kleber Rogério do Nascimento</span>
-	</div>
+	<!-- Incluir o rodapé no final da página -->
+    <div th:insert="fragments/footer :: footer"></div>
 
 	<!--JavaScript bootstrap-->
 	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>

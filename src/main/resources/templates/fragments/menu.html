@@ -1,0 +1,74 @@
+<!-- src/main/resources/templates/fragments/menu.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <!-- Definir o fragmento 'menu' -->
+        <div th:fragment="menu">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/">App Serco</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <!-- Home -->
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                                </li>
+
+                                <!-- Menu suspenso para Funcionários -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="funcionariosDropdown" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Funcionários
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="funcionariosDropdown">
+                                        <li><a class="dropdown-item" href="/funcionarios">Listar Funcionários</a></li>
+                                        <li><a class="dropdown-item" href="/cadastrarFuncionario">Cadastrar Funcionário</a></li>
+                                    </ul>
+                                </li>
+
+                                <!-- Menu suspenso para Cooperados -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="cooperadosDropdown" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Cooperados
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="cooperadosDropdown">
+                                        <li><a class="dropdown-item" href="/cooperados">Listar Cooperados</a></li>
+                                        <li><a class="dropdown-item" href="/cadastrarCooperado">Cadastrar Cooperado</a></li>
+                                        <li><a class="dropdown-item" href="/cotas">Cotas</a></li>
+                                        <li><a class="dropdown-item" href="/relatorios">Relatórios</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="logout-link" href="/logout">Sair</a>
+                                </li>
+                            </ul>
+                            <script>
+						document.addEventListener("DOMContentLoaded", function() {
+							let logoutLink = document.getElementById("logout-link");
+							logoutLink.addEventListener("click", (event) => {
+								event.preventDefault();
+								var xmlhttp = new XMLHttpRequest();
+						        xmlhttp.open("GET", "/cooperados", true);
+						        xmlhttp.setRequestHeader("Authorization", "Basic logout");
+						        xmlhttp.send();
+						        
+						        setTimeout(function () {
+						            window.location.href = "localhost:8080";
+						        }, 200);
+							});
+						});
+					</script>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </div>
+    </body>
+</html>

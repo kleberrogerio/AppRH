@@ -23,11 +23,11 @@ public class Cooperado implements Serializable {
 	@Column(name="coop_index_cod")
 	private int coopindexcod;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
-	@Column(name="coop_matricula",unique = true)
-	private int coopmatricula;
+	@Id //(Anotação que identifica que é chave primária)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//(Anotação que faz com que esse campo seja auto increment)
+	@NotNull//(Anotação que faz com que esse campo não seja nulo)
+	@Column(name="coop_matricula",unique = true)//)(Anotação que indica o nome do campo na tabela no banco de dados)
+	private int coopmatricula;//(Indica o nome do campo na tabela no banco de dados)
 	
 	@NotNull
 	@Column(name="coop_nome")
@@ -38,14 +38,15 @@ public class Cooperado implements Serializable {
 	private String coopnomeguerra;
 	
 	
-	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)//(Indica que um cooperado pode ter muitos telefones, 
+																	//essa anotação que faz o relacionamento da tabela cooperado com a tabela telefone)
 	private List<Telefone> telefones;
 	
 	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
 	private List<Dividas> dividas;
 	
-	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.REMOVE)
-	private List<Coopendereco> coopendereco;
+	@OneToMany(mappedBy = "cooperado", cascade = CascadeType.ALL)
+	private List<Coopendereco> coopenderecos;
 	
 	@OneToOne(mappedBy = "cooperado", cascade = CascadeType.ALL)
 	private Coopcadastro coopcadastro;
@@ -58,12 +59,12 @@ public class Cooperado implements Serializable {
 	private Lgpd lgpd;
 	
 	public List<Coopendereco> getCoopendereco() {
-		return coopendereco;
+		return coopenderecos;
 	}
 
 
 	public void setCoopendereco(List<Coopendereco> coopendereco) {
-		this.coopendereco = coopendereco;
+		this.coopenderecos = coopendereco;
 	}
 
 
@@ -149,8 +150,3 @@ public class Cooperado implements Serializable {
 	
 	
 }
-
-
-
-
-

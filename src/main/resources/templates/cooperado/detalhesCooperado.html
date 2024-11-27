@@ -28,62 +28,9 @@
 </head>
 
 <body>
-<header>
-
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/">App Serco</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-						
-						<li class="nav-item"><a class="nav-link" href="/funcionarios">Funcionários</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cadastrarFuncionario">Cadastrar Funcionário</a>
-						</li>
-
-						<li class="nav-item"><a class="nav-link" href="/cooperados">
-								 Listar Cooperados
-							</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cadastrarCooperado">
-								 Cadastrar Cooperado
-							</a></li>
-							
-							<li class="nav-item"><a class="nav-link" href="/cotas">
-								 Cotas
-							</a></li>
-							<li class="nav-item"><a class="nav-link" href="/relatorios">
-								 Relatórios
-							</a></li>
-							<li class="nav-item">
-								<a class="nav-link" id="logout-link" href="/logout">Sair</a
-							></li>
-					</ul>
-					<script>
-						document.addEventListener("DOMContentLoaded", function() {
-							let logoutLink = document.getElementById("logout-link");
-							logoutLink.addEventListener("click", (event) => {
-								event.preventDefault();
-								var xmlhttp = new XMLHttpRequest();
-						        xmlhttp.open("GET", "/cooperados", true);
-						        xmlhttp.setRequestHeader("Authorization", "Basic logout");
-						        xmlhttp.send();
-						        
-						        setTimeout(function () {
-						            window.location.href = "http://localhost:8080/";
-						        }, 200);
-							});
-						});
-					</script>
-				</div>
-			</div>
-		</nav>
-
-	</header>
-	
+<!-- Incluir o fragmento do menu -->
+    <div th:insert="fragments/menu :: menu"></div>	
+    	
 	<div class="container">
 
 		<h1>Detalhes do cooperado:</h1>
@@ -92,27 +39,39 @@
 			<br>
 
 			<p>
-					<a th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Dívida</button></a>
-					 <a th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Cota Parte</button></a>
-					 <a th:href="${(#mvc.url('CC#coopendereco').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-danger">Endereço</button></a>
-					 <a th:href="${(#mvc.url('CC#coopcadastro').arg(0, cooperado.coopmatricula)).build()}"><button type="button"
-					 class="btn btn-primary">Dados Cadastrais</button></a>
-					 <br><br>
-				<b>Matrícula:</b> <span th:text="${cooperado.coopmatricula}"></span>
+				<a
+					th:href="${(#mvc.url('CC#divida').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-danger">Dívida</button></a> <a
+					th:href="${(#mvc.url('CC#cota').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-primary">Cota Parte</button></a> <a
+					th:href="${(#mvc.url('CC#coopendereco').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-danger">Endereço</button></a> <a
+					th:href="${(#mvc.url('CC#coopcadastro').arg(0, cooperado.coopmatricula)).build()}"><button
+						type="button" class="btn btn-primary">Dados Cadastrais</button></a> <br>
+				<br>
+				 <div>
+   					 <img th:src="@{|/uploads/${cooperado.coopmatricula}.jpg|}" alt="Foto do Cooperado" width="200" height="200" />
+				</div>
+				
+				<b>Matrícula:</b> <span
+					th:text="${cooperado.coopmatricula}"></span>
 			</p>
+			
+			
+			
 			<p>
 				<b>Nome:</b> <span th:text="${cooperado.coopnome}"></span>
 			</p>
 			<p>
-				<b>Nome de Guerra:</b> <span th:text="${cooperado.coopnomeguerra}"></span>
+				<b>Apelido:</b> <span th:text="${cooperado.coopnomeguerra}"></span>
 			</p>
 			
 			
 			<br> <br>
-			
+			<br>
+				<button onclick="location.href = document.referrer;">Voltar</button>
+				
+				
 					<h2>Adicionar telefone:</h2>
 
 			<th:block th:include="mensagemValidacao"></th:block>
@@ -206,6 +165,8 @@
 -->
 			</tbody>
 		</table>
+		<br>
+<a href="javascript:history.back()">Voltar</a>
 		<script>
 	document.addEventListener("DOMContentLoaded", function() {
 		document.querySelectorAll(".deletar-telefone").forEach(element => {
@@ -242,10 +203,8 @@
 
 	<div style="height: 100px;"></div>
 
-	<div class="footer-copyright fixed-bottom bg-dark text-center py-3">
-		<span class="text-light align-middle">| App Serco - ©
-			2023 Copyright: Kleber Rogério do Nascimento</span>
-	</div>
+	<!-- Incluir o rodapé no final da página -->
+    <div th:insert="fragments/footer :: footer"></div>
 
 
 

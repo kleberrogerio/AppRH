@@ -24,8 +24,8 @@ public class Coopendereco {
 	private int coopmatricula;
 	
 	@NotNull
-	@Column(name="coop_endereco")
-	private String coopendereco;
+	@Column(name="coop_end_endereco")
+	private String coopendendereco;
 	
 	@Column(name="coop_bairro")
 	private String coopbairro;
@@ -68,13 +68,13 @@ public class Coopendereco {
 	}
 
 
-	public String getCoopendereco() {
-		return coopendereco;
+	public String getCoopendendereco() {
+		return coopendendereco;
 	}
 
 
-	public void setCoopendereco(String coopendereco) {
-		this.coopendereco = coopendereco;
+	public void setCoopendendereco(String coopendendereco) {
+		this.coopendendereco = coopendendereco;
 	}
 
 

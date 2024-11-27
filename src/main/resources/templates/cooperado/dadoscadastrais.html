@@ -28,60 +28,9 @@
 </head>
 
 <body>
-<header>
-
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/">App Serco</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-						
-						<li class="nav-item"><a class="nav-link" href="/funcionarios">Funcionários</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cadastrarFuncionario">Cadastrar Funcionário</a>
-						</li>
-
-						<li class="nav-item"><a class="nav-link" href="/cooperados">
-								 Listar Cooperados
-							</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cadastrarCooperado">
-								 Cadastrar Cooperado
-							</a></li>
-							
-							<li class="nav-item"><a class="nav-link" href="/cotas">
-								 Cotas
-							</a></li>
-							<li class="nav-item"><a class="nav-link" href="/relatorios">
-								 Relatórios
-							<li class="nav-item">
-								<a class="nav-link" id="logout-link" href="/logout">Sair</a
-							></li>
-					</ul>
-					<script>
-						document.addEventListener("DOMContentLoaded", function() {
-							let logoutLink = document.getElementById("logout-link");
-							logoutLink.addEventListener("click", (event) => {
-								event.preventDefault();
-								var xmlhttp = new XMLHttpRequest();
-						        xmlhttp.open("GET", "/cooperados", true);
-						        xmlhttp.setRequestHeader("Authorization", "Basic logout");
-						        xmlhttp.send();
-						        
-						        setTimeout(function () {
-						            window.location.href = "http://localhost:8080/";
-						        }, 200);
-							});
-						});
-					</script>
-				</div>
-			</div>
-		</nav>
-
-	</header>
+<!-- Incluir o fragmento do menu -->
+    <div th:insert="fragments/menu :: menu"></div>	
+    
 	
 	<div class="container">
 
@@ -102,64 +51,76 @@
 			
 			
 			<br> <br>
-			
+		<br>
+<a href="javascript:history.back()">Voltar</a>	
 		<h3>Dados cadastrais:</h3>
-		<table class="table table-hover table-responsive w-auto table-striped">
-			<thead>
-				<tr>
-					<th scope="col">Data Cadastro
-					<th scope="col">Data Admissão
-					<th scope="col">Data Desligamento<br>
-					<th scope="col">Motivo do desligamento
-					<th scope="col">Ativo</th>
-					<th scope="col">Data Admissibilidade
-					<th scope="col">Data Teste psicológico
-					<th scope="col">Data Teste  Técnico
-					<th scope="col">Informações
-					<th scope="col">Restrições
-					<th scope="col">Anotações
-					<th scope="col">Data Teste psicológico
-					<th scope="col">Data Teste  Técnico
-					<th scope="col">Seleção
-					<th scope="col">Indicação
-					<th scope="col">Ocorrências
-					
-				</tr>
-			</thead>
-			<tbody>
+<div class="dados-cadastrais">
+    <div th:each="coopcadastro : ${coopcadastro}">
+        <div class="dado-item">
+            <strong>Data Cadastro:</strong>
+            <span th:text="${coopcadastro.coopdatacadastro}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Admissão:</strong>
+            <span th:text="${coopcadastro.coopdataadmissao}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Desligamento:</strong>
+            <span th:text="${coopcadastro.coopdatadesligamento}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Motivo do desligamento:</strong>
+            <span th:text="${coopcadastro.coopmotivodesl}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Ativo:</strong>
+            <span th:text="${coopcadastro.coopcooperado}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Admissibilidade:</strong>
+            <span th:text="${coopcadastro.coopdataadmissibilidade}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Teste Psicológico:</strong>
+            <span th:text="${coopcadastro.cooptestepsicologico}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Data Teste Técnico:</strong>
+            <span th:text="${coopcadastro.cooptestetecnico}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Informações:</strong>
+            <span th:text="${coopcadastro.coopinformacoes}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Restrições:</strong>
+            <span th:text="${coopcadastro.cooprestricao}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Anotações:</strong>
+            <span th:text="${coopcadastro.coopanotacoes}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Seleção:</strong>
+            <span th:text="${coopcadastro.coopsel}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Indicação:</strong>
+            <span th:text="${coopcadastro.coopindicacao}"></span>
+        </div>
+        <div class="dado-item">
+            <strong>Ocorrências:</strong>
+            <span th:text="${coopcadastro.coopocorrencias}"></span>
+        </div>
+    </div>
+</div>
 
-				<tr th:each="coopcadastro : ${coopcadastro}" >
-					<td><span th:text="${coopcadastro.coopdatacadastro}"></span></td>
-					<td><span th:text="${coopcadastro.coopdataadmissao}"></span></td>
-					<td><span th:text="${coopcadastro.coopdatadesligamento}"></span></td>
-					<td><span th:text="${coopcadastro.coopmotivodesl}"></span></td>
-					<td><span th:text="${coopcadastro.coopcooperado}"></span></td>	
-					<td><span th:text="${coopcadastro.coopdataadmissibilidade}"></span></td>
-					<td><span th:text="${coopcadastro.cooptestepsicologico}"></span></td>
-					<td><span th:text="${coopcadastro.cooptestetecnico}"></span></td>
-					<td><span th:text="${coopcadastro.coopinformacoes}"></span></td>
-					<td><span th:text="${coopcadastro.cooprestricao}"></span></td>
-					<td><span th:text="${coopcadastro.coopanotacoes}"></span></td>
-					<td><span th:text="${coopcadastro.coopdataatestepsico}"></span></td>
-					<td><span th:text="${coopcadastro.coopsel}"></span></td>
-					<td><span th:text="${coopcadastro.coopindicacao}"></span></td>
-					<td><span th:text="${coopcadastro.coopocorrencias}"></span></td>					
-					
-				</tr>
-				</tbody>
-		</table>
-		</div>
-
-	</div>
 
 
 	<div style="height: 100px;"></div>
 
-	<div class="footer-copyright fixed-bottom bg-dark text-center py-3">
-		<span class="text-light align-middle">| App Serco - ©
-			2023 Copyright: Kleber Rogério do Nascimento</span>
-	</div>
-
+	<!-- Incluir o rodapé no final da página -->
+    <div th:insert="fragments/footer :: footer"></div>
 
 
 

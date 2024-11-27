@@ -1,4 +1,4 @@
-package com.AppRH.AppRH.controllers;
+/*package com.AppRH.AppRH.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,3 +46,4 @@ public class RelatorioController {
     }
 
 }
+*/
