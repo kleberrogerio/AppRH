@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>| App Serco |</title>
+
+<!-- Bootstrap -->
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap para testes, apagar depois que configurar thymeleaf-->
+<link href="/cooperado/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+<!-- Incluir o fragmento do menu -->
+    <div th:insert="fragments/menu :: menu"></div>
+ 
+	<div class="container">
+
+		<!-- 	nova busca -->
+		<div class="row">
+			<div class="col">
+				<br> <br>
+				<div class="card text-center card w-100">
+					<div class="card-header">
+						<h3><< Pesquisar no sistema>></h3>
+					</div>
+
+					<form class="form-inline" method="post">
+
+
+						<div class="row form-group justify-content-center w-100 p-2">
+
+
+							<div class="col col-14 col-md-2">
+
+								<label for="cars" class="my-3 p-2 w-100">
+									<h5>Status do Interessado:</h5>
+								</label>
+							</div>
+
+							<div class="col col-14 col-md-2">
+							
+
+
+								<select name="nome" id="nome" class="custom-select my-3 p-2 w-100">
+									<option value="">Escolher...</option>
+									<option value="all">Todos</option>
+									<option value="ativos">Ativos</option>
+									<option value="inativos">Inativos</option>
+									
+										</select>
+								
+								
+							</div>
+							
+							
+							
+
+							<div class="col col-14 col-md-4">
+
+								<input class="form-control form-control-lg my-3 p-2 w-100"
+									type="search" placeholder="Matrícula ou Nome ou Apelido"
+									aria-label="Pesquisar" name="buscar" id="buscar" >
+							</div>
+
+							<div class="col col-14 col-md-2">
+							
+							
+
+								<button class="btn btn-primary my-3 p-2 w-100" type="submit">Pesquisar</button>
+
+							</div>
+						</div>
+
+					</form>
+
+					<div class="row form-group justify-content-center w-100 p-2">
+						<h4>
+							<i><span th:text="${mensagem}"></span></i>
+						</h4>
+						
+					</div>
+
+					<div class="row form-group justify-content-center w-100 p-2">
+						
+						<table
+							class="table table-hover table-responsive w-auto table-striped">
+							
+							<tbody>
+							<thead>
+								<tr>
+									<th scope="col">Matrícula:</th>
+									<th scope="col">Nome do cooperado:</th>
+									<th scope="col">Apelido:</th>
+									<th scope="col"></th>
+									<th scope="col">Ações:</th>
+									<th ><abbr title="Recebe Ligação">L</abbr></th>
+									<th ><abbr title="Contato via Whatsapp">W</abbr></th>
+									<th ><abbr title="Recebe Correspondência">C</abbr></th>
+									<th scope="col"></th>
+								</tr>
+							</thead>
+
+							
+								<tr th:each="interessado: ${interessados}" th:attr="data-interessado-id=${interessado.funcpronome}">
+
+									<td><a
+										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula).build())}">
+											<span th:text="${interessado.funcpromatricula}"></span>
+									</a></td>
+									<td><span th:text="${interessado.funcpronome}"></span></td>
+									<td><span th:text="${interessado.funcpronomeguerra}"></span></td>									
+									
+								<td><a
+									th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+									th:attr="data-interessado-nome=${interessado.funcpronome}"
+									type="button" class="btn btn-danger deletar-interessado"
+									sec:authorize="hasRole('ROLE_DEVELOPER')"
+									sec:disabled="!hasRole('ROLE_DEVELOPER')">Excluir</a></td>
+
+
+								<td><a
+										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+										class="btn btn-primary">Editar
+											</button>
+									</a></td>									
+											 	<td>
+											 	
+												<input class="form-check-input lgpd" id="lgpd1" data-lgpd="ligacao" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopligacao()}" /></td>
+												<td><input class="form-check-input lgpd" id="lgpd2" data-lgpd="whatsapp" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopwhatsapp()}" /></td>
+												<td><input class="form-check-input lgpd" id="lgpd3" data-lgpd="correio" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopcorreio()}" /></td>
+												<td>												
+												
+												<body>
+    
+</body>
+
+								</tr>
+								<tr>
+						<td colspan="2" th:style="'text-align: right;'"><h5>Total</h5></td>
+										
+					</tr>								
+								
+							</tbody>
+							
+						</table>
+						<a href="#">Topo</a>
+						<br>
+<button onclick="location.href = document.referrer;">Voltar</button>
+						
+					</div>
+					  
+					<div th:if="${totalPages > 1}" class="pagination-container">
+    <div class="row">
+        <!-- Total de Registros -->
+        <div class="col-sm-4 text-left">
+            Total Registros: [[${totalItems}]]
+        </div>
+
+        <!-- Paginação Reduzida -->
+        <div class="col-sm-4 d-flex justify-content-center">
+            <!-- Botão "Anterior" -->
+            <a th:if="${currentPage > 1}" 
+               th:href="@{'/cooperados/' + ${currentPage - 1} + '/' + ${contextPath}}" 
+               class="btn btn-outline-secondary btn-sm mr-2">&laquo; Anterior</a>
+            <span th:unless="${currentPage > 1}" class="btn btn-secondary btn-sm disabled mr-2">&laquo; Anterior</span>
+
+            <!-- Exibir as primeiras páginas -->
+            <span th:each="i : ${#numbers.sequence(1, 2)}">
+                <a th:if="${currentPage != i}" 
+                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
+                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
+                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
+            </span>
+
+            <!-- Ponto de reticências se há muitas páginas entre o início e a página atual -->
+            <span th:if="${currentPage > 4}">...</span>
+
+            <!-- Páginas próximas à página atual -->
+            <span th:each="i : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
+                  th:if="${i > 2 && i < totalPages}">
+                <a th:if="${currentPage != i}" 
+                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
+                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
+                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
+            </span>
+
+            <!-- Ponto de reticências se há muitas páginas entre a página atual e o fim -->
+            <span th:if="${currentPage < totalPages - 3}">...</span>
+
+            <!-- Exibir as últimas páginas -->
+            <span th:each="i : ${#numbers.sequence(totalPages - 1, totalPages)}" 
+                  th:if="${totalPages > 3}">
+                <a th:if="${currentPage != i}" 
+                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
+                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
+                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
+            </span>
+
+            <!-- Botão "Próximo" -->
+            <a th:if="${currentPage < totalPages}" 
+               th:href="@{'/cooperados/' + ${currentPage - 1} + '/' + ${contextPath}}" 
+               class="btn btn-outline-secondary btn-sm ml-2">Próximo &raquo;</a>
+            <span th:unless="${currentPage < totalPages}" class="btn btn-secondary btn-sm disabled ml-2">Próximo &raquo;</span>
+        </div>
+
+        <!-- Exibe a página atual -->
+        <div class="col-sm-4 text-right">
+            Página [[${currentPage}]] de [[${totalPages}]]
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		document.querySelectorAll(".deletar-cooperado").forEach(element => {
+			element.addEventListener("click", function(event) {
+				
+				let nome = event.target.dataset["cooperadoNome"];
+				if (!confirm("Deletar cooperado " + nome + "?")) {
+					event.preventDefault();
+				}
+			});
+		});
+		
+		document.querySelectorAll("input[type='checkbox'].lgpd").forEach(element => {
+			element.addEventListener("click", function(event) {
+				let value = event.target.checked;
+				let type = event.target.dataset.lgpd;
+				let cooperadoId = event.target.parentElement.parentElement.dataset.cooperadoId
+				
+				fetch(`/ControlaLGPD/${cooperadoId}?type=${type}&value=${value}`, {
+					method: "POST"
+				}).then().then();
+				
+				
+				console.log(value, cooperadoId, type);
+			});
+		});
+		
+	});
+</script>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+	</div>
+
+
+	<div style="height: 100px;"></div>
+
+
+
+
+	<!-- Incluir o rodapé no final da página -->
+    <div th:insert="fragments/footer :: footer"></div>
+
+	<!--JavaScript bootstrap-->
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous">
+		
+	</script>
+</body>
+
+</html>

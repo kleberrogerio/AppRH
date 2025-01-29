@@ -8,6 +8,6 @@ import com.AppRH.AppRH.models.Interessado;
 
 public interface InteressadoRepository extends JpaRepository<Interessado, Long>{
 	
-	//List<Interessado>findByCoopnome(String coop_nome);
+	List<Interessado> findByFuncpronome(String nome);
 
 }
