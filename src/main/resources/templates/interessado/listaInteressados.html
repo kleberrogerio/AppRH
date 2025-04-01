@@ -99,30 +99,25 @@
 							<tbody>
 							<thead>
 								<tr>
-									<th scope="col">Matrícula:</th>
 									<th scope="col">Nome do cooperado:</th>
 									<th scope="col">Apelido:</th>
 									<th scope="col"></th>
 									<th scope="col">Ações:</th>
-									<th ><abbr title="Recebe Ligação">L</abbr></th>
+							<!-- 		<th ><abbr title="Recebe Ligação">L</abbr></th>
 									<th ><abbr title="Contato via Whatsapp">W</abbr></th>
-									<th ><abbr title="Recebe Correspondência">C</abbr></th>
+									<th ><abbr title="Recebe Correspondência">C</abbr></th> -->
 									<th scope="col"></th>
 								</tr>
 							</thead>
 
 							
-								<tr th:each="interessado: ${interessados}" th:attr="data-interessado-id=${interessado.funcpronome}">
+								<tr th:each="interessado: ${interessados}" >
 
-									<td><a
-										th:href="${(#mvc.url('CC#detalhesCooperado').arg(0, cooperado.coopmatricula).build())}">
-											<span th:text="${interessado.funcpromatricula}"></span>
-									</a></td>
 									<td><span th:text="${interessado.funcpronome}"></span></td>
-									<td><span th:text="${interessado.funcpronomeguerra}"></span></td>									
+									<td><span th:text="${interessado.funcproemail}"></span></td>									
 									
-								<td><a
-									th:href="${(#mvc.url('CC#deletarCooperado').arg(0, cooperado.coopmatricula)).build()}"
+							<!-- 	<td><a
+									th:href="${(#mvc.url('CC#deletarCooperado').arg(0, interessado.funcproindex)).build()}"
 									th:attr="data-interessado-nome=${interessado.funcpronome}"
 									type="button" class="btn btn-danger deletar-interessado"
 									sec:authorize="hasRole('ROLE_DEVELOPER')"
@@ -133,21 +128,21 @@
 										th:href="${(#mvc.url('CC#editarCooperado').arg(0, cooperado.coopmatricula)).build()}"
 										class="btn btn-primary">Editar
 											</button>
-									</a></td>									
+									</a></td>			 				
 											 	<td>
 											 	
 												<input class="form-check-input lgpd" id="lgpd1" data-lgpd="ligacao" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopligacao()}" /></td>
 												<td><input class="form-check-input lgpd" id="lgpd2" data-lgpd="whatsapp" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopwhatsapp()}" /></td>
 												<td><input class="form-check-input lgpd" id="lgpd3" data-lgpd="correio" type="checkbox" name="lgpd" th:checked="*{cooperado.lgpd.isCoopcorreio()}" /></td>
 												<td>												
-												
+												-->		
 												<body>
     
 </body>
 
 								</tr>
 								<tr>
-						<td colspan="2" th:style="'text-align: right;'"><h5>Total</h5></td>
+					<!-- 	<td colspan="2" th:style="'text-align: right;'"><h5>Total</h5></td> -->
 										
 					</tr>								
 								
@@ -160,99 +155,12 @@
 						
 					</div>
 					  
-					<div th:if="${totalPages > 1}" class="pagination-container">
-    <div class="row">
-        <!-- Total de Registros -->
-        <div class="col-sm-4 text-left">
-            Total Registros: [[${totalItems}]]
-        </div>
-
-        <!-- Paginação Reduzida -->
-        <div class="col-sm-4 d-flex justify-content-center">
-            <!-- Botão "Anterior" -->
-            <a th:if="${currentPage > 1}" 
-               th:href="@{'/cooperados/' + ${currentPage - 1} + '/' + ${contextPath}}" 
-               class="btn btn-outline-secondary btn-sm mr-2">&laquo; Anterior</a>
-            <span th:unless="${currentPage > 1}" class="btn btn-secondary btn-sm disabled mr-2">&laquo; Anterior</span>
-
-            <!-- Exibir as primeiras páginas -->
-            <span th:each="i : ${#numbers.sequence(1, 2)}">
-                <a th:if="${currentPage != i}" 
-                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
-                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
-                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
-            </span>
-
-            <!-- Ponto de reticências se há muitas páginas entre o início e a página atual -->
-            <span th:if="${currentPage > 4}">...</span>
-
-            <!-- Páginas próximas à página atual -->
-            <span th:each="i : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
-                  th:if="${i > 2 && i < totalPages}">
-                <a th:if="${currentPage != i}" 
-                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
-                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
-                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
-            </span>
-
-            <!-- Ponto de reticências se há muitas páginas entre a página atual e o fim -->
-            <span th:if="${currentPage < totalPages - 3}">...</span>
-
-            <!-- Exibir as últimas páginas -->
-            <span th:each="i : ${#numbers.sequence(totalPages - 1, totalPages)}" 
-                  th:if="${totalPages > 3}">
-                <a th:if="${currentPage != i}" 
-                   th:href="@{'/cooperados/' + ${i} + '/' + ${contextPath}}" 
-                   class="btn btn-outline-primary btn-sm mx-1">[[${i}]]</a>
-                <span th:unless="${currentPage != i}" class="btn btn-primary btn-sm mx-1">[[${i}]]</span>
-            </span>
-
-            <!-- Botão "Próximo" -->
-            <a th:if="${currentPage < totalPages}" 
-               th:href="@{'/cooperados/' + ${currentPage - 1} + '/' + ${contextPath}}" 
-               class="btn btn-outline-secondary btn-sm ml-2">Próximo &raquo;</a>
-            <span th:unless="${currentPage < totalPages}" class="btn btn-secondary btn-sm disabled ml-2">Próximo &raquo;</span>
-        </div>
-
-        <!-- Exibe a página atual -->
-        <div class="col-sm-4 text-right">
-            Página [[${currentPage}]] de [[${totalPages}]]
-        </div>
-    </div>
-</div>
+				</div>
 
 
 
 
-<script>
-	document.addEventListener("DOMContentLoaded", function() {
-		document.querySelectorAll(".deletar-cooperado").forEach(element => {
-			element.addEventListener("click", function(event) {
-				
-				let nome = event.target.dataset["cooperadoNome"];
-				if (!confirm("Deletar cooperado " + nome + "?")) {
-					event.preventDefault();
-				}
-			});
-		});
-		
-		document.querySelectorAll("input[type='checkbox'].lgpd").forEach(element => {
-			element.addEventListener("click", function(event) {
-				let value = event.target.checked;
-				let type = event.target.dataset.lgpd;
-				let cooperadoId = event.target.parentElement.parentElement.dataset.cooperadoId
-				
-				fetch(`/ControlaLGPD/${cooperadoId}?type=${type}&value=${value}`, {
-					method: "POST"
-				}).then().then();
-				
-				
-				console.log(value, cooperadoId, type);
-			});
-		});
-		
-	});
-</script>
+
 				</div>
 			</div>
 		</div>
