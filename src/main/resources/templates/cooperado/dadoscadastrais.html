@@ -112,6 +112,9 @@
             <strong>Ocorrências:</strong>
             <span th:text="${coopcadastro.coopocorrencias}"></span>
         </div>
+        
+        <!-- Botão Editar -->
+<a th:href="@{/cooperado/editar/{matricula}(matricula=${cooperado.coopmatricula})}" class="btn btn-primary">Editar</a>
     </div>
 </div>
 

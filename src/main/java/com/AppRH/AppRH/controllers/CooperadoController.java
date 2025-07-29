@@ -1,6 +1,7 @@
 
 package com.AppRH.AppRH.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +49,7 @@ import com.AppRH.AppRH.repository.LgpdRepository;
 import com.AppRH.AppRH.repository.LogAlteracaoRepository;
 import com.AppRH.AppRH.repository.TelefoneRepository;
 import com.AppRH.AppRH.service.CooperadoService;
+import java.util.Optional;
 
 @Controller
 public class CooperadoController {
@@ -78,6 +81,12 @@ public class CooperadoController {
 	@Autowired
 	private CooperadoService cs;
 	
+	@Autowired
+	private CooperadoRepository cooperadoRepository;
+
+	@Autowired
+	private CoopcadastroRepository coopCadastroRepository;
+	
 	//INSERE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
 	@GetMapping(value = "/cadastrarCooperado")
@@ -102,7 +111,7 @@ public class CooperadoController {
 	     
 	     Coopcadastro coopcadastro = new Coopcadastro();
 	     coopcadastro.setCoopcooperado("ATIVO");
-	     coopcadastro.setCoopdataadmissao(LocalDateTime.now());
+	     coopcadastro.setCoopdataadmissao(LocalDate.now());
 	     cooperado.setCoopcadastro(coopcadastro);
 	     coopcadastro.setCooperado(cooperado);
 	     
@@ -555,6 +564,41 @@ public class CooperadoController {
 		return mv;	
 			
 	}
+	
+	// MÉTODO PARA EDITAR DADOS CADASTRAIS
+	@GetMapping("/cooperado/editar/{id}")
+	public String editar(@PathVariable Integer id, Model model) {
+
+	    try {
+	       // Long matriculaLong = Long.parseLong(id);
+	        Optional<Cooperado> cooperadoOpt = cooperadoRepository.findById(id);
+
+	        if (cooperadoOpt.isPresent()) {
+	            Cooperado cooperado = cooperadoOpt.get();
+	            Iterable<Coopcadastro> cadastros = coopCadastroRepository.findByCooperado(cooperado);
+	            Coopcadastro cadastro = cadastros.iterator().hasNext() ? cadastros.iterator().next() : null;
+
+	            if (cadastro != null) {
+	                model.addAttribute("cooperado", cooperado);
+	                model.addAttribute("coopcadastro", cadastro);
+	                return "cooperado/editarDadosCadastrais"; // nome EXATO do seu arquivo HTML
+	            }
+	        }
+
+	    } catch (NumberFormatException e) {
+	        // Log do erro (opcional): e.printStackTrace();
+	    }
+
+	    return "redirect:/erro";
+	}
+
+	
+	@PostMapping("/cooperado/atualizar")
+	public String atualizarCadastro(@ModelAttribute Coopcadastro coopcadastro) {
+	    coopCadastroRepository.save(coopcadastro);
+	    return "redirect:/cooperado/" + coopcadastro.getCooperado().getCoopmatricula();
+	}
+
 	
 	//UPDATE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN','DEVELOPER')")

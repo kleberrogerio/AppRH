@@ -3,6 +3,7 @@ package com.AppRH.AppRH.models;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="coop_cadastro")
@@ -30,12 +33,15 @@ private static final long serialVersionUID = 1L;
 	@Column(name="coop_matricula",insertable = false, updatable = false)
 	private int coopmatricula;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="coop_data_cadastro")
-	private LocalDateTime coopdatacadastro;
+	private LocalDate coopdatacadastro;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="coop_data_admissao")
-	private LocalDateTime coopdataadmissao;
+	private LocalDate coopdataadmissao;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="coop_data_desligamento")
 	private Date coopdatadesligamento;
 	
@@ -45,6 +51,7 @@ private static final long serialVersionUID = 1L;
 	@Column(name="coop_cooperado")
 	private String coopcooperado;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="coop_data_admissibilidade")
 	private Date coopdataadmissibilidade;
 	
@@ -56,7 +63,7 @@ private static final long serialVersionUID = 1L;
 	
 	@Lob
 	@Column(name="coop_informacoes")
-	private Blob coopinformacoes;
+	private String coopinformacoes;
 	
 	@Column(name="coop_restricao")
 	private String cooprestricao;
@@ -105,20 +112,20 @@ private static final long serialVersionUID = 1L;
 
 	
 
-	public LocalDateTime getCoopdatacadastro() {
+	public LocalDate getCoopdatacadastro() {
 		return coopdatacadastro;
 	}
 
-	public void setCoopdatacadastro(LocalDateTime coopdatacadastro) {
+	public void setCoopdatacadastro(LocalDate coopdatacadastro) {
 		this.coopdatacadastro = coopdatacadastro;
 	}
 
-	public LocalDateTime getCoopdataadmissao() {
+	public LocalDate getCoopdataadmissao() {
 		return coopdataadmissao;
 	}
 
-	public void setCoopdataadmissao(LocalDateTime localDateTime) {
-		this.coopdataadmissao = localDateTime;
+	public void setCoopdataadmissao(LocalDate LocalDate) {
+		this.coopdataadmissao = LocalDate;
 	}
 
 	public Date getCoopdatadesligamento() {
@@ -169,11 +176,11 @@ private static final long serialVersionUID = 1L;
 		this.cooptestetecnico = cooptestetecnico;
 	}
 
-	public Blob getCoopinformacoes() {
+	public String getCoopinformacoes() {
 		return coopinformacoes;
 	}
 
-	public void setCoopinformacoes(Blob coopinformacoes) {
+	public void setCoopinformacoes(String coopinformacoes) {
 		this.coopinformacoes = coopinformacoes;
 	}
 

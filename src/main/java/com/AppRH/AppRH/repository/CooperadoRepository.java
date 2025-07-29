@@ -1,6 +1,7 @@
 package com.AppRH.AppRH.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +14,13 @@ import com.AppRH.AppRH.models.Cooperado;
 //import com.AppRH.AppRH.util.PaginacaoUtil;
 
 @Repository
-public interface CooperadoRepository extends JpaRepository<Cooperado, Long>{
+public interface CooperadoRepository extends JpaRepository<Cooperado, Integer>{
 		
 	//Cooperado findByCoopindexcod(int coop_index_cod);
 	Cooperado findByCoopmatricula(int coop_matricula);
 	List<Cooperado>findByCoopnome(String coop_nome);
+	
+	//Optional<Cooperado> findById(Integer id);
 	
 	//Para Buscar
 	@Query(value = "SELECT * FROM coop c", nativeQuery = true)//(Usa a anotação para poder usar o select pata buscar todos os Cooperados)
