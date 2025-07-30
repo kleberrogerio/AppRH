@@ -51,6 +51,10 @@ import com.AppRH.AppRH.repository.TelefoneRepository;
 import com.AppRH.AppRH.service.CooperadoService;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+
+
 @Controller
 public class CooperadoController {
 	
@@ -568,25 +572,19 @@ public class CooperadoController {
 	// MÉTODO PARA EDITAR DADOS CADASTRAIS
 	@GetMapping("/cooperado/editar/{id}")
 	public String editar(@PathVariable Integer id, Model model) {
+	    Optional<Cooperado> cooperadoOpt = cooperadoRepository.findById(id);
 
-	    try {
-	       // Long matriculaLong = Long.parseLong(id);
-	        Optional<Cooperado> cooperadoOpt = cooperadoRepository.findById(id);
+	    if (cooperadoOpt.isPresent()) {
+	        Cooperado cooperado = cooperadoOpt.get();
+	        Iterable<Coopcadastro> cadastros = coopCadastroRepository.findByCooperado(cooperado);
 
-	        if (cooperadoOpt.isPresent()) {
-	            Cooperado cooperado = cooperadoOpt.get();
-	            Iterable<Coopcadastro> cadastros = coopCadastroRepository.findByCooperado(cooperado);
-	            Coopcadastro cadastro = cadastros.iterator().hasNext() ? cadastros.iterator().next() : null;
+	        Coopcadastro cadastro = cadastros.iterator().hasNext() ? cadastros.iterator().next() : null;
 
-	            if (cadastro != null) {
-	                model.addAttribute("cooperado", cooperado);
-	                model.addAttribute("coopcadastro", cadastro);
-	                return "cooperado/editarDadosCadastrais"; // nome EXATO do seu arquivo HTML
-	            }
+	        if (cadastro != null) {
+	            model.addAttribute("cooperado", cooperado);
+	            model.addAttribute("coopcadastro", cadastro);
+	            return "cooperado/editarDadosCadastrais"; // nome correto do HTML
 	        }
-
-	    } catch (NumberFormatException e) {
-	        // Log do erro (opcional): e.printStackTrace();
 	    }
 
 	    return "redirect:/erro";
@@ -594,10 +592,48 @@ public class CooperadoController {
 
 	
 	@PostMapping("/cooperado/atualizar")
-	public String atualizarCadastro(@ModelAttribute Coopcadastro coopcadastro) {
-	    coopCadastroRepository.save(coopcadastro);
-	    return "redirect:/cooperado/" + coopcadastro.getCooperado().getCoopmatricula();
+	public String atualizarCadastro(@ModelAttribute Coopcadastro coopcadastro,
+	                                @RequestParam("fotosFile") MultipartFile fotosFile) {
+
+	    Coopcadastro cadastroExistente = coopCadastroRepository
+	        .findById(coopcadastro.getCoopindexcod()).orElse(null);
+
+	    if (cadastroExistente != null) {
+	        cadastroExistente.setCoopdataadmissao(coopcadastro.getCoopdataadmissao());
+	        cadastroExistente.setCoopdatacadastro(coopcadastro.getCoopdatacadastro());
+	        cadastroExistente.setCoopdatadesligamento(coopcadastro.getCoopdatadesligamento());
+	        cadastroExistente.setCoopmotivodesl(coopcadastro.getCoopmotivodesl());
+	        cadastroExistente.setCoopcooperado(coopcadastro.getCoopcooperado());
+	        cadastroExistente.setCoopdataadmissibilidade(coopcadastro.getCoopdataadmissibilidade());
+	        cadastroExistente.setCooptestepsicologico(coopcadastro.getCooptestepsicologico());
+	        cadastroExistente.setCooptestetecnico(coopcadastro.getCooptestetecnico());
+	        cadastroExistente.setCoopinformacoes(coopcadastro.getCoopinformacoes());
+	        cadastroExistente.setCooprestricao(coopcadastro.getCooprestricao());
+	        cadastroExistente.setCoopanotacoes(coopcadastro.getCoopanotacoes());
+	        cadastroExistente.setCoopdataatestepsico(coopcadastro.getCoopdataatestepsico());
+	        cadastroExistente.setCoopdataatestetecnico(coopcadastro.getCoopdataatestetecnico());
+	        cadastroExistente.setCoopsel(coopcadastro.getCoopsel());
+	        cadastroExistente.setCoopindicacao(coopcadastro.getCoopindicacao());
+	        cadastroExistente.setCoopfoto(coopcadastro.getCoopfoto());
+
+	        if (fotosFile != null && !fotosFile.isEmpty()) {
+	            try {
+	                cadastroExistente.setCoopfoto(fotosFile.getBytes());
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return "redirect:/erro"; // ou mostre mensagem de erro
+	            }
+	        }
+
+	        coopCadastroRepository.save(cadastroExistente);
+	        return "redirect:/cooperado/editar/" + coopcadastro.getCooperado().getCoopmatricula() + "?sucesso";
+	    }
+
+	    return "redirect:/erro";
 	}
+
+
+
 
 	
 	//UPDATE COOPERADO

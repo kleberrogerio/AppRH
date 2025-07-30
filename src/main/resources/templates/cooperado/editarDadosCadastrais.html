@@ -11,7 +11,11 @@
     <form th:action="@{/cooperado/atualizar}" th:object="${coopcadastro}" method="post">
 
         <!-- Identificador oculto -->
-        <input type="hidden" th:field="*{coopmatricula}"/>
+     <input type="hidden" th:field="*{cooperado.coopmatricula}" />
+
+
+
+		<input type="hidden" name="coopindexcod" th:value="${coopcadastro.coopindexcod}" />
 
         <div class="mb-3">
             <label>Data Cadastro</label>
@@ -23,15 +27,83 @@
             <input type="date" th:field="*{coopdataadmissao}" class="form-control"/>
         </div>
 
-        <div class="mb-3">
-            <label>Informações</label>
-            <textarea th:field="*{coopinformacoes}" class="form-control"></textarea>
-        </div>
+            <div class="mb-3">
+        <label>Data Desligamento</label>
+        <input type="date" th:field="*{coopdatadesligamento}" class="form-control"/>
+    </div>
 
-        <!-- Adicione os demais campos conforme necessário -->
+    <div class="mb-3">
+        <label>Motivo do Desligamento</label>
+        <input type="text" th:field="*{coopmotivodesl}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Nome do Cooperado</label>
+        <input type="text" th:field="*{coopcooperado}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Data Admissibilidade</label>
+        <input type="date" th:field="*{coopdataadmissibilidade}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Teste Psicológico</label>
+        <input type="text" th:field="*{cooptestepsicologico}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Teste Técnico</label>
+        <input type="text" th:field="*{cooptestetecnico}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Informações</label>
+        <textarea th:field="*{coopinformacoes}" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Restrições</label>
+        <input type="text" th:field="*{cooprestricao}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Anotações</label>
+        <textarea th:field="*{coopanotacoes}" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Data Teste Psicológico</label>
+        <input type="date" th:field="*{coopdataatestepsico}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Data Teste Técnico</label>
+        <input type="date" th:field="*{coopdataatestetecnico}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Seleção</label>
+        <input type="text" th:field="*{coopsel}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Indicação</label>
+        <input type="number" th:field="*{coopindicacao}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Foto (URL ou nome do arquivo)</label>
+        <input type="text" th:field="*{coopfoto}" class="form-control"/>
+    </div>
 
         <button type="submit" class="btn btn-success">Salvar</button>
-        <a th:href="@{/cooperado/{matricula}(matricula=${coopcadastro.coopmatricula})}" class="btn btn-secondary">Cancelar</a>
+        <a th:href="@{/cooperado/{matricula}(matricula=${cooperado.coopmatricula})}" class="btn btn-secondary">Cancelar</a>
+
+		<div th:if="${param.sucesso}" class="alert alert-success">
+		    Cadastro atualizado com sucesso!
+		</div>
+
     </form>
 </div>
 </body>

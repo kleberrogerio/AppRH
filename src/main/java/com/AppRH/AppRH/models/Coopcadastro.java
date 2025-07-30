@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="coop_cad_index_cod")
-	private int coopindexcod;
+	private Long coopindexcod;
 	
 	@NotNull
 	@Column(name="coop_matricula",insertable = false, updatable = false)
@@ -43,7 +43,7 @@ private static final long serialVersionUID = 1L;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="coop_data_desligamento")
-	private Date coopdatadesligamento;
+	private LocalDate coopdatadesligamento;
 	
 	@Column(name="coop_motivo_desl")
 	private String coopmotivodesl;
@@ -53,7 +53,7 @@ private static final long serialVersionUID = 1L;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="coop_data_admissibilidade")
-	private Date coopdataadmissibilidade;
+	private LocalDate coopdataadmissibilidade;
 	
 	@Column(name="coop_teste_psicologico")
 	private String cooptestepsicologico;
@@ -73,10 +73,10 @@ private static final long serialVersionUID = 1L;
 	private String coopanotacoes;
 	
 	@Column(name="coop_data_testepsico")
-	private Date coopdataatestepsico;
+	private LocalDate coopdataatestepsico;
 	
 	@Column(name="coop_data_teste_tecnico")
-	private Date coopdataatestetecnico;
+	private LocalDate coopdataatestetecnico;
 	
 	@Column(name="coop_sel")
 	private String coopsel;
@@ -87,18 +87,19 @@ private static final long serialVersionUID = 1L;
 	@Column(name="coop_ocorrencias")
 	private Blob coopocorrencias;
 	
+	@Lob
 	@Column(name="coop_foto")
-	private String coopfoto;
-	
+	private byte[] coopfoto;
+		
 	@ManyToOne
 	@JoinColumn(name = "coop_matricula")
 	private Cooperado cooperado;
 
-	public int getCoopindexcod() {
+	public Long getCoopindexcod() {
 		return coopindexcod;
 	}
 
-	public void setCoopindexcod(int coopindexcod) {
+	public void setCoopindexcod(Long coopindexcod) {
 		this.coopindexcod = coopindexcod;
 	}
 
@@ -128,11 +129,11 @@ private static final long serialVersionUID = 1L;
 		this.coopdataadmissao = LocalDate;
 	}
 
-	public Date getCoopdatadesligamento() {
+	public LocalDate getCoopdatadesligamento() {
 		return coopdatadesligamento;
 	}
 
-	public void setCoopdatadesligamento(Date coopdatadesligamento) {
+	public void setCoopdatadesligamento(LocalDate coopdatadesligamento) {
 		this.coopdatadesligamento = coopdatadesligamento;
 	}
 
@@ -152,11 +153,11 @@ private static final long serialVersionUID = 1L;
 		this.coopcooperado = coopcooperado;
 	}
 
-	public Date getCoopdataadmissibilidade() {
+	public LocalDate getCoopdataadmissibilidade() {
 		return coopdataadmissibilidade;
 	}
 
-	public void setCoopdataadmissibilidade(Date coopdataadmissibilidade) {
+	public void setCoopdataadmissibilidade(LocalDate coopdataadmissibilidade) {
 		this.coopdataadmissibilidade = coopdataadmissibilidade;
 	}
 
@@ -200,19 +201,19 @@ private static final long serialVersionUID = 1L;
 		this.coopanotacoes = coopanotacoes;
 	}
 
-	public Date getCoopdataatestepsico() {
+	public LocalDate getCoopdataatestepsico() {
 		return coopdataatestepsico;
 	}
 
-	public void setCoopdataatestepsico(Date coopdataatestepsico) {
+	public void setCoopdataatestepsico(LocalDate coopdataatestepsico) {
 		this.coopdataatestepsico = coopdataatestepsico;
 	}
 
-	public Date getCoopdataatestetecnico() {
+	public LocalDate getCoopdataatestetecnico() {
 		return coopdataatestetecnico;
 	}
 
-	public void setCoopdataatestetecnico(Date coopdataatestetecnico) {
+	public void setCoopdataatestetecnico(LocalDate coopdataatestetecnico) {
 		this.coopdataatestetecnico = coopdataatestetecnico;
 	}
 
@@ -248,11 +249,11 @@ private static final long serialVersionUID = 1L;
 		this.cooperado = cooperado;
 	}
 
-	public String getCoopfoto() {
+	public byte[] getCoopfoto() {
 		return coopfoto;
 	}
 
-	public void setCoopfoto(String coopfoto) {
+	public void setCoopfoto(byte[] coopfoto) {
 		this.coopfoto = coopfoto;
 	}
 
