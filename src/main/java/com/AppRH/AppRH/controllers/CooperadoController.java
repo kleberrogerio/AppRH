@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -362,8 +366,13 @@ public class CooperadoController {
 		Iterable<Cotaparte> cotaparte = cpr.findByCooperado(cooperado);
 		mv.addObject("cotaparte",cotaparte);
 		
-		Iterable<Coopcadastro> coopcadastro = cc.findByCooperado(cooperado);
-		mv.addObject("coopcadastro",coopcadastro);
+		//Iterable<Coopcadastro> coopcadastro = cc.findByCooperado(cooperado);
+		//mv.addObject("coopcadastro",coopcadastro);
+		
+		// Coopcadastro — assume-se que queremos só o primeiro (ou único)
+	    Iterable<Coopcadastro> coopcadastroList = cc.findByCooperado(cooperado);
+	    Coopcadastro unicoCadastro = coopcadastroList.iterator().hasNext() ? coopcadastroList.iterator().next() : null;
+	    mv.addObject("coopcadastro", unicoCadastro);
 		
 		Iterable<Lgpd> lgpd = lr.findByCooperado(cooperado);
 		mv.addObject("lgpd",lgpd);
@@ -592,13 +601,16 @@ public class CooperadoController {
 
 	
 	@PostMapping("/cooperado/atualizar")
-	public String atualizarCadastro(@ModelAttribute Coopcadastro coopcadastro,
-	                                @RequestParam("fotosFile") MultipartFile fotosFile) {
+	public String atualizarCadastro(
+	        @ModelAttribute Coopcadastro coopcadastro,
+	        @RequestParam("fotosFile") MultipartFile fotosFile) {
 
-	    Coopcadastro cadastroExistente = coopCadastroRepository
-	        .findById(coopcadastro.getCoopindexcod()).orElse(null);
+	    Optional<Coopcadastro> optionalCadastro = coopCadastroRepository.findById(coopcadastro.getCoopindexcod());
 
-	    if (cadastroExistente != null) {
+	    if (optionalCadastro.isPresent()) {
+	        Coopcadastro cadastroExistente = optionalCadastro.get();
+
+	        // Atualiza os campos normalmente
 	        cadastroExistente.setCoopdataadmissao(coopcadastro.getCoopdataadmissao());
 	        cadastroExistente.setCoopdatacadastro(coopcadastro.getCoopdatacadastro());
 	        cadastroExistente.setCoopdatadesligamento(coopcadastro.getCoopdatadesligamento());
@@ -614,26 +626,47 @@ public class CooperadoController {
 	        cadastroExistente.setCoopdataatestetecnico(coopcadastro.getCoopdataatestetecnico());
 	        cadastroExistente.setCoopsel(coopcadastro.getCoopsel());
 	        cadastroExistente.setCoopindicacao(coopcadastro.getCoopindicacao());
-	        cadastroExistente.setCoopfoto(coopcadastro.getCoopfoto());
 
+	        // Processa a imagem
 	        if (fotosFile != null && !fotosFile.isEmpty()) {
 	            try {
 	                cadastroExistente.setCoopfoto(fotosFile.getBytes());
 	            } catch (IOException e) {
 	                e.printStackTrace();
-	                return "redirect:/erro"; // ou mostre mensagem de erro
+	                return "redirect:/erro";
 	            }
 	        }
 
 	        coopCadastroRepository.save(cadastroExistente);
-	        return "redirect:/cooperado/editar/" + coopcadastro.getCooperado().getCoopmatricula() + "?sucesso";
+
+	        // Redireciona com sucesso
+	        Long matricula = cadastroExistente.getCoopcooperado() != null
+	                ? cadastroExistente.getCooperado().getCoopmatricula()
+	                : 0L;
+
+	        return "redirect:/cooperado/editar/" + matricula + "?sucesso";
 	    }
 
 	    return "redirect:/erro";
 	}
 
+	//Endpoint para exibir a foto do cooperado
+	@GetMapping("/cooperado/foto/{id}")
+	@ResponseBody
+	public ResponseEntity<byte[]> exibirFoto(@PathVariable("id") Long id) {
+	    Optional<Coopcadastro> optional = coopCadastroRepository.findById(id);
 
+	    if (optional.isPresent() && optional.get().getCoopfoto() != null) {
+	        byte[] imagem = optional.get().getCoopfoto();
 
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.IMAGE_JPEG); // ou IMAGE_PNG dependendo do tipo
+
+	        return new ResponseEntity<>(imagem, headers, HttpStatus.OK);
+	    }
+
+	    return ResponseEntity.notFound().build();
+	}
 
 	
 	//UPDATE COOPERADO

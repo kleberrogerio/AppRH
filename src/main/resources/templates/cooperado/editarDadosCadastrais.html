@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang=â€pt-brâ€ xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-    <title>Editar Dados Cadastrais</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>App Serco</title>
+
+	<!-- Bootstrap -->
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	
+
+	<!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
+	<!-- ALERTA: Respond.js nÃ£o funciona se vocÃª visualizar uma pÃ¡gina file:// -->
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<title>| App Serco |</title>
+
 </head>
 <body>
+<!-- Incluir o fragmento do menu -->
+    <div th:insert="fragments/menu :: menu"></div>	
+    
 <div class="container mt-5">
     <h2>Editar Dados do Cooperado</h2>
 
-    <form th:action="@{/cooperado/atualizar}" th:object="${coopcadastro}" method="post">
+    <form th:action="@{/cooperado/atualizar}" th:object="${coopcadastro}" method="post" enctype="multipart/form-data">
+    
 
         <!-- Identificador oculto -->
      <input type="hidden" th:field="*{cooperado.coopmatricula}" />
@@ -23,7 +47,7 @@
         </div>
 
         <div class="mb-3">
-            <label>Data Admissão</label>
+            <label>Data AdmissÃ£o</label>
             <input type="date" th:field="*{coopdataadmissao}" class="form-control"/>
         </div>
 
@@ -48,53 +72,53 @@
     </div>
 
     <div class="mb-3">
-        <label>Teste Psicológico</label>
+        <label>Teste PsicolÃ³gico</label>
         <input type="text" th:field="*{cooptestepsicologico}" class="form-control"/>
     </div>
 
     <div class="mb-3">
-        <label>Teste Técnico</label>
+        <label>Teste TÃ©cnico</label>
         <input type="text" th:field="*{cooptestetecnico}" class="form-control"/>
     </div>
 
     <div class="mb-3">
-        <label>Informações</label>
+        <label>InformaÃ§Ãµes</label>
         <textarea th:field="*{coopinformacoes}" class="form-control"></textarea>
     </div>
 
     <div class="mb-3">
-        <label>Restrições</label>
+        <label>RestriÃ§Ãµes</label>
         <input type="text" th:field="*{cooprestricao}" class="form-control"/>
     </div>
 
     <div class="mb-3">
-        <label>Anotações</label>
+        <label>AnotaÃ§Ãµes</label>
         <textarea th:field="*{coopanotacoes}" class="form-control"></textarea>
     </div>
 
     <div class="mb-3">
-        <label>Data Teste Psicológico</label>
+        <label>Data Teste PsicolÃ³gico</label>
         <input type="date" th:field="*{coopdataatestepsico}" class="form-control"/>
     </div>
 
     <div class="mb-3">
-        <label>Data Teste Técnico</label>
+        <label>Data Teste TÃ©cnico</label>
         <input type="date" th:field="*{coopdataatestetecnico}" class="form-control"/>
     </div>
 
     <div class="mb-3">
-        <label>Seleção</label>
+        <label>SeleÃ§Ã£o</label>
         <input type="text" th:field="*{coopsel}" class="form-control"/>
     </div>
 
     <div class="mb-3">
-        <label>Indicação</label>
+        <label>IndicaÃ§Ã£o</label>
         <input type="number" th:field="*{coopindicacao}" class="form-control"/>
     </div>
 
     <div class="mb-3">
         <label>Foto (URL ou nome do arquivo)</label>
-        <input type="text" th:field="*{coopfoto}" class="form-control"/>
+        <input type="file" name="fotosFile" accept="image/*" />
     </div>
 
         <button type="submit" class="btn btn-success">Salvar</button>
@@ -106,5 +130,56 @@
 
     </form>
 </div>
+<br>
+<a href="javascript:history.back()">Voltar</a>
+		<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		document.querySelectorAll(".deletar-telefone").forEach(element => {
+			element.addEventListener("click", function(event) {
+				
+				let nome = event.target.dataset["cooperadoNome"];
+				if (!confirm("Deletar telefone ?")) {
+					event.preventDefault();
+				}
+			});
+		});
+		
+		document.querySelectorAll("input[type='checkbox'].lgpd").forEach(element => {
+			element.addEventListener("click", function(event) {
+				let value = event.target.checked;
+				let type = event.target.dataset.lgpd;
+				let cooperadoId = event.target.parentElement.parentElement.dataset.cooperadoId
+				
+				fetch(`/ControlaLGPD/${cooperadoId}?type=${type}&value=${value}`, {
+					method: "POST"
+				}).then().then();
+				
+				
+				console.log(value, cooperadoId, type);
+			});
+		});
+		
+	});
+</script>
+
+
+	</div>
+
+
+	<div style="height: 100px;"></div>
+
+	<!-- Incluir o rodapÃ© no final da pÃ¡gina -->
+    <div th:insert="fragments/footer :: footer"></div>
+
+
+
+
+	<!--JavaScript bootstrap-->
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+
+		</script>
+
 </body>
 </html>

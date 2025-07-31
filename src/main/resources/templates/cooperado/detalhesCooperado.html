@@ -49,10 +49,30 @@
 					th:href="${(#mvc.url('CC#coopcadastro').arg(0, cooperado.coopmatricula)).build()}"><button
 						type="button" class="btn btn-primary">Dados Cadastrais</button></a> <br>
 				<br>
+				<!-- Visualização 1 decidir depois qual fica melhor -->
 				 <div>
    					 <img th:src="@{|/uploads/${cooperado.coopmatricula}.jpg|}" alt="Foto do Cooperado" width="200" height="200" />
 				</div>
-				
+				<!-- Visualização 2 decidir depois qual fica melhor -->
+				<div>
+				  	<img th:src="@{'/cooperado/foto/' + ${cooperado.coopmatricula}}" alt="Foto do Cooperado" width="200" height="200" />
+				</div>
+				<!-- Visualização 3 decidir depois qual fica melhor 
+				<div class="mb-3">
+   					 <label>Foto atual:</label><br>
+    
+    				<img th:src="@{/cooperado/foto/{id}(id=${coopcadastro.coopindexcod})}" 
+         			alt="Foto do cooperado" 
+        			style="max-width: 200px; max-height: 200px;" />
+				</div>
+				<!-- Visualização 4 decidir depois qual fica melhor 
+				<div>
+    				<label>Foto:</label><br>
+    				<img th:src="@{/cooperado/foto/{id}(id=${coopcadastro.coopindexcod})}" 
+         			alt="Foto do cooperado" 
+         			style="max-width: 200px;" />
+				</div>
+				-->
 				<b>Matrícula:</b> <span
 					th:text="${cooperado.coopmatricula}"></span>
 			</p>
