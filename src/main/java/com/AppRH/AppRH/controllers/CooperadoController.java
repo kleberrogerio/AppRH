@@ -95,6 +95,9 @@ public class CooperadoController {
 	@Autowired
 	private CoopcadastroRepository coopCadastroRepository;
 	
+	@Autowired
+	private DividasRepository dividasRepository;
+	
 	//INSERE COOPERADO
 	@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
 	@GetMapping(value = "/cadastrarCooperado")
@@ -666,6 +669,42 @@ public class CooperadoController {
 	    }
 
 	    return ResponseEntity.notFound().build();
+	}
+	
+	// MÉTODO PARA EDITAR UMA DÍVIDA ESPECÍFICA
+	@GetMapping("/cooperado/editarDividas/{id}")
+	public String editarDividas(@PathVariable Long id, Model model) {
+	    Optional<Dividas> optionalDivida = dividasRepository.findById(id);
+	    if (optionalDivida.isPresent()) {
+	        model.addAttribute("divida", optionalDivida.get());
+	        return "cooperado/editarDividas"; // tela de edição separada
+	    }
+	    return "redirect:/erro";
+	}
+
+	// MÉTODO PARA ATUALIZAR UMA DÍVIDA
+	@PostMapping("/cooperado/atualizarDividas")
+	public String atualizarDividas(@ModelAttribute Dividas dividas) {
+	    Optional<Dividas> optionalDividas = dividasRepository.findById(dividas.getCoopindexcod());
+	    
+	    if (optionalDividas.isPresent()) {
+	        Dividas dividaExistente = optionalDividas.get();
+
+	        // Atualiza os campos
+	        dividaExistente.setCoopdescricao(dividas.getCoopdescricao());
+	        dividaExistente.setCoopformapagto(dividas.getCoopformapagto());
+	        dividaExistente.setCoopdatavencimento(dividas.getCoopdatavencimento());
+	        dividaExistente.setCoopdatapagamento(dividas.getCoopdatapagamento());
+	        dividaExistente.setCoopflagcotaparte(dividas.getCoopflagcotaparte());
+	        dividaExistente.setCoopvalor(dividas.getCoopvalor());
+
+	        dividasRepository.save(dividaExistente);
+
+	        // Redireciona para a lista de dívidas do cooperado
+	        return "redirect:/divida" + dividaExistente.getCooperado().getCoopmatricula() + "?sucesso";
+	    }
+
+	    return "redirect:/erro";
 	}
 
 	

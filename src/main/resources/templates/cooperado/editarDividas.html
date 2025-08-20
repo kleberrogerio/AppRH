@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>| App Serco |</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Incluir o fragmento do menu -->
+    <div th:insert="fragments/menu :: menu"></div>
+
+    <div class="container mt-5">
+        <h2>Editar Dívida do Cooperado</h2>
+
+        <!-- Ajustei o th:object para "dividas" -->
+        <form th:action="@{/cooperado/atualizarDividas}" th:object="${dividas}" method="post">
+
+            <!-- ID da dívida (hidden) -->
+            <input type="hidden" th:field="*{coopindexcod}" />
+
+            <div class="mb-3">
+                <label>Descrição</label>
+                <input type="text" th:field="*{coopdescricao}" class="form-control" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Forma de Pagamento</label>
+                <input type="text" th:field="*{coopformapagto}" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Data de Vencimento</label>
+                <input type="date" th:field="*{coopdatavencimento}" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Data de Pagamento</label>
+                <input type="date" th:field="*{coopdatapagamento}" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Valor</label>
+                <input type="number" step="0.01" th:field="*{coopvalor}" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label>É Cota-Parte?</label>
+                <input type="checkbox" th:field="*{coopflagcotaparte}" class="form-check-input"/>
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a th:href="@{/cooperado/listarDividas}" class="btn btn-secondary">Cancelar</a>
+
+            <div th:if="${param.sucesso}" class="alert alert-success mt-3">
+                Dívida atualizada com sucesso!
+            </div>
+        </form>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <!-- Incluir o rodapé -->
+    <div th:insert="fragments/footer :: footer"></div>
+
+    <!-- JS -->
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>

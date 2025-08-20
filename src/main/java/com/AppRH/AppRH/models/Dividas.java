@@ -21,7 +21,7 @@ public class Dividas implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="coop_index_cod")
-	private int coopindexcod;
+	private Long coopindexcod;
 	
 	@NotNull
 	@Column(name="coop_matricula",insertable = false, updatable = false)
@@ -57,11 +57,11 @@ public class Dividas implements Serializable {
 		this.cooperado = cooperado;
 	}
 
-	public int getCoopindexcod() {
+	public Long getCoopindexcod() {
 		return coopindexcod;
 	}
 
-	public void setCoopindexcod(int coopindexcod) {
+	public void setCoopindexcod(Long coopindexcod) {
 		this.coopindexcod = coopindexcod;
 	}
 
